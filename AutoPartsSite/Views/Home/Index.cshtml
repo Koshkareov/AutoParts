@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Поиск запчастей</h2>
+
+    <p>
+        @using (Html.BeginForm("SearchForParts", "Parts", FormMethod.Post))
+        {
+        <p>
+            @Html.TextArea("autopartNumbers", new { rows = 10, columns = 40 })
+            <input type="submit" value="Поиск" />
+        </p>
+        }
+
+        </p>
+</div>
