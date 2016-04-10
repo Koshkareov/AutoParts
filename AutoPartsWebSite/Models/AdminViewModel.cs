@@ -8,7 +8,7 @@ namespace IdentityAutoPart.Models
     {
         public string Id { get; set; }
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "RoleName")]
+        [Display(Name = "Роль")]
         public string Name { get; set; }
     }
 
