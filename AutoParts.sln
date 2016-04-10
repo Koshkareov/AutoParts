@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPartsImport", "AutoPart
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPartsSite", "AutoPartsSite\AutoPartsSite.csproj", "{E8D7BF12-7D41-4CA8-BAEF-46D7A3F9EE1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPartsWebSite", "AutoPartsWebSite\AutoPartsWebSite.csproj", "{E3813F09-4426-43C6-92D7-45D0FBA3C83F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{E8D7BF12-7D41-4CA8-BAEF-46D7A3F9EE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8D7BF12-7D41-4CA8-BAEF-46D7A3F9EE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8D7BF12-7D41-4CA8-BAEF-46D7A3F9EE1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3813F09-4426-43C6-92D7-45D0FBA3C83F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3813F09-4426-43C6-92D7-45D0FBA3C83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3813F09-4426-43C6-92D7-45D0FBA3C83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3813F09-4426-43C6-92D7-45D0FBA3C83F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
