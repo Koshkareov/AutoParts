@@ -39,12 +39,12 @@ namespace IdentityAutoPart.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two factor provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "The phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль был изменен."
+                : message == ManageMessageId.SetPasswordSuccess ? "Ваш пароль был установлен."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Ваш  двух-факторный провайдер был установлен."
+                : message == ManageMessageId.Error ? "Возникла ошибка."
+                : message == ManageMessageId.AddPhoneSuccess ? "Номер телефона был добавлен."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Ваш номер телефона удален."
                 : "";
 
             var model = new IndexViewModel
@@ -115,7 +115,7 @@ namespace IdentityAutoPart.Controllers
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
-                    Body = "Your security code is: " + code
+                    Body = "Ваш код : " + code
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
@@ -290,8 +290,8 @@ namespace IdentityAutoPart.Controllers
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.RemoveLoginSuccess ? "Внешний вход был удален."
+                : message == ManageMessageId.Error ? "Возникла ошибка."
                 : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
