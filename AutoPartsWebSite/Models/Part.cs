@@ -1,4 +1,4 @@
-namespace AutoPartsImport
+namespace AutoPartsWebSite.Models
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +12,6 @@ namespace AutoPartsImport
         public int Id { get; set; }
 
         public int? ImportId { get; set; }
-
-        //public string ImportGuid { get; set; }
 
         public string Brand { get; set; }
 
@@ -34,7 +32,5 @@ namespace AutoPartsImport
         public string Supplier { get; set; }
 
         public string DeliveryTime { get; set; }
-
-        public virtual Import Import { get; set; }
     }
 }

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<AutoPartsWebSite.Models.Part>
+
+
+@{
+    ViewBag.Title = "Поиск запчастей";
+}
+
+<div class="jumbotron">
+    <h2>Поиск запчастей</h2>
+
+    <p>
+        @using (Html.BeginForm("SearchPart", "Parts", FormMethod.Post))
+        {
+        <p>
+            @Html.TextBox("autopartNumber")
+            <input type="submit" value="Поиск" />
+        </p>
+        }
+        @*<p>
+            @Html.ActionLink("Экспорт результатов в Excel", "Excel")
+        </p>*@
+        </p>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Марка")
+            </th>
+            <th>
+                @Html.DisplayName("Номер")
+            </th>
+            <th>
+                @Html.DisplayName("Название")
+            </th>
+            <th>
+                @Html.DisplayName("Описание")
+            </th>
+            <th>
+                @Html.DisplayName("Объем")
+            </th>
+            <th>
+                @Html.DisplayName("Вес")
+            </th>
+            <th>
+                @Html.DisplayName("Наличие")
+            </th>
+            <th>
+                @Html.DisplayName("Цена")
+            </th>
+            <th>
+                @Html.DisplayName("Поставщик")
+            </th>
+            <th>
+                @Html.DisplayName("Срок поставки")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryTime)
+                </td>                
+            </tr>
+        }
+
+    </table>

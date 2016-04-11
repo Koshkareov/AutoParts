@@ -54,10 +54,12 @@ namespace AutoPartsImport
                 // Подготавливаю словарь для строчки данных
                 Dictionary<string, string> dicPart = new Dictionary<string, string>();
                 string importGuid = System.Guid.NewGuid().ToString();
+                int importId = AddImportData();
                 for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
                 {
                     dicPart.Clear();
-                    dicPart.Add("Guid", importGuid);   // import GUID
+                    dicPart.Add("Id", Convert.ToString(importId));   // import ID
+                    //dicPart.Add("Guid", importGuid);   // import GUID
                     dicPart.Add("Brand", Convert.ToString(worksheet.Cells[dic["Brand"] + i.ToString()].Value));   //  Brand = 1
                     dicPart.Add("Number", Convert.ToString(worksheet.Cells[dic["Number"] + i.ToString()].Value));   //  Number = 2
                     dicPart.Add("Name", Convert.ToString(worksheet.Cells[dic["Name"] + i.ToString()].Value));   //  Name = 4
@@ -77,11 +79,11 @@ namespace AutoPartsImport
 
         public static void AddPartData(ref Dictionary<string, string> dicPartData)
         {
-            using (var db = new AutoPartsDBEntities())
+            using (var db = new Model()) //AutoPartsDBEntities())
             {
                 var autopart = new Part
                 {
-                    ImportId = dicPartData["Guid"],
+                    ImportId = Convert.ToInt32(dicPartData["Id"]),
                     Brand = dicPartData["Brand"],
                     Number = dicPartData["Number"],
                     Name = dicPartData["Name"],
@@ -97,7 +99,24 @@ namespace AutoPartsImport
                 db.Parts.Add(autopart);
                 db.SaveChanges();
             }
-        }       
+        }
+
+        public static int AddImportData()
+        {
+            using (var db = new Model()) //AutoPartsDBEntities())
+            {
+                var imp = new Import
+                {
+                    Date = DateTime.Now
+                };
+
+                db.Imports.Add(imp);
+                db.SaveChanges();
+                var id = imp.Id;
+                return id;
+            }
+           
+        }
 
         private void buttonImport_Click(object sender, EventArgs e)
         {

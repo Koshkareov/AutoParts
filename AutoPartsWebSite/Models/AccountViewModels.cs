@@ -67,7 +67,7 @@ namespace IdentityAutoPart.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} должен быть как не менее {2} символов.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} должен быть как не менее {2} символов.", MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
@@ -86,7 +86,7 @@ namespace IdentityAutoPart.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} должен быть как не менее {2} символов.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} должен быть как не менее {2} символов.", MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }

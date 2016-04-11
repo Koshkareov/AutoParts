@@ -21,7 +21,7 @@ namespace IdentityAutoPart.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("AutoPartsDB", throwIfV1Schema: false)
         {
         }
 
