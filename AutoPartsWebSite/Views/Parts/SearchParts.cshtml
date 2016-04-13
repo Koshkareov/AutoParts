@@ -59,7 +59,9 @@
         <th>
             @Html.DisplayName("Срок поставки")
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayName("Количество")
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -97,6 +99,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeliveryTime)
+            </td>
+            <td>
+                @*<input type="number" name="quantity" min="1" max="5">*@                
+                @Html.TextBoxFor(modelItem => item.Number, "0", new { id = item.Id,  type= "number", min="0",max = item.Quantity })
+                @*ToDo: Set and read values and id via script
+                http://www.dotnet-tricks.com/Tutorial/mvc/K18L190813-How-to-get-textboxes-values-in-MVC4-created-by-jQuery.html*@
+                
             </td>
             @*<td>
                     @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
