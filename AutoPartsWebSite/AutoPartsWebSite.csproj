@@ -188,6 +188,11 @@
     <Content Include="Views\Parts\Index.cshtml" />
     <Content Include="Views\Parts\SearchParts.cshtml" />
     <Content Include="Views\Parts\SearchPart.cshtml" />
+    <Content Include="Views\Carts\Create.cshtml" />
+    <Content Include="Views\Carts\Delete.cshtml" />
+    <Content Include="Views\Carts\Details.cshtml" />
+    <Content Include="Views\Carts\Edit.cshtml" />
+    <Content Include="Views\Carts\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -266,6 +271,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
@@ -274,14 +280,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604111852596_InitialCreate.cs" />
+    <Compile Include="Migrations\201604111852596_InitialCreate.Designer.cs">
+      <DependentUpon>201604111852596_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604251455241_InitialCreate1.cs" />
+    <Compile Include="Migrations\201604251455241_InitialCreate1.Designer.cs">
+      <DependentUpon>201604251455241_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\PartModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604111852596_InitialCreate.resx">
+      <DependentUpon>201604111852596_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604251455241_InitialCreate1.resx">
+      <DependentUpon>201604251455241_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
