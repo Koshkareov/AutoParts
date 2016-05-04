@@ -6,6 +6,9 @@
     <title>@ViewBag.Title - AUTOPARTS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{     
+        string cartText = "Корзина(" + ViewBag.CartCount + ")";
+    }
 
 </head>
 <body>
@@ -32,6 +35,8 @@
                     @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
                     {
                         <li>@Html.ActionLink("Мульти-поиск", "SearchParts", "Parts")</li>
+                        <li>@Html.ActionLink(cartText, "Index", "Carts")</li>
+                       
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

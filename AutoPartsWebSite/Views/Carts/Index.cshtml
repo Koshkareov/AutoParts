@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.Cart>
 
 @{
-    ViewBag.Title = "Корзина";
+    ViewBag.Title = "Корзина"; 
 }
 
 <h2>Корзина</h2>
 
 <p>
    @* @Html.ActionLink("Create New", "Create")*@
-    @Html.ActionLink("Загрузить корзинку из Excel", "ExcelLoad") |
+    @*@Html.ActionLink("Загрузить корзинку из Excel", "ExcelLoad") |
     
-    @Html.ActionLink("Выгрузить корзинку в Excel", "ExcelSave")
+    @Html.ActionLink("Выгрузить корзинку в Excel", "ExcelSave")*@
 </p>
 <table class="table">
     <tr>
@@ -50,6 +50,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Amount)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
         @*<th>
             @Html.DisplayNameFor(model => model.Data)
         </th>*@
@@ -65,7 +68,9 @@
             @Html.DisplayFor(modelItem => item.Brand)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Number)
+
+            @Html.ActionLink(item.Number, "Edit", new { id = item.Id })
+            @*@Html.DisplayFor(modelItem => item.Number)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -92,17 +97,50 @@
             @Html.DisplayFor(modelItem => item.DeliveryTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Amount)
+            @Html.ActionLink(item.Amount.ToString(), "Edit", new { id = item.Id })
+            @*@Html.DisplayFor(modelItem => item.Amount)*@            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.Data)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @*@Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |*@
             @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @*@Html.ActionLink("Удалить", "Delete", new { id=item.Id })*@
+
+            @using (Html.BeginForm("Delete", "Carts", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()   
+                @Html.Hidden("id", item.Id)                
+                <input type="submit" value="Удалить" class="btn btn-link" />                         
+            }
+
         </td>
     </tr>
 }
+    <tfoot align="left" style="background: #fc0">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>            
+            <td>
+                Всего деталей: @ViewBag.CartCount              
+            </td>
+            <td>
+                Общая сумма:  @ViewBag.CartTotal
+            </td>
+            <td></td>   
+        </tr>
+    </tfoot>
 
 </table>

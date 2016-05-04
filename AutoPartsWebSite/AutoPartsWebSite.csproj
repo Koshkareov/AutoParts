@@ -288,6 +288,18 @@
     <Compile Include="Migrations\201604251455241_InitialCreate1.Designer.cs">
       <DependentUpon>201604251455241_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605040913186_Cart-Data-in-ISO-format.cs" />
+    <Compile Include="Migrations\201605040913186_Cart-Data-in-ISO-format.Designer.cs">
+      <DependentUpon>201605040913186_Cart-Data-in-ISO-format.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605040924100_Cart-DisplayNames.cs" />
+    <Compile Include="Migrations\201605040924100_Cart-DisplayNames.Designer.cs">
+      <DependentUpon>201605040924100_Cart-DisplayNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605041421310_Cart-add-PartId.cs" />
+    <Compile Include="Migrations\201605041421310_Cart-add-PartId.Designer.cs">
+      <DependentUpon>201605041421310_Cart-add-PartId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -306,6 +318,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604251455241_InitialCreate1.resx">
       <DependentUpon>201604251455241_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605040913186_Cart-Data-in-ISO-format.resx">
+      <DependentUpon>201605040913186_Cart-Data-in-ISO-format.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605040924100_Cart-DisplayNames.resx">
+      <DependentUpon>201605040924100_Cart-DisplayNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605041421310_Cart-add-PartId.resx">
+      <DependentUpon>201605041421310_Cart-add-PartId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
