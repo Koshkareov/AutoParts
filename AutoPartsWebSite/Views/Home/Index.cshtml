@@ -1,19 +1,25 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    int maxSearchItemCount = 1;
+}
+@if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+{
+    maxSearchItemCount = 100; //toDo: teake it from DB
 }
 <div class="jumbotron">
     <h2>Поиск запчастей</h2>
 
     <p>
-        @using (Html.BeginForm("SearchPart", "Parts", FormMethod.Post))
+        @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
         {
         <p>
-            @Html.TextBox("autopartNumber")
+            @Html.TextArea("autopartNumbers", new { rows = 10, columns = 60 })
+            @Html.Hidden("maxItemCount", maxSearchItemCount)
             <input type="submit" value="Поиск" />
         </p>
         }
-        @*<p>
-                @Html.ActionLink("Экспорт результатов в Excel", "Excel")
-            </p>*@
+        <p>
+            @Html.ActionLink("Экспорт результатов в Excel", "Excel")
         </p>
+
     </div>

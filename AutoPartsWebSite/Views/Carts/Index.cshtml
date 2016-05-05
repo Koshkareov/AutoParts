@@ -134,10 +134,12 @@
             <td></td>
             <td></td>            
             <td>
-                Всего деталей: @ViewBag.CartCount              
+                @*Всего деталей: @ViewBag.CartCount*@              
+                Всего деталей: @Model.Sum(x => x.Amount)
             </td>
             <td>
-                Общая сумма:  @ViewBag.CartTotal
+                @*Общая сумма:  @ViewBag.CartTotal*@
+                Общая сумма: @Model.Sum(x => x.Total) USD
             </td>
             <td></td>   
         </tr>

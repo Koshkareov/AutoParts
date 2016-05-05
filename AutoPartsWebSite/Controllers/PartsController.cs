@@ -131,17 +131,24 @@ namespace AutoPartsWebSite.Controllers
         }
 
         //[Authorize(Roles = "RegistredUser")]
-        public ActionResult SearchParts(string autopartNumbers)
+        public ActionResult SearchParts(string autopartNumbers, int? maxItemCount)
         {
             string[] autopartNumbersList = new string[] { };
             var autoparts = (from s in db.Parts
-                             select s).Take(100);
+                             select s).Take(0);
 
             if (!String.IsNullOrEmpty(autopartNumbers))
             {
                 // string txt = TextBox1.Text;
                 string[] delimiter = { Environment.NewLine }; //new Char[] { '\n', '\r' }
                 autopartNumbersList = autopartNumbers.Split(delimiter, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
+
+                var numbersList = new List<string>(autopartNumbersList);
+                if(maxItemCount < numbersList.Count)
+                {
+                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count()- (int)maxItemCount);
+                }                
+                autopartNumbersList = numbersList.ToArray();
 
                 //foreach (string autopartNumber in autopartNumbersList)
                 //{
@@ -174,9 +181,7 @@ namespace AutoPartsWebSite.Controllers
             string[] autopartNumbersList = (string[])Session["AutopartNumbersList"];
             var autoparts = (from s in db.Parts
                              where autopartNumbersList.Contains(s.Number)
-                             select s).Take(1000);
-
-
+                             select new { s.Id, s.Brand, s.Name, s.Details, s.Size, s.Weight, s.Quantity, s.Price, s.Supplier, s.DeliveryTime}).Take(1000);
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("AutoParts");

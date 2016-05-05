@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AutoPartsWebSite.Controllers
 {
+    [Authorize(Roles = "RegistredUser")]
     public class CartsController : Controller
     {
         private CartModel db = new CartModel();
@@ -47,7 +48,17 @@ namespace AutoPartsWebSite.Controllers
             return total ?? decimal.Zero;
         }
 
-        // GET: Carts
+        [Authorize(Roles = "RegistredUser")]
+        public PartialViewResult CartSummary()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var userCart = (from s in db.Carts
+                            select s).Take(1000);
+            userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
+            return PartialView(userCart.ToList());
+        }
+
+        // GET: Carts        
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
@@ -158,68 +169,146 @@ namespace AutoPartsWebSite.Controllers
             return RedirectToAction("Index");
         }
 
+        public void AddToCartItem(int PartId, int Amount)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var userCart = (from s in db.Carts
+                             select s).Take(1000);
+            userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
+
+            Part autopart = db.Parts.Find(PartId);
+            Cart cartpart = userCart.Where(s => s.PartId == PartId).FirstOrDefault();
+             if ((cartpart != null) && (autopart != null) && (Amount != 0))
+             {
+                        if (Convert.ToInt32(cartpart.Quantity) >= (cartpart.Amount + Amount))
+                        {
+                            cartpart.Amount = cartpart.Amount + Amount;
+                            if (ModelState.IsValid)
+                            {
+                                cartpart.Data = DateTime.Now;
+                                db.Entry(cartpart).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                        }
+             }
+             else
+             {
+                        if ((autopart != null) && (Amount != 0))
+                        {
+                            Cart cart = new Cart();
+                            cart.PartId = autopart.Id;
+                            cart.UserId = User.Identity.GetUserId();
+
+                            cart.Brand = autopart.Brand;
+                            cart.Number = autopart.Number;
+                            cart.Name = autopart.Name;
+                            cart.Details = autopart.Details;
+                            cart.Size = autopart.Size;
+                            cart.Weight = autopart.Weight;
+                            cart.Quantity = autopart.Quantity;
+                            cart.Supplier = autopart.Supplier;
+                            cart.Price = autopart.Price;
+                            cart.DeliveryTime = autopart.DeliveryTime;
+                            cart.Amount = Amount;
+                            cart.Data = DateTime.Now;
+
+
+                            if (ModelState.IsValid)
+                            {
+                                db.Carts.Add(cart);
+                                db.SaveChanges();
+                            }
+                        }
+             }
+        
+       }
+
+        //public RedirectToRouteResult AddToCart(int? PartId, int? Amount, string returnUrl)
+        //{            
+        //    if (PartId != null)
+        //    {
+        //        //var autoparts = (from s in db.Parts
+        //        //                 select s).Take(100);
+        //        //autoparts = autoparts.Where(s => s.Id.Equals(PartId)).Take(1);
+        //        Part autopart = db.Parts.Find(PartId); // (Part)autoparts;
+        //        Cart cartpart = db.Carts.Where(s => s.PartId == PartId).FirstOrDefault();
+        //        if ((cartpart != null) && (autopart != null) && (Amount != null) && (Amount != 0))
+        //        {
+        //            if (Convert.ToInt32(cartpart.Quantity) >= (cartpart.Amount + Amount))
+        //            {
+        //                cartpart.Amount = cartpart.Amount + Amount;
+        //                if (ModelState.IsValid)
+        //                {
+        //                    cartpart.Data = DateTime.Now;
+        //                    db.Entry(cartpart).State = EntityState.Modified;
+        //                    db.SaveChanges();
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if ((autopart != null) && (Amount != null) && (Amount != 0))
+        //            {
+        //                Cart cart = new Cart();
+        //                cart.PartId = autopart.Id;
+        //                cart.UserId = User.Identity.GetUserId();
+
+        //                cart.Brand = autopart.Brand;
+        //                cart.Number = autopart.Number;
+        //                cart.Name = autopart.Name;
+        //                cart.Details = autopart.Details;
+        //                cart.Size = autopart.Size;
+        //                cart.Weight = autopart.Weight;
+        //                cart.Quantity = autopart.Quantity;
+        //                cart.Supplier = autopart.Supplier;
+        //                cart.Price = autopart.Price;
+        //                cart.DeliveryTime = autopart.DeliveryTime;
+        //                cart.Amount = Amount;
+        //                cart.Data = DateTime.Now;
+
+
+        //                if (ModelState.IsValid)
+        //                {
+        //                    db.Carts.Add(cart);
+        //                    db.SaveChanges();
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return RedirectToAction("Index", new { returnUrl });
+
+        //}
         public RedirectToRouteResult AddToCart(int? PartId, int? Amount, string returnUrl)
         {
-            if (PartId != null)
+            if ((PartId != null)  && (Amount != null))
             {
-                //var autoparts = (from s in db.Parts
-                //                 select s).Take(100);
-                //autoparts = autoparts.Where(s => s.Id.Equals(PartId)).Take(1);
-                Part autopart = db.Parts.Find(PartId); // (Part)autoparts;
-                Cart cartpart = db.Carts.Where(s => s.PartId == PartId).FirstOrDefault();
-                if ((cartpart != null) && (autopart != null) && (Amount != null) && (Amount != 0))
-                {
-                    if (Convert.ToInt32(cartpart.Quantity) >= (cartpart.Amount + Amount))
-                    {
-                        cartpart.Amount = cartpart.Amount + Amount;
-                        if (ModelState.IsValid)
-                        {
-                            cartpart.Data = DateTime.Now;
-                            db.Entry(cartpart).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
-                    }
-                }
-                else
-                {
-                    if ((autopart != null) && (Amount != null) && (Amount != 0))
-                    {
-                        Cart cart = new Cart();
-                        cart.PartId = autopart.Id;
-                        cart.UserId = User.Identity.GetUserId();
-
-                        cart.Brand = autopart.Brand;
-                        cart.Number = autopart.Number;
-                        cart.Name = autopart.Name;
-                        cart.Details = autopart.Details;
-                        cart.Size = autopart.Size;
-                        cart.Weight = autopart.Weight;
-                        cart.Quantity = autopart.Quantity;
-                        cart.Supplier = autopart.Supplier;
-                        cart.Price = autopart.Price;
-                        cart.DeliveryTime = autopart.DeliveryTime;
-                        cart.Amount = Amount;
-                        cart.Data = DateTime.Now;
-
-
-                        if (ModelState.IsValid)
-                        {
-                            db.Carts.Add(cart);
-                            db.SaveChanges();
-                        }
-                    }
-                }
+                AddToCartItem((int)PartId, (int)Amount);
             }
             return RedirectToAction("Index", new { returnUrl });
 
-            //Game game = repository.Games
-            //    .FirstOrDefault(g => g.GameId == gameId);
+        }
+                
+        public RedirectToRouteResult AddToCartMulti(FormCollection form, string returnUrl)
+        {
 
-            //if (game != null)
-            //{
-            //    GetCart().AddItem(game, 1);
-            //}
-            //return RedirectToAction("Index", new { returnUrl });
+            int PartId;
+            int Amount;
+            List<int> listValues = new List<int>();
+            foreach (string key in Request.Form.AllKeys)
+            {
+                if (key.StartsWith("Amount"))
+                {
+                    PartId = Convert.ToInt32(key.Remove(0, 6));
+                    Amount = Convert.ToInt32(Request.Form[key]);
+                    if(Amount != 0) 
+                    {
+                        AddToCartItem(PartId, Amount);
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", new { returnUrl });
+
         }
 
         protected override void Dispose(bool disposing)

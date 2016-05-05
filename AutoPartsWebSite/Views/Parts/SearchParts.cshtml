@@ -2,17 +2,24 @@
 
 
 @{
-    ViewBag.Title = "Мульти-поиск запчастей";
+    ViewBag.Title = "Поиск запчастей";
+    int maxSearchItemCount = 1;
+}
+
+@if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+{
+    maxSearchItemCount = 100; //toDo: teake it from DB
 }
 
 <div class="jumbotron">
-    <h2>Мульти-поиск запчастей</h2>
+    <h2>Поиск запчастей</h2>
 
     <p>
         @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
         {
         <p>
             @Html.TextArea("autopartNumbers", new { rows = 10, columns = 60 })
+            @Html.Hidden("maxItemCount", maxSearchItemCount)            
             <input type="submit" value="Поиск" />
         </p>
         }
@@ -65,7 +72,10 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+@using (Html.BeginForm("AddToCartMulti", "Carts"))
+{
+
+    foreach (var item in Model)
     {
         <tr>
             @*<td>
@@ -101,19 +111,23 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DeliveryTime)
             </td>
-            <td>
+
+            <td>             
+                @Html.TextBox("Amount" + item.Id, "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })                
+            </td>
+
+            @*<td>*@
                 @*<input type="number" name="quantity" min="1" max="5">*@                
                 @*@Html.TextBoxFor(modelItem => item.Number, "0", new { id = item.Id,  type= "number", min="0",max = item.Quantity })*@
                 @*ToDo: Set and read values and id via script
                 http://www.dotnet-tricks.com/Tutorial/mvc/K18L190813-How-to-get-textboxes-values-in-MVC4-created-by-jQuery.html*@
-                
-            </td>
+           @*</td>*@
             
-                @using (Html.BeginForm("AddToCart", "Carts"))
+                @*@using (Html.BeginForm("AddToCart", "Carts"))
                 {
                     <td>
                         <div class="pull-right">
-                            @Html.TextBox("Amount", "0", new { type = "number", min = "0", max = item.Quantity })
+                            @Html.TextBox("Amount", "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })
                         </div>
                     </td>
                     <td>
@@ -124,7 +138,7 @@
                         </div>
                     </td>
                     
-                }
+                }*@
             
 
             @*<td>
@@ -134,5 +148,10 @@
                 </td>*@
         </tr>
     }
+    <div class="pull-right">
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+    </div>
+}
 
 </table>

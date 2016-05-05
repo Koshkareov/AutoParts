@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - AUTOPARTS</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @{     
-        string cartText = "Корзина(" + ViewBag.CartCount + ")";
-    }
+    @Scripts.Render("~/bundles/modernizr")    
 
 </head>
 <body>
@@ -26,20 +23,21 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin")) {
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>                                       
+                </ul> 
+                @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+                    {                       
+                        <li>@Html.Action("CartSummary", "Carts")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
                         <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>
                     }
-                    @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
-                    {
-                        <li>@Html.ActionLink("Мульти-поиск", "SearchParts", "Parts")</li>
-                        <li>@Html.ActionLink(cartText, "Index", "Carts")</li>
-                       
-                    }
                 </ul>
-                @Html.Partial("_LoginPartial")
+
             </div>
         </div>
     </div>

@@ -1,0 +1,11 @@
+﻿
+@model IEnumerable<AutoPartsWebSite.Models.Cart>
+
+<div class="help-block">
+    @Html.ActionLink("Корзина", "Index", "Carts")<br>
+    (
+    @*Деталей - @Model.Sum(x => x.Amount)
+        ,*@
+    @Model.Sum(x => x.Total) USD
+    )
+</div>
