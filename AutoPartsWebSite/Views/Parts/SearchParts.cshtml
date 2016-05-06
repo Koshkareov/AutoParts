@@ -4,11 +4,13 @@
 @{
     ViewBag.Title = "Поиск запчастей";
     int maxSearchItemCount = 1;
+    int maxSearchRowsCount = 1;
 }
 
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
     maxSearchItemCount = 100; //toDo: teake it from DB
+    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
 }
 
 <div class="jumbotron">
@@ -18,15 +20,11 @@
         @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
         {
         <p>
-            @Html.TextArea("autopartNumbers", new { rows = 10, columns = 60 })
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })
             @Html.Hidden("maxItemCount", maxSearchItemCount)            
             <input type="submit" value="Поиск" />
         </p>
-        }
-        <p>
-            @Html.ActionLink("Экспорт результатов в Excel", "Excel")
-        </p>
-       
+        }       
     </div>
 
 @*<p>
@@ -148,10 +146,16 @@
                 </td>*@
         </tr>
     }
+    if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+    {
     <div class="pull-right">
         @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
         <input type="submit" class="btn btn-success" value="Добавить в корзину" />
     </div>
-}
+    }
+ }
 
 </table>
+<p>
+    @Html.ActionLink("Экспорт результатов в Excel", "Excel")
+</p>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - AUTOPARTS</title>
+    <title>@ViewBag.Title - ALFA PARTS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")    
 
@@ -17,15 +17,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("AUTOPARTS", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("ALFA PARTS", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>                                       
+                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>                                       
                 </ul> 
+                
+                
                 @Html.Partial("_LoginPartial")
+
                 <ul class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
                     {                       
@@ -33,8 +36,21 @@
                     }
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   href="#">
+                                    Админ
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- links -->
+                                    <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
+                                    <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>
+                                </ul>
+                            </li>
+                        </ul>
                     }
                 </ul>
 
@@ -45,7 +61,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - AUTOPARTS</p>
+            <p>&copy; @DateTime.Now.Year - ALFA PARTS TRADING FZE.</p>
         </footer>
     </div>
 

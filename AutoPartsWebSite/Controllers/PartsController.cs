@@ -184,14 +184,14 @@ namespace AutoPartsWebSite.Controllers
                              select new { s.Id, s.Brand, s.Name, s.Details, s.Size, s.Weight, s.Quantity, s.Price, s.Supplier, s.DeliveryTime}).Take(1000);
             using (ExcelPackage pck = new ExcelPackage())
             {
-                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("AutoParts");
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("ALFAPARTS-SearchResult");
                 ws.Cells["A1"].LoadFromCollection(autoparts, true);
                 // Загружаю коллекцию  "autoparts"
                 // ToDo: еще нужно будет добавить русские хидеры
                 Byte[] fileBytes = pck.GetAsByteArray();
                 Response.Clear();
                 Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment;filename=AutoParts.xlsx");
+                Response.AddHeader("content-disposition", "attachment;filename=ALFAPARTS.xlsx");
                 // Заменяю имя выходного Эксель файла
 
                 Response.Charset = "";
