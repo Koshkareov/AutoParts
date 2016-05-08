@@ -116,13 +116,21 @@ namespace IdentityAutoPart.Models
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@example.com";
             const string password = "Admin@123456";
-            const string roleName = "Admin";
+            const string roleName = "Admin";           
 
             //Create Role Admin if it does not exist
             var role = roleManager.FindByName(roleName);
             if (role == null) {
                 role = new IdentityRole(roleName);
                 var roleresult = roleManager.Create(role);
+            }
+
+            //Create Role RegistredUser if it does not exist
+            var roleRegistredUser = roleManager.FindByName("RegistredUser");
+            if (roleRegistredUser == null)
+            {
+                roleRegistredUser = new IdentityRole("RegistredUser");
+                var roleresult = roleManager.Create(roleRegistredUser);
             }
 
             var user = userManager.FindByName(name);

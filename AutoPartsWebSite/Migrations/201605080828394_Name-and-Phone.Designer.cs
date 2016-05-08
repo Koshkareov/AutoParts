@@ -7,13 +7,13 @@ namespace AutoPartsWebSite.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class CartDatainISOformat : IMigrationMetadata
+    public sealed partial class NameandPhone : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CartDatainISOformat));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NameandPhone));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605040913186_Cart-Data-in-ISO-format"; }
+            get { return "201605080828394_Name-and-Phone"; }
         }
         
         string IMigrationMetadata.Source

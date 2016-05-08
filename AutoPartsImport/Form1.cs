@@ -36,7 +36,7 @@ namespace AutoPartsImport
             }
         }
 
-        private static void LoadFileData(string fileName)
+        private void LoadFileData(string fileName)
         {
             Dictionary<string, string> dic = PartsInfo.PartDic();
             
@@ -69,7 +69,9 @@ namespace AutoPartsImport
                     dicPart.Add("Quantity", Convert.ToString(worksheet.Cells[dic["Quantity"] + i.ToString()].Value));   //  Quantity = 10
                     dicPart.Add("Price", Convert.ToString(worksheet.Cells[dic["Price"] + i.ToString()].Value));   //  Price = 8
                     dicPart.Add("Supplier", Convert.ToString(worksheet.Cells[dic["Supplier"] + i.ToString()].Value));   //  Supplier = 7
-                    dicPart.Add("DeliveryTime", Convert.ToString(worksheet.Cells[dic["DeliveryTime"] + i.ToString()].Value));   //  DeliveryTime
+                    dicPart.Add("DeliveryTime", Convert.ToString(numericUpDownDeliveryTime.Value)); //Convert.ToString(worksheet.Cells[dic["DeliveryTime"] + i.ToString()].Value));   //  DeliveryTime
+                    // dicPart.Add("DeliveryTime", Convert.ToString(worksheet.Cells[dic["DeliveryTime"] + i.ToString()].Value));   //  DeliveryTime
+                    // dicPart.Add("DeliveryTime", "5"); 
 
                     Console.WriteLine(i + " from " + worksheet.Dimension.End.Row);
                     AddPartData(ref dicPart);
@@ -121,6 +123,16 @@ namespace AutoPartsImport
         private void buttonImport_Click(object sender, EventArgs e)
         {
             LoadFileData(openImportFileDialog.FileName);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
