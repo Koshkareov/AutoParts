@@ -1,24 +1,24 @@
 ﻿@model IdentityAutoPart.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage your account";
+    ViewBag.Title = "Мои настройки";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
     <div class="col-md-8">
         <p>
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("Изменить пароль", "ChangePassword", "Manage")
             }
             else
             {
-                @Html.ActionLink("Pick a password", "SetPassword")
+                @Html.ActionLink("Выберите пароль", "SetPassword", "Manage")
             }
         </p>
-        <p>
-            Phone Number: @(Model.PhoneNumber ?? "None") [
+        @*<p>
+            Phone Number: @(Model..PhoneNumber ?? "None") [
             @if (Model.PhoneNumber != null)
             {
                 @Html.ActionLink("Change", "AddPhoneNumber")
@@ -70,6 +70,6 @@
                     <input type="submit" value="Remember Browser" class="btn btn-default"/>
                 </p>
             </form>
-        }
+        }*@
     </div>
 </div>

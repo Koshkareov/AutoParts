@@ -90,7 +90,22 @@ namespace IdentityAutoPart.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = userViewModel.Email,
+                    Email = userViewModel.Email,
+                    // Add the custom fields Info here:
+                    FirstName = userViewModel.FirstName,
+                    LastName = userViewModel.LastName,
+                    Phone = userViewModel.Phone
+
+            };
+
+                // Add the custom fields Info here:
+                user.FirstName = userViewModel.FirstName;
+                user.LastName = userViewModel.LastName;
+                user.Phone = userViewModel.Phone;
+
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
@@ -140,7 +155,12 @@ namespace IdentityAutoPart.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
-                RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                // Include the Addresss info:
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone,
+
+            RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,
@@ -153,7 +173,9 @@ namespace IdentityAutoPart.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include =
+            "Email,Id,FirstName,LastName,Phone")]
+            EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -165,6 +187,10 @@ namespace IdentityAutoPart.Controllers
 
                 user.UserName = editUser.Email;
                 user.Email = editUser.Email;
+                //edit additional User properties
+                user.FirstName = editUser.FirstName;
+                user.LastName = editUser.LastName;
+                user.Phone = editUser.Phone;
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 
@@ -186,7 +212,7 @@ namespace IdentityAutoPart.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError("", "Something failed.");
+            ModelState.AddModelError("", "Что-то пошло не так.");
             return View();
         }
 

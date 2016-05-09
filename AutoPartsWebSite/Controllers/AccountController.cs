@@ -150,6 +150,12 @@ namespace IdentityAutoPart.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                //add additional User properties
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Phone = model.Phone;
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

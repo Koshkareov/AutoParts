@@ -28,6 +28,7 @@ namespace IdentityAutoPart.Models
         public string Phone { get; set; }
 
         // Concatenate FirstName and LastName info for display in tables and such:
+        [Display(Name = "Имя")]
         public string FullName
         {
             get

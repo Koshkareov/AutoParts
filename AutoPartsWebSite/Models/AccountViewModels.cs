@@ -76,6 +76,15 @@ namespace IdentityAutoPart.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Новый пароль и подтверждение пароля не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Номер телефона")]
+        public string Phone { get; set; }
     }
 
     public class ResetPasswordViewModel

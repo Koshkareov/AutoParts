@@ -1,13 +1,13 @@
 ﻿@model IdentityAutoPart.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Просмотр";
 }
 
-<h2>Details.</h2>
+<h2>Просмотр</h2>
 
 <div>
-    <h4>User</h4>
+    <h4>Данные пользователя.</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,13 +16,31 @@
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
     </dl>
 </div>
-<h4>List of roles for this user</h4>
+<h4>Список ролей этого пользователя</h4>
 @if (ViewBag.RoleNames.Count == 0)
 {
     <hr />
-    <p>No roles found for this user.</p>
+    <p>У этого пользователя нет ролей.</p>
 }
 
 <table class="table">
@@ -37,8 +55,8 @@
     }
 </table>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Вернутся к списку", "Index")
 </p>
 
 

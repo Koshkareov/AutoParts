@@ -21,6 +21,15 @@ namespace IdentityAutoPart.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Номер телефона")]
+        public string Phone { get; set; }
+
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }
 }
