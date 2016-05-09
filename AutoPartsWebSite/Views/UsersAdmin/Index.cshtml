@@ -21,6 +21,12 @@
             @Html.DisplayNameFor(model => model.Phone)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.MoneyLimit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SearchLimit)
+        </th>
+        <th>
 
         </th>
     </tr>
@@ -36,6 +42,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoneyLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SearchLimit)
             </td>
             <td>
                 @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |

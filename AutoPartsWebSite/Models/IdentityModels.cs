@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -42,6 +43,14 @@ namespace IdentityAutoPart.Models
                     .Format("{0} {1}", dspFirstName, dspLastName);
             }
         }
+
+        [Display(Name = "Лимит")]
+        public int MoneyLimit { get; set; }
+
+        [Display(Name = "Поиск позиций")]
+        public int SearchLimit { get; set; }
+
+
 
     }
 

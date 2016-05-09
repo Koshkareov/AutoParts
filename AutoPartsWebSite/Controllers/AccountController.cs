@@ -155,6 +155,8 @@ namespace IdentityAutoPart.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Phone = model.Phone;
+                user.MoneyLimit = 0;
+                user.SearchLimit = 1;
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

@@ -97,14 +97,18 @@ namespace IdentityAutoPart.Controllers
                     // Add the custom fields Info here:
                     FirstName = userViewModel.FirstName,
                     LastName = userViewModel.LastName,
-                    Phone = userViewModel.Phone
+                    Phone = userViewModel.Phone,
+                    MoneyLimit = userViewModel.MoneyLimit,
+                    SearchLimit = userViewModel.SearchLimit
 
-            };
+                };
 
                 // Add the custom fields Info here:
                 user.FirstName = userViewModel.FirstName;
                 user.LastName = userViewModel.LastName;
                 user.Phone = userViewModel.Phone;
+                user.MoneyLimit = userViewModel.MoneyLimit;
+                user.SearchLimit = userViewModel.SearchLimit;
 
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
@@ -159,6 +163,8 @@ namespace IdentityAutoPart.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
+                MoneyLimit = user.MoneyLimit,
+                SearchLimit = user.SearchLimit,
 
             RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
@@ -174,7 +180,7 @@ namespace IdentityAutoPart.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include =
-            "Email,Id,FirstName,LastName,Phone")]
+            "Email,Id,FirstName,LastName,Phone,MoneyLimit,SearchLimit")]
             EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
@@ -191,6 +197,8 @@ namespace IdentityAutoPart.Controllers
                 user.FirstName = editUser.FirstName;
                 user.LastName = editUser.LastName;
                 user.Phone = editUser.Phone;
+                user.MoneyLimit = editUser.MoneyLimit;
+                user.SearchLimit = editUser.SearchLimit;
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 

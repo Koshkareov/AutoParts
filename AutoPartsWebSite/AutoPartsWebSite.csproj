@@ -289,6 +289,10 @@
     <Compile Include="Migrations\201605080828394_Name-and-Phone.Designer.cs">
       <DependentUpon>201605080828394_Name-and-Phone.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .cs" />
+    <Compile Include="Migrations\201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .Designer.cs">
+      <DependentUpon>201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -307,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605080828394_Name-and-Phone.resx">
       <DependentUpon>201605080828394_Name-and-Phone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .resx">
+      <DependentUpon>201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

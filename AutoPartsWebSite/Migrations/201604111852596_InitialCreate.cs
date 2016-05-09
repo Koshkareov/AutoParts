@@ -57,13 +57,25 @@ namespace AutoPartsWebSite.Migrations
                     Data = c.DateTime(),
                 })
                 .PrimaryKey(t => t.Id);
+
+            AddColumn("dbo.AspNetUsers", "FirstName", c => c.String());
+            AddColumn("dbo.AspNetUsers", "LastName", c => c.String());
+            AddColumn("dbo.AspNetUsers", "Phone", c => c.String());
+            AddColumn("dbo.AspNetUsers", "MoneyLimit", c => c.Int(nullable: false, defaultValue: 0, defaultValueSql: "0"));
+            AddColumn("dbo.AspNetUsers", "SearchLimit", c => c.Int(nullable: false, defaultValue: 1, defaultValueSql: "1"));
         }
-        
+
         public override void Down()
         {
             DropTable("dbo.Part");
             DropTable("dbo.Import");
             DropTable("dbo.Cart");
+
+            DropColumn("dbo.AspNetUsers", "FirstName");
+            DropColumn("dbo.AspNetUsers", "LastName");
+            DropColumn("dbo.AspNetUsers", "Phone");
+            DropColumn("dbo.AspNetUsers", "MoneyLimit");
+            DropColumn("dbo.AspNetUsers", "SearchLimit");
         }
     }
 }

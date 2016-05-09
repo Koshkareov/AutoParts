@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IdentityAutoPart.Models
 {
@@ -85,6 +86,12 @@ namespace IdentityAutoPart.Models
 
         [Display(Name = "Номер телефона")]
         public string Phone { get; set; }
+
+        [Display(Name = "Лимит")]
+        public int MoneyLimit { get; set; }
+
+        [Display(Name = "Поиск позиций")]
+        public int SearchLimit { get; set; }
     }
 
     public class ResetPasswordViewModel
