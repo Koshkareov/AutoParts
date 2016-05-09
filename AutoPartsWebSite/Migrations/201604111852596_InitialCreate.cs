@@ -58,6 +58,17 @@ namespace AutoPartsWebSite.Migrations
                 })
                 .PrimaryKey(t => t.Id);
 
+            CreateTable(
+                "dbo.Payment",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    UserId = c.String(nullable: false),
+                    Data = c.DateTime(),
+                    Amount = c.Int(),                    
+                })
+                .PrimaryKey(t => t.Id);
+
             AddColumn("dbo.AspNetUsers", "FirstName", c => c.String());
             AddColumn("dbo.AspNetUsers", "LastName", c => c.String());
             AddColumn("dbo.AspNetUsers", "Phone", c => c.String());
@@ -70,6 +81,7 @@ namespace AutoPartsWebSite.Migrations
             DropTable("dbo.Part");
             DropTable("dbo.Import");
             DropTable("dbo.Cart");
+            DropTable("dbo.Payment");
 
             DropColumn("dbo.AspNetUsers", "FirstName");
             DropColumn("dbo.AspNetUsers", "LastName");
