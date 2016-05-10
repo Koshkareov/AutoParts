@@ -1,4 +1,4 @@
-namespace AutoPartsWebSite.Models
+﻿namespace AutoPartsWebSite.Models
 {
     using System;
     using System.Data.Entity;

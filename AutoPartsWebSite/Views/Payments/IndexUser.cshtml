@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AutoPartsWebSite.Models.Payment>
+
+@{
+    ViewBag.Title = "Платежи";
+}
+
+<h2>Платежи  @ViewBag.UserName</h2>
+
+<p>
+    @Html.ActionLink("Новый платеж", "Create", new { UserId = ViewBag.UserId })
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
+            @*@Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |*@
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+<p>
+    @Html.ActionLink("Вернуться к списку пользователей", "Index", "UsersAdmin")
+</p>
+

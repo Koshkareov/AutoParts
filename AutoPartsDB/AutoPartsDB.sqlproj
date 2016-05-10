@@ -60,9 +60,6 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Part.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <RefactorLog Include="AutoPartsDB.refactorlog" />
   </ItemGroup>
 </Project>

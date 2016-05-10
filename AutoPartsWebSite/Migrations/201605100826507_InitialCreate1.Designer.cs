@@ -7,18 +7,18 @@ namespace AutoPartsWebSite.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddMoneyLimitandSearchLimitfieldsintoIdentityModel : IMigrationMetadata
+    public sealed partial class InitialCreate1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddMoneyLimitandSearchLimitfieldsintoIdentityModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel "; }
+            get { return "201605100826507_InitialCreate1"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target

@@ -10,6 +10,7 @@ namespace AutoPartsWebSite.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationDataLossAllowed = false;
             ContextKey = "AutoPartsWebSite.Models.PartModel";
         }
 

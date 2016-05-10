@@ -1,4 +1,4 @@
-namespace AutoPartsWebSite.Models
+Ôªønamespace AutoPartsWebSite.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,10 +18,10 @@ namespace AutoPartsWebSite.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "ƒ‡Ú‡")]
+        [Display(Name = "–î–∞—Ç–∞")]
         public DateTime? Data { get; set; }
 
-        [Display(Name = "œÎ‡ÚÂÊ")]
+        [Display(Name = "–°—É–º–º–∞")]
         public int? Amount { get; set; }
 
         //public virtual ICollection<Microsoft.AspNet.Identity.IUser> User { get; set; }

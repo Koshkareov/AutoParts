@@ -194,6 +194,12 @@
     <Content Include="Views\Carts\Edit.cshtml" />
     <Content Include="Views\Carts\Index.cshtml" />
     <Content Include="Views\Carts\CartSummary.cshtml" />
+    <Content Include="Views\Payments\Create.cshtml" />
+    <Content Include="Views\Payments\Delete.cshtml" />
+    <Content Include="Views\Payments\Details.cshtml" />
+    <Content Include="Views\Payments\Edit.cshtml" />
+    <Content Include="Views\Payments\Index.cshtml" />
+    <Content Include="Views\Payments\IndexUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -276,26 +282,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604111852596_InitialCreate.cs" />
-    <Compile Include="Migrations\201604111852596_InitialCreate.Designer.cs">
-      <DependentUpon>201604111852596_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201605100826507_InitialCreate1.cs" />
+    <Compile Include="Migrations\201605100826507_InitialCreate1.Designer.cs">
+      <DependentUpon>201605100826507_InitialCreate1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605080828394_Name-and-Phone.cs" />
-    <Compile Include="Migrations\201605080828394_Name-and-Phone.Designer.cs">
-      <DependentUpon>201605080828394_Name-and-Phone.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .cs" />
-    <Compile Include="Migrations\201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .Designer.cs">
-      <DependentUpon>201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605091843337_201604111852596_InitialCreate.cs" />
-    <Compile Include="Migrations\201605091843337_201604111852596_InitialCreate.Designer.cs">
-      <DependentUpon>201605091843337_201604111852596_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\InitialCreate.cs" />
+    <Compile Include="Migrations\InitialCreate.Designer.cs">
+      <DependentUpon>InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -312,17 +311,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604111852596_InitialCreate.resx">
-      <DependentUpon>201604111852596_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605100826507_InitialCreate1.resx">
+      <DependentUpon>201605100826507_InitialCreate1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605080828394_Name-and-Phone.resx">
-      <DependentUpon>201605080828394_Name-and-Phone.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .resx">
-      <DependentUpon>201605091209256_Add MoneyLimit and SearchLimit fields into IdentityModel .cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605091843337_201604111852596_InitialCreate.resx">
-      <DependentUpon>201605091843337_201604111852596_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\InitialCreate.resx">
+      <DependentUpon>InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

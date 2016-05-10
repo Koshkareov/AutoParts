@@ -49,10 +49,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SearchLimit)
             </td>
-            <td>
+            <td>                
                 @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Просмотр", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id }) |
+                @using (Html.BeginForm("IndexUser", "Payments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("id", item.Id)
+                    @*@Html.Hidden("returnUrl", Request.Url.PathAndQuery)*@
+                    <input type="submit" value="Платежи" class="btn btn-default" />
+                }
             </td>
         </tr>
     }
