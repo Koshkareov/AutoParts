@@ -160,6 +160,13 @@ namespace AutoPartsWebSite.Controllers
             return View(userPayment.ToList());
         }
 
+        public List<Payment> GetUserPayments(string id)
+        {
+            var userPayments = (from s in db.Payments
+                               select s).Take(1000);
+            userPayments = userPayments.Where(s => s.UserId.Equals(id));
+            return userPayments.ToList();
+        }
 
         protected override void Dispose(bool disposing)
         {

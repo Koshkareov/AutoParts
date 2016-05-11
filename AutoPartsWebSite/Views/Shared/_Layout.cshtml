@@ -24,6 +24,7 @@
                     <li>@Html.ActionLink("Поиск", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>                                       
+                    @*<li>@Html.Action("Заказы", "Index", "Orders")</li>*@
                 </ul> 
                 
                 
@@ -31,8 +32,9 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
-                    {                       
+                    {                                            
                         <li>@Html.Action("CartSummary", "Carts")</li>
+                        <li>@Html.ActionLink("Заказы", "Index", "Orders")</li>
                     }
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {

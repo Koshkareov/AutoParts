@@ -8,9 +8,21 @@ using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
 using Microsoft.AspNet.Identity;
+using IdentityAutoPart.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AutoPartsWebSite.Controllers
 {
+    public class CartSummaryResult
+    {
+        public string Items { get; set; }
+        public string Cart { get; set; }
+        public string Limit { get; set; }
+        public string Payments { get; set; }
+        public string Orders { get; set; }
+        public string Balans { get; set; }
+    }
+
     [Authorize(Roles = "RegistredUser")]
     public class CartsController : Controller
     {
@@ -48,6 +60,72 @@ namespace AutoPartsWebSite.Controllers
             return total ?? decimal.Zero;
         }
 
+        public decimal GetUserLimit()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUserManager UserManager = HttpContext.GetOwinContext()
+                                           .GetUserManager<ApplicationUserManager>();
+            var user = UserManager.FindById(currentUserId);
+            if (user == null)
+            {
+                return 0;
+            }
+            return user.MoneyLimit;
+        }
+
+        public decimal GetUserPayments()
+        {
+            string currentUserId = User.Identity.GetUserId();            
+            AutoPartsWebSite.Controllers.PaymentsController PaymentsCtrl = new PaymentsController();
+            return Convert.ToDecimal(PaymentsCtrl.GetUserPayments(currentUserId).Sum(x => x.Amount));            
+        }
+
+        public decimal GetUserOrders()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            AutoPartsWebSite.Controllers.OrdersController OrdersCtrl = new OrdersController();
+            return Convert.ToDecimal(OrdersCtrl.GetUserOrders(currentUserId).Sum(x => x.Summary));
+        }
+
+        public decimal GetUserCart()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var userCart = (from s in db.Carts
+                            select s).Take(1000);
+            userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
+            return Convert.ToDecimal(userCart.ToList().Sum(x => x.Total));
+        }
+
+        public decimal GetUserBalans()
+        {
+            return GetUserPayments() + GetUserLimit() - GetUserOrders();
+        }
+
+        public bool PositiveUserBalans()
+        {
+            if ((GetUserPayments() + GetUserLimit() - GetUserOrders()) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool PositiveUserCartBalans()
+        {
+            if ((GetUserPayments() + GetUserLimit() - GetUserOrders() - GetUserCart()) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         [Authorize(Roles = "RegistredUser")]
         public PartialViewResult CartSummary()
         {
@@ -55,7 +133,15 @@ namespace AutoPartsWebSite.Controllers
             var userCart = (from s in db.Carts
                             select s).Take(1000);
             userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
-            return PartialView(userCart.ToList());
+            //userCart.ToList().Sum(x => x.Total).ToString()
+            CartSummaryResult resModel = new CartSummaryResult { Items = Convert.ToDecimal(userCart.ToList().Sum(x => x.Amount)).ToString("N"),
+                                            Cart = Convert.ToDecimal(userCart.ToList().Sum(x => x.Total)).ToString("N"),
+                                            Limit = GetUserLimit().ToString("N"),
+                                            Payments = GetUserPayments().ToString("N"),
+                                            Orders = GetUserOrders().ToString("N"),
+                                            Balans = GetUserBalans().ToString("N") };
+
+            return PartialView(resModel);
         }
 
         // GET: Carts        
@@ -309,6 +395,19 @@ namespace AutoPartsWebSite.Controllers
 
             return RedirectToAction("Index", new { returnUrl });
 
+        }
+
+
+        public ActionResult AddNewOrder()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var userCart = (from s in db.Carts
+                            select s).Take(1000);
+            userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
+
+            TempData["NewOrder"] = userCart.ToList();
+
+            return RedirectToAction("Index", "Orders");
         }
 
         protected override void Dispose(bool disposing)

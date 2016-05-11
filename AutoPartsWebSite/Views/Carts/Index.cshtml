@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.Cart>
 
 @{
-    ViewBag.Title = "Корзина"; 
+    ViewBag.Title = "Корзина";
 }
 
 <h2>Корзина</h2>
@@ -139,9 +139,19 @@
             </td>
             <td>
                 @*Общая сумма:  @ViewBag.CartTotal*@
-                Общая сумма: @Model.Sum(x => x.Total) USD
+                Общая сумма: 
+                @{  decimal cartSum = Convert.ToDecimal(Model.Sum(x => x.Total));} 
+                @cartSum.ToString("N")
+                USD
             </td>
-            <td></td>   
+            <td>
+                @if (((AutoPartsWebSite.Controllers.CartsController)this.ViewContext.Controller).PositiveUserCartBalans())
+                {
+                    @Html.ActionLink("Заказать", "AddNewOrder", routeValues: null, htmlAttributes: new { @class = "btn btn-success" })
+                }
+                
+
+            </td>   
         </tr>
     </tfoot>
 

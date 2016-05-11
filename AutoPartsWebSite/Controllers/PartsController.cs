@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
 using System.IO;
+using Microsoft.AspNet.Identity;
+using IdentityAutoPart.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -134,6 +137,7 @@ namespace AutoPartsWebSite.Controllers
         public ActionResult SearchParts(string autopartNumbers, int? maxItemCount)
         {
             string[] autopartNumbersList = new string[] { };
+            maxItemCount = GetSearchLimit(); // get info from db
             var autoparts = (from s in db.Parts
                              select s).Take(0);
 
@@ -202,6 +206,19 @@ namespace AutoPartsWebSite.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public int GetSearchLimit()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUserManager UserManager = HttpContext.GetOwinContext()
+                                           .GetUserManager<ApplicationUserManager>();
+            var user = UserManager.FindById(currentUserId);
+            if (user == null)
+            {
+                return 1;
+            }
+            return user.SearchLimit;
         }
 
         protected override void Dispose(bool disposing)
