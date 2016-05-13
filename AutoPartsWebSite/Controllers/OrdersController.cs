@@ -17,6 +17,7 @@ namespace AutoPartsWebSite.Controllers
     public class OrdersController : Controller
     {
         private OrderModel db = new OrderModel();
+        private CartModel cartdb = new CartModel();
 
         // GET: Orders
         public ActionResult Index()
@@ -44,6 +45,8 @@ namespace AutoPartsWebSite.Controllers
             {
                 return HttpNotFound();
             }
+           // TempData["Order"] = id;
+            // return RedirectToAction("Index", "OrderItems");
             return View(order);
         }
 
@@ -133,6 +136,61 @@ namespace AutoPartsWebSite.Controllers
                                select s).Take(1000);
             userOrders = userOrders.Where(s => s.UserId.Equals(id));
             return userOrders.ToList();
+        }
+
+       public ActionResult CreateUserOrder()
+        {
+            string currentUserId = User.Identity.GetUserId();            
+            var userCart = (from s in cartdb.Carts
+                            select s).Take(1000);
+            userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
+            var orderItems = new List<OrderItem> { };
+
+            Order order = new Order();
+            order.UserId = currentUserId;            
+            order.Data = DateTime.Now;
+            order.State = 1; // new added Order           
+            db.Orders.Add(order);
+
+            foreach (Cart cartItem in userCart)
+            {
+                var orderItem = new OrderItem
+                {
+                    PartId = cartItem.PartId,
+                    UserId = cartItem.UserId,
+                    Brand = cartItem.Brand,
+                    Number = cartItem.Number,
+                    Name = cartItem.Name,
+                    Details = cartItem.Details,
+                    Size = cartItem.Size,
+                    Weight = cartItem.Weight,
+                    Quantity = cartItem.Quantity,
+                    Price = cartItem.Price,
+                    Supplier = cartItem.Supplier,
+                    DeliveryTime = cartItem.DeliveryTime,
+                    Amount = cartItem.Amount,
+                    Data = cartItem.Data,
+                    State = 1, // new added orderItem
+                    OrderId = order.Id
+                };
+                //db.OrderItems.Add(orderItem);
+                orderItems.Add(orderItem);
+            }
+            orderItems.ForEach(s => db.OrderItems.Add(s));
+
+            order.Summary = orderItems.Sum(x => x.Total);
+            // order.State = orderItems.Count();
+
+            if (ModelState.IsValid)
+            {                
+                db.SaveChanges();
+                db.SaveChanges();
+                // ToDo: Clear user Cart
+
+                return RedirectToAction("Index");
+            }
+
+            return View(order);
         }
 
         protected override void Dispose(bool disposing)

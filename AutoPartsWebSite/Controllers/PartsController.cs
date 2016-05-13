@@ -137,7 +137,7 @@ namespace AutoPartsWebSite.Controllers
         public ActionResult SearchParts(string autopartNumbers, int? maxItemCount)
         {
             string[] autopartNumbersList = new string[] { };
-            maxItemCount = GetSearchLimit(); // get info from db
+            maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
             var autoparts = (from s in db.Parts
                              select s).Take(0);
 
@@ -148,7 +148,12 @@ namespace AutoPartsWebSite.Controllers
                 autopartNumbersList = autopartNumbers.Split(delimiter, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
 
                 var numbersList = new List<string>(autopartNumbersList);
-                if(maxItemCount < numbersList.Count)
+
+                // two digits for search item message
+                ViewBag.SearchLimit = maxItemCount;
+                ViewBag.ItemsToSearch = numbersList.Count;
+
+                if (maxItemCount < numbersList.Count)
                 {
                     numbersList.RemoveRange((int)maxItemCount, numbersList.Count()- (int)maxItemCount);
                 }                
@@ -175,7 +180,7 @@ namespace AutoPartsWebSite.Controllers
 
             }
             //Session["AutopartsSearchResult"] = autoparts; //.ToList();
-            Session["AutopartNumbersList"] = autopartNumbersList;
+            Session["AutopartNumbersList"] = autopartNumbersList;            
             return View(autoparts);
         }
 

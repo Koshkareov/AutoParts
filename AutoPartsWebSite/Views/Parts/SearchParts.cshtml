@@ -9,8 +9,8 @@
 
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
-    maxSearchItemCount = 100; //toDo: teake it from DB
-    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
+    maxSearchItemCount = 1; //toDo: teake it from DB
+    maxSearchRowsCount = 1; //toDo: good to change it to maxSearchItemCount and add scroling
 }
 
 <div class="jumbotron">
@@ -25,7 +25,15 @@
             <input type="submit" value="Поиск" />
         </p>
         }       
+
+        @if (ViewBag.SearchLimit < ViewBag.ItemsToSearch)
+        {
+            <div>
+                Результат для поиска @ViewBag.SearchLimit позиций из @ViewBag.ItemsToSearch
+            </div>
+        }
     </div>
+
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -54,7 +62,7 @@
             @Html.DisplayName("Вес")
         </th>
         <th>
-            @Html.DisplayName("Наличие")
+            @Html.DisplayName("Срок поставки")
         </th>
         <th>
             @Html.DisplayName("Цена")
@@ -63,10 +71,10 @@
             @Html.DisplayName("Поставщик")
         </th>
         <th>
-            @Html.DisplayName("Срок поставки")
+            @Html.DisplayName("Количество")
         </th>
         <th>
-            @Html.DisplayName("Количество")
+            @Html.DisplayName("Наличие")
         </th>
     </tr>
 
@@ -98,7 +106,7 @@
                 @Html.DisplayFor(modelItem => item.Weight)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                @Html.DisplayFor(modelItem => item.DeliveryTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
@@ -107,7 +115,7 @@
                 @Html.DisplayFor(modelItem => item.Supplier)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeliveryTime)
+                @Html.DisplayFor(modelItem => item.Quantity)
             </td>
 
             <td>             

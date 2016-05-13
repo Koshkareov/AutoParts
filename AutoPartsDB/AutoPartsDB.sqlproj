@@ -62,4 +62,7 @@
   <ItemGroup>
     <RefactorLog Include="AutoPartsDB.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="AutoPartDB.sql" />
+  </ItemGroup>
 </Project>

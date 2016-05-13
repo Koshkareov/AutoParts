@@ -84,6 +84,7 @@ namespace IdentityAutoPart.Models
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Номер телефона")]
         public string Phone { get; set; }
 

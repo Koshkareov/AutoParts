@@ -64,7 +64,7 @@
     [Display(Name = "Статус")]
     public int State { get; set; }
 
-        [Display(Name = "Стоимость")]
+    [Display(Name = "Стоимость")]
     public decimal? Total { get { return Amount * (Convert.ToDecimal(Price)); } }
 
     public virtual Order Order { get; set; }

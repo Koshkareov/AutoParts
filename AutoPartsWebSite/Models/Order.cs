@@ -15,12 +15,13 @@
             OrderItems = new HashSet<OrderItem>();
         }
         [Key]
+
+        [Display(Name = "Номер")]
         public int Id { get; set; }
         
         [Required]
         public string UserId { get; set; }
-
-        [DataType(DataType.Currency)]        
+                
         [Column(TypeName = "money")]
         [Display(Name = "Сумма")]
         public decimal? Summary { get; set; }

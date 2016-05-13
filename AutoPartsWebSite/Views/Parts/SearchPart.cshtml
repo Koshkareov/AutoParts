@@ -43,7 +43,7 @@
                 @Html.DisplayName("Вес")
             </th>
             <th>
-                @Html.DisplayName("Наличие")
+                @Html.DisplayName("Срок поставки")
             </th>
             <th>
                 @Html.DisplayName("Цена")
@@ -52,7 +52,7 @@
                 @Html.DisplayName("Поставщик")
             </th>
             <th>
-                @Html.DisplayName("Срок поставки")
+                @Html.DisplayName("Наличие")
             </th>
             <th></th>
         </tr>
@@ -79,7 +79,7 @@
                     @Html.DisplayFor(modelItem => item.Weight)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                    @Html.DisplayFor(modelItem => item.DeliveryTime)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
@@ -88,7 +88,7 @@
                     @Html.DisplayFor(modelItem => item.Supplier)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DeliveryTime)
+                    @Html.DisplayFor(modelItem => item.Quantity)
                 </td>                
             </tr>
         }

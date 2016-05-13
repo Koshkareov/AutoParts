@@ -405,9 +405,10 @@ namespace AutoPartsWebSite.Controllers
                             select s).Take(1000);
             userCart = userCart.Where(s => s.UserId.Equals(currentUserId));
 
-            TempData["NewOrder"] = userCart.ToList();
+            // TempData["Cart"] = userCart.ToList();
+            // Call CreatUserOrder action from Order controller
 
-            return RedirectToAction("Index", "Orders");
+            return RedirectToAction("CreateUserOrder", "Orders");
         }
 
         protected override void Dispose(bool disposing)
