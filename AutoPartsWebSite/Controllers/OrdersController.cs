@@ -174,9 +174,12 @@ namespace AutoPartsWebSite.Controllers
                     OrderId = order.Id
                 };
                 //db.OrderItems.Add(orderItem);
-                orderItems.Add(orderItem);
+                orderItems.Add(orderItem);                
             }
+            // add order items into DB
             orderItems.ForEach(s => db.OrderItems.Add(s));
+            // Clear user Cart
+            userCart.ToList().ForEach(s => cartdb.Carts.Remove(s));
 
             order.Summary = orderItems.Sum(x => x.Total);
             // order.State = orderItems.Count();
@@ -184,9 +187,7 @@ namespace AutoPartsWebSite.Controllers
             if (ModelState.IsValid)
             {                
                 db.SaveChanges();
-                db.SaveChanges();
-                // ToDo: Clear user Cart
-
+                cartdb.SaveChanges();
                 return RedirectToAction("Index");
             }
 
