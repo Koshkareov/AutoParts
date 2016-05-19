@@ -125,6 +125,14 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Runtime.Serialization" />
@@ -179,6 +187,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PagedList.css" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Parts\Create.cshtml" />
@@ -205,11 +214,11 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\OrderItems\Create.cshtml" />
-    <Content Include="Views\OrderItems\Delete.cshtml" />
-    <Content Include="Views\OrderItems\Details.cshtml" />
-    <Content Include="Views\OrderItems\Edit.cshtml" />
-    <Content Include="Views\OrderItems\Index.cshtml" />
+    <Content Include="Views\OrdersAdmin\Create.cshtml" />
+    <Content Include="Views\OrdersAdmin\Delete.cshtml" />
+    <Content Include="Views\OrdersAdmin\Details.cshtml" />
+    <Content Include="Views\OrdersAdmin\Edit.cshtml" />
+    <Content Include="Views\OrdersAdmin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -291,7 +300,7 @@
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\OrderItemsController.cs" />
+    <Compile Include="Controllers\OrdersAdminController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />

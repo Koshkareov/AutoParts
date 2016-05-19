@@ -62,6 +62,9 @@
             @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().UserId)
         </th>*@
         <th>
+            @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Id)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Brand)
         </th>
         <th>
@@ -115,6 +118,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>

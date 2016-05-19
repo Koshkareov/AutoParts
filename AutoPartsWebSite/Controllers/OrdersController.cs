@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace AutoPartsWebSite.Controllers
 {
+    [Authorize(Roles = "RegistredUser")]
     public class OrdersController : Controller
     {
         private OrderModel db = new OrderModel();
