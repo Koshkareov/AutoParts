@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
 using PagedList;
+using IdentityAutoPart.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -70,6 +73,12 @@ namespace AutoPartsWebSite.Controllers
             return View(orders.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult IndexOrderItems()
+        {
+            var orderItems = db.OrderItems.Include(o => o.Order);
+            return View(orderItems.ToList());
+        }
+
         // GET: OrdersAdmin/Details/5
         public ActionResult Details(int? id)
         {
@@ -120,6 +129,11 @@ namespace AutoPartsWebSite.Controllers
             {
                 return HttpNotFound();
             }
+                       
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var users = userManager.Users.ToList();            
+            ViewBag.Users = new SelectList(users, "Id", "FullName");
+
             return View(order);
         }
 

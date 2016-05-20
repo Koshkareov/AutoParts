@@ -219,6 +219,12 @@
     <Content Include="Views\OrdersAdmin\Details.cshtml" />
     <Content Include="Views\OrdersAdmin\Edit.cshtml" />
     <Content Include="Views\OrdersAdmin\Index.cshtml" />
+    <Content Include="Views\OrderItemsAdmin\Create.cshtml" />
+    <Content Include="Views\OrderItemsAdmin\Delete.cshtml" />
+    <Content Include="Views\OrderItemsAdmin\Details.cshtml" />
+    <Content Include="Views\OrderItemsAdmin\Edit.cshtml" />
+    <Content Include="Views\OrderItemsAdmin\Index.cshtml" />
+    <Content Include="Views\OrdersAdmin\IndexOrderItems.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -300,6 +306,7 @@
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderItemsAdminController.cs" />
     <Compile Include="Controllers\OrdersAdminController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PartsController.cs" />

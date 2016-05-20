@@ -18,17 +18,25 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Пользователь", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.Users, new { htmlAttributes = new { @class = "form-control" } })
+    
+                @*@Html.DropDownList("Id", (SelectList)ViewBag.Users, "--Select One--")*@
+                
+                @*@Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })*@
             </div>
+            
+            
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @{ Html.EnableClientValidation(false); }
                 @Html.EditorFor(model => model.Summary, new { htmlAttributes = new { @class = "form-control" } })
+                @{ Html.EnableClientValidation(true); }
                 @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,9 +51,35 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+            <div class="col-md-10">                
+
+                @Html.DropDownListFor(model => model.State, Model.getOrderStates())
+
+                @*@{
+                    List<SelectListItem> StateItems = new List<SelectListItem>();
+                    StateItems.Add(new SelectListItem
+                    {
+                        Text = "Статус 1",
+                        Value = "1"
+                    });
+                    StateItems.Add(new SelectListItem
+                    {
+                        Text = "Статус 2",
+                        Value = "2",
+                        Selected = true
+                    });
+                    StateItems.Add(new SelectListItem
+                    {
+                        Text = "Статус 3",
+                        Value = "3"
+                    });
+                }
+
+                @Html.DropDownListFor(model => model.State, StateItems, "-- Select Status --")*@
+
+
+                @*@Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" }*@
             </div>
         </div>
 

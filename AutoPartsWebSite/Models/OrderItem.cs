@@ -5,7 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
+    using System.Web.Mvc;
     [Table("OrderItem")]
     public partial class OrderItem
     {
@@ -68,5 +68,27 @@
     public decimal? Total { get { return Amount * (Convert.ToDecimal(Price)); } }
 
     public virtual Order Order { get; set; }
-}
+
+        public List<SelectListItem> getOrderItemStates()
+        {
+            List<SelectListItem> StateItems = new List<SelectListItem>();
+            StateItems.Add(new SelectListItem
+            {
+                Text = "Статус-1",
+                Value = "1"
+            });
+            StateItems.Add(new SelectListItem
+            {
+                Text = "Статус-2",
+                Value = "2",
+                Selected = true
+            });
+            StateItems.Add(new SelectListItem
+            {
+                Text = "Статус-3",
+                Value = "3"
+            });
+            return StateItems;
+        }
+    }
 }
