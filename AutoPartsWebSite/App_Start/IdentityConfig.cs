@@ -84,10 +84,48 @@ namespace IdentityAutoPart.Models
 
     public class EmailService : IIdentityMessageService
     {
+        //public Task SendAsync(IdentityMessage message)
+        //{
+        //    // Plug in your email service here to send an email.
+        //    return Task.FromResult(0);
+        //}
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            // Credentials:
+            var credentialUserName = "site@alfa-parts.com";
+            var sentFrom = "site@alfa-parts.com";
+            var pwd = "G0l0qltN";
+
+            // Configure the client:
+            System.Net.Mail.SmtpClient client =
+                new System.Net.Mail.SmtpClient("smtp.yandex.com");
+
+            client.Port = 587;
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+
+            // Creatte the credentials:
+            System.Net.NetworkCredential credentials =
+                new System.Net.NetworkCredential(credentialUserName, pwd);
+
+            client.EnableSsl = true;
+            client.Credentials = credentials;
+
+            //System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+            //var sentFrom = "site@alfa-parts.com";
+
+
+            // Create the message:
+            var mail =
+                new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+
+            
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+            mail.IsBodyHtml = true;
+
+            // Send:
+            return client.SendMailAsync(mail);
         }
     }
 
