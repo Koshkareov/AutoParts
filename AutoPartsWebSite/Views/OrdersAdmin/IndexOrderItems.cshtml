@@ -1,19 +1,20 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.OrderItem>
 
-<p>
+@{
+    ViewBag.Title = "Позиции заказа" + Model.FirstOrDefault().OrderId;
+}
+
+<h2>Позиции заказа # @Model.FirstOrDefault().OrderId</h2>
+
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Order.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PartId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>      
         <th>
             @Html.DisplayNameFor(model => model.Brand)
         </th>
@@ -33,22 +34,19 @@
             @Html.DisplayNameFor(model => model.Weight)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Supplier)
-        </th>
+        </th>                       
         <th>
             @Html.DisplayNameFor(model => model.DeliveryTime)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th> 
+        <th>
             @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Data)
+            @Html.DisplayNameFor(model => model.Total)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.State)
@@ -59,13 +57,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Order.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Brand)
@@ -86,32 +78,35 @@
             @Html.DisplayFor(modelItem => item.Weight)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
+            @Html.DisplayFor(modelItem => item.Supplier)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Supplier)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeliveryTime)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Data)
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>        
+        <td>
+            @*@Html.DisplayFor(modelItem => item.State)*@
+            @item.getOrderItemStates().First(itm => itm.Value == item.State.ToString()).Text
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Изменить", "EditOrderItems", new { id=item.Id })
+             @*|
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
         </td>
     </tr>
 }
 
 </table>
+
+<div>
+    @Html.ActionLink("Вернуться к списку Заказов", "Index")
+</div>

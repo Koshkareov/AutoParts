@@ -190,6 +190,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\OrdersAdmin\Index.cshtml" />
     <Content Include="Views\Parts\Create.cshtml" />
     <Content Include="Views\Parts\Delete.cshtml" />
     <Content Include="Views\Parts\Details.cshtml" />
@@ -218,13 +219,13 @@
     <Content Include="Views\OrdersAdmin\Delete.cshtml" />
     <Content Include="Views\OrdersAdmin\Details.cshtml" />
     <Content Include="Views\OrdersAdmin\Edit.cshtml" />
-    <Content Include="Views\OrdersAdmin\Index.cshtml" />
     <Content Include="Views\OrderItemsAdmin\Create.cshtml" />
     <Content Include="Views\OrderItemsAdmin\Delete.cshtml" />
     <Content Include="Views\OrderItemsAdmin\Details.cshtml" />
     <Content Include="Views\OrderItemsAdmin\Edit.cshtml" />
     <Content Include="Views\OrderItemsAdmin\Index.cshtml" />
     <Content Include="Views\OrdersAdmin\IndexOrderItems.cshtml" />
+    <Content Include="Views\OrdersAdmin\EditOrderItems.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

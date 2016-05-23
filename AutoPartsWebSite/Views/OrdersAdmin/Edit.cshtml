@@ -1,10 +1,10 @@
 ﻿@model AutoPartsWebSite.Models.Order
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактирование заказа #" + Model.Id;
 }
 
-<h2>Edit</h2>
+<h2>Редактирование заказа # @Model.Id</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Order</h4>
+        @*<h4>Order</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.Label("Пользователь", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.Users, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.UserId, (SelectList)ViewBag.Users, htmlAttributes: new { @class = "form-control" })
     
                 @*@Html.DropDownList("Id", (SelectList)ViewBag.Users, "--Select One--")*@
                 
@@ -53,7 +53,7 @@
             @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">                
 
-                @Html.DropDownListFor(model => model.State, Model.getOrderStates())
+                @Html.DropDownListFor(model => model.State, Model.getOrderStates(), htmlAttributes: new { @class = "form-control" })
 
                 @*@{
                     List<SelectListItem> StateItems = new List<SelectListItem>();
@@ -85,14 +85,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку Заказов", "Index") | 
+    @Html.ActionLink("Позиции заказа", "IndexOrderItems", new { id = Model.Id })
 </div>
 
 @section Scripts {

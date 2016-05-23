@@ -73,9 +73,26 @@ namespace AutoPartsWebSite.Controllers
             return View(orders.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult IndexOrderItems()
+        public ActionResult IndexOrderItems(int? id)
         {
-            var orderItems = db.OrderItems.Include(o => o.Order);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //var orderItems = from s in db.OrderItems select s;
+            ////var orderItems = db.OrderItems.Include(o => o.Order);
+            //orderItems = orderItems.Where(s => s.Id.Equals(id));
+
+            // var orderItems = db.OrderItems.Include(o => o.Order).Where(o => o.Order.Id.Equals(id));
+            var orderItems = db.OrderItems.Include(o => o.Order)
+                .Where(o => o.Order.Id == id);
+
+            if (orderItems == null)
+            {
+                return HttpNotFound();
+            }
+
             return View(orderItems.ToList());
         }
 
@@ -92,6 +109,35 @@ namespace AutoPartsWebSite.Controllers
                 return HttpNotFound();
             }
             return View(order);
+        }
+
+        public ActionResult EditOrderItems(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrderItem orderItems = db.OrderItems.Find(id);
+            if (orderItems == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orderItems);
+        }       
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOrderItems([Bind(Include = "Id,OrderId,PartId,UserId,Brand,Number,Name,Details,Size,Weight,Quantity,Price,Supplier,DeliveryTime,Amount,Data,State")] OrderItem orderItem)
+        // public ActionResult EditOrderItems([Bind(Include = "Brand,Number,Name,Details,Size,Weight,Quantity,Price,Supplier,DeliveryTime,Amount,Data,State")] OrderItem orderItem)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(orderItem).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("IndexOrderItems", new { id = orderItem.OrderId });
+            }
+            ViewBag.OrderId = new SelectList(db.Orders, "Id", "UserId", orderItem.OrderId);
+            return View(orderItem);
         }
 
         // GET: OrdersAdmin/Create

@@ -12,15 +12,15 @@
 
 <h2>Заказы</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 
 @using (Html.BeginForm("Index", "OrdersAdmin", FormMethod.Get))
 {
     <p>
-        Номер заказа : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Поиск" />
+        Номер заказа : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { htmlAttributes = new { @class = "form-control" } })
+        <input type="submit" value="Поиск"  class="btn btn-default" />
     </p>
 }
 
@@ -76,7 +76,7 @@
         </td>
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Детально", "Details", new { id=item.Id })
+            @Html.ActionLink("Детально", "IndexOrderItems", new { id=item.Id })
              @*|
             @Html.ActionLink("Удалить", "Delete", new { id=item.Id })*@
         </td>
