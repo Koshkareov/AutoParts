@@ -29,7 +29,8 @@
         @if (ViewBag.SearchLimit < ViewBag.ItemsToSearch)
         {
             <div>
-                Результат для поиска @ViewBag.SearchLimit позиций из @ViewBag.ItemsToSearch
+                @*Результат для поиска @ViewBag.SearchLimit позиций из @ViewBag.ItemsToSearch*@
+                Для поиска более 1-й позиции требуется авторизация
             </div>
         }
     </div>
@@ -71,11 +72,14 @@
             @Html.DisplayName("Поставщик")
         </th>
         <th>
-            @Html.DisplayName("Количество")
-        </th>
-        <th>
             @Html.DisplayName("Наличие")
         </th>
+        @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+        {
+            <th>
+                @Html.DisplayName("Количество")
+            </th>
+        }
     </tr>
 
 @using (Html.BeginForm("AddToCartMulti", "Carts"))
@@ -117,10 +121,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
-
-            <td>             
-                @Html.TextBox("Amount" + item.Id, "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })                
-            </td>
+            @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+            {
+                <td>             
+                    @Html.TextBox("Amount" + item.Id, "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })                
+                </td>
+            }
 
             @*<td>*@
                 @*<input type="number" name="quantity" min="1" max="5">*@                
