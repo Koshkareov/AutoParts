@@ -145,7 +145,7 @@
                 USD
             </td>
             <td>
-                @if (((AutoPartsWebSite.Controllers.CartsController)this.ViewContext.Controller).PositiveUserCartBalans())
+                @if (((AutoPartsWebSite.Controllers.CartsController)this.ViewContext.Controller).PositiveUserCartBalans() && (Model.Count() > 0))
                 {
                     @Html.ActionLink("Заказать", "AddNewOrder", routeValues: null, htmlAttributes: new { @class = "btn btn-success" })
                 }

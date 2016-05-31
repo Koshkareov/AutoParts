@@ -5,12 +5,14 @@
     ViewBag.Title = "Поиск запчастей";
     int maxSearchItemCount = 1;
     int maxSearchRowsCount = 1;
+    string searchMsgText = "Для поиска более 1-й позиции требуется авторизация";
 }
 
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
-    maxSearchItemCount = 1; //toDo: teake it from DB
-    maxSearchRowsCount = 1; //toDo: good to change it to maxSearchItemCount and add scroling
+    maxSearchItemCount = ViewBag.SearchLimit;
+    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
+    searchMsgText = "Результат для поиска " + @ViewBag.SearchLimit + " позиций из " + @ViewBag.ItemsToSearch;
 }
 
 <div class="jumbotron">
@@ -21,7 +23,7 @@
         {
         <p>
             @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })
-            @Html.Hidden("maxItemCount", maxSearchItemCount)            
+            @*@Html.Hidden("maxItemCount", maxSearchItemCount)*@            
             <input type="submit" value="Поиск" />
         </p>
         }       
@@ -29,8 +31,7 @@
         @if (ViewBag.SearchLimit < ViewBag.ItemsToSearch)
         {
             <div>
-                @*Результат для поиска @ViewBag.SearchLimit позиций из @ViewBag.ItemsToSearch*@
-                Для поиска более 1-й позиции требуется авторизация
+                @searchMsgText
             </div>
         }
     </div>

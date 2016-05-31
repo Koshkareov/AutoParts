@@ -134,10 +134,11 @@ namespace AutoPartsWebSite.Controllers
         }
 
         //[Authorize(Roles = "RegistredUser")]
-        public ActionResult SearchParts(string autopartNumbers, int? maxItemCount)
+        public ActionResult SearchParts(string autopartNumbers) //, int? maxItemCount)
         {
             string[] autopartNumbersList = new string[] { };
-            maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
+            int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
+            ViewBag.SearchLimit = maxItemCount;
             var autoparts = (from s in db.Parts
                              select s).Take(0);
 
