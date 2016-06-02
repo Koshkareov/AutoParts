@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using IdentityAutoPart.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
+using Postal;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -68,12 +69,13 @@ namespace AutoPartsWebSite.Controllers
             {
                 db.Orders.Add(order);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 
             return View(order);
         }
-
+              
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -189,10 +191,28 @@ namespace AutoPartsWebSite.Controllers
             {                
                 db.SaveChanges();
                 cartdb.SaveChanges();
+                SendEmail(order); // send notifications
                 return RedirectToAction("Index");
             }
 
             return View(order);
+        }
+
+        public void SendEmail(Order neworder)
+        {
+            var user = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(neworder.UserId);
+
+            // send new order e-mail to admin
+            dynamic adminNewOrder = new Email("adminNewOrder");
+            adminNewOrder.To = "podovzhniy@gmail.com"; // "admins@alfa-parts.com";
+            adminNewOrder.Order = neworder.Id;
+            adminNewOrder.Send();
+
+            // send new order e-mail to user
+            dynamic userNewOrder = new Email("userNewOrder");
+            userNewOrder.To = user.Email;
+            adminNewOrder.Order = neworder;
+            userNewOrder.Send();
         }
 
         protected override void Dispose(bool disposing)

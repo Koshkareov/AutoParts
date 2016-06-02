@@ -5,7 +5,7 @@
 }
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
-    maxSearchItemCount = 100; //toDo: teake it from DB
+    maxSearchItemCount = 10; //toDo: teake it from DB
     maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
 }
 <div class="jumbotron">
@@ -16,7 +16,7 @@
         {
         <p>
             @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })
-            @Html.Hidden("maxItemCount", maxSearchItemCount)
+            @*@Html.Hidden("maxItemCount", maxSearchItemCount)*@
             <input type="submit" value="Поиск" />
      </p>
         }       

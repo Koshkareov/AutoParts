@@ -11,6 +11,7 @@ using PagedList;
 using IdentityAutoPart.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Postal;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -132,7 +133,8 @@ namespace AutoPartsWebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(orderItem).State = EntityState.Modified;
+                db.Entry(orderItem).State = EntityState.Modified;                
+                SendEmail(db.Orders.Find(orderItem.OrderId)); // send notifications
                 db.SaveChanges();
                 return RedirectToAction("IndexOrderItems", new { id = orderItem.OrderId });
             }
@@ -193,6 +195,7 @@ namespace AutoPartsWebSite.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(order).State = EntityState.Modified;
+                SendEmail(order); // send notifications
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -225,6 +228,23 @@ namespace AutoPartsWebSite.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public void SendEmail(Order neworder)
+        {
+            var user = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(neworder.UserId);
+
+            // send new order e-mail to admin
+            dynamic adminNewOrder = new Email("adminChangeOrder");
+            adminNewOrder.To = "admins@alfa-parts.com";
+            adminNewOrder.Order = neworder.Id;
+            adminNewOrder.Send();
+
+            // send new order e-mail to user
+            dynamic userNewOrder = new Email("userChangeOrder");
+            userNewOrder.To = user.Email;
+            adminNewOrder.Order = neworder;
+            userNewOrder.Send();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

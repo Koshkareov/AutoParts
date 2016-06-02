@@ -238,6 +238,12 @@
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
     <Content Include="Views\Emails\Example.cshtml" />
+    <Content Include="Views\Emails\adminNewUser.cshtml" />
+    <Content Include="Views\Emails\adminNewOrder.cshtml" />
+    <Content Include="Views\Emails\adminChangeOrder.cshtml" />
+    <Content Include="Views\Emails\userNewUser.cshtml" />
+    <Content Include="Views\Emails\userChangeOrder.cshtml" />
+    <Content Include="Views\Emails\userNewOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

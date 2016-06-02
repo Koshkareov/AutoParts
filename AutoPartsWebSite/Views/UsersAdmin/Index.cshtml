@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<IdentityAutoPart.Models.ApplicationUser>
+@using IdentityAutoPart.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
 
 @{
     ViewBag.Title = "Пользователи";
@@ -27,6 +30,9 @@
             @Html.DisplayNameFor(model => model.SearchLimit)
         </th>
         <th>
+            @Html.DisplayName("Роли")
+        </th>
+        <th>
 
         </th>
     </tr>
@@ -48,6 +54,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SearchLimit)
+            </td>
+            <td>              
+
+                @if (item.Roles.Count > 0)
+                {                    
+                    @item.Roles.Count                        
+                }                
             </td>
             <td>                
                 @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
