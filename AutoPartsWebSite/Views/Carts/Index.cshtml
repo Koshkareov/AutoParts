@@ -36,7 +36,7 @@
             @Html.DisplayNameFor(model => model.Weight)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.DeliveryTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
@@ -45,7 +45,7 @@
             @Html.DisplayNameFor(model => model.Supplier)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DeliveryTime)
+            @Html.DisplayNameFor(model => model.Quantity)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
@@ -85,7 +85,7 @@
             @Html.DisplayFor(modelItem => item.Weight)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
+            @Html.DisplayFor(modelItem => item.DeliveryTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
@@ -94,7 +94,7 @@
             @Html.DisplayFor(modelItem => item.Supplier)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DeliveryTime)
+            @Html.DisplayFor(modelItem => item.Quantity)
         </td>
         <td>
             @Html.ActionLink(item.Amount.ToString(), "Edit", new { id = item.Id })
