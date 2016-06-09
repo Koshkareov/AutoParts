@@ -20,9 +20,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Data)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.State)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -37,9 +37,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Data)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.State)
-        </td>
+        </td>*@
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
             @Html.ActionLink("Подробно", "Details", new { id=item.Id })

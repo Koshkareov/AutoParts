@@ -40,10 +40,9 @@
         <th>            
             Сумма
         </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.State)*@
+        @*<th>            
             @Html.ActionLink("Статус", "Index", new { sortOrder = ViewBag.StateSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -70,10 +69,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Summary)
         </td>
-        <td>
-            @item.getOrderStates().First(itm => itm.Value == item.State.ToString()).Text
-            @*@Html.DisplayFor(modelItem => item.State)*@                
-        </td>
+        @*<td>
+            @item.getOrderStates().First(itm => itm.Value == item.State.ToString()).Text                            
+        </td>*@
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Детально", "IndexOrderItems", new { id=item.Id })

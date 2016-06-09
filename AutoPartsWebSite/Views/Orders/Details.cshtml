@@ -38,9 +38,9 @@
             @Html.DisplayNameFor(model => model.State)
         </dt>
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.State)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
@@ -158,7 +158,8 @@
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.State)
+                @*@Html.DisplayFor(modelItem => item.State)*@
+                @item.getOrderItemStates().First(itm => itm.Value == item.State.ToString()).Text
             </td>
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

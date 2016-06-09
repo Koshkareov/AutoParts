@@ -74,19 +74,34 @@
             List<SelectListItem> StateItems = new List<SelectListItem>();
             StateItems.Add(new SelectListItem
             {
-                Text = "Статус-1",
+                Text = "В работе",
                 Value = "1"
             });
             StateItems.Add(new SelectListItem
             {
-                Text = "Статус-2",
+                Text = "Закуплено",
                 Value = "2",
                 Selected = true
             });
             StateItems.Add(new SelectListItem
             {
-                Text = "Статус-3",
+                Text = "Снято",
                 Value = "3"
+            });
+            StateItems.Add(new SelectListItem
+            {
+                Text = "Отправлено",
+                Value = "4"
+            });
+            StateItems.Add(new SelectListItem
+            {
+                Text = "Готово к выдаче",
+                Value = "5"
+            });
+            StateItems.Add(new SelectListItem
+            {
+                Text = "Выдано",
+                Value = "6"
             });
             return StateItems;
         }
