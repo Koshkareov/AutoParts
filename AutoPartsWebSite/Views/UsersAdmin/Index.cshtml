@@ -73,6 +73,13 @@
                     @*@Html.Hidden("returnUrl", Request.Url.PathAndQuery)*@
                     <input type="submit" value="Платежи" class="btn btn-default" />
                 }
+                @using (Html.BeginForm("Index", "Rates", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("id", item.Id)
+                    @*@Html.Hidden("returnUrl", Request.Url.PathAndQuery)*@
+                    <input type="submit" value="Надбавки" class="btn btn-default" />
+                }
             </td>
         </tr>
     }

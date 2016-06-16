@@ -249,6 +249,11 @@
     <Content Include="Views\Suppliers\Details.cshtml" />
     <Content Include="Views\Suppliers\Edit.cshtml" />
     <Content Include="Views\Suppliers\Index.cshtml" />
+    <Content Include="Views\Rates\Create.cshtml" />
+    <Content Include="Views\Rates\Delete.cshtml" />
+    <Content Include="Views\Rates\Details.cshtml" />
+    <Content Include="Views\Rates\Edit.cshtml" />
+    <Content Include="Views\Rates\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,6 +342,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
+    <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
@@ -365,6 +371,8 @@
     <Compile Include="Models\PartModel.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentModel.cs" />
+    <Compile Include="Models\Rate.cs" />
+    <Compile Include="Models\RateModel.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,6 @@
 ﻿USE [AutoPartsDB]
 GO
-/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -22,7 +22,7 @@ CREATE TABLE [dbo].[__MigrationHistory](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -37,7 +37,7 @@ CREATE TABLE [dbo].[AspNetRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -54,7 +54,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -72,7 +72,7 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -88,7 +88,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,7 +118,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Cart]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[Cart]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +146,7 @@ CREATE TABLE [dbo].[Cart](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Import]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[Import]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -162,7 +162,7 @@ CREATE TABLE [dbo].[Import](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Order]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[Order]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +180,7 @@ CREATE TABLE [dbo].[Order](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[OrderItem]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[OrderItem]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -210,7 +210,7 @@ CREATE TABLE [dbo].[OrderItem](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Part]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[Part]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -235,7 +235,7 @@ CREATE TABLE [dbo].[Part](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Payment]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[Payment]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -252,7 +252,25 @@ CREATE TABLE [dbo].[Payment](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Supplier]    Script Date: 16.06.2016 14:27:48 ******/
+/****** Object:  Table [dbo].[Rate]    Script Date: 16.06.2016 18:09:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rate](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](max) NOT NULL,
+	[SupplierId] [int] NOT NULL,
+	[Data] [datetime] NULL,
+	[Value] [numeric](7, 2) NULL,
+ CONSTRAINT [PK_dbo.Rate] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Supplier]    Script Date: 16.06.2016 18:09:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
