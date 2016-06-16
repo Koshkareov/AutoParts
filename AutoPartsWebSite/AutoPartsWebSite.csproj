@@ -244,6 +244,11 @@
     <Content Include="Views\Emails\userNewUser.cshtml" />
     <Content Include="Views\Emails\userChangeOrder.cshtml" />
     <Content Include="Views\Emails\userNewOrder.cshtml" />
+    <Content Include="Views\Suppliers\Create.cshtml" />
+    <Content Include="Views\Suppliers\Delete.cshtml" />
+    <Content Include="Views\Suppliers\Details.cshtml" />
+    <Content Include="Views\Suppliers\Edit.cshtml" />
+    <Content Include="Views\Suppliers\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -333,6 +338,7 @@
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -359,6 +365,8 @@
     <Compile Include="Models\PartModel.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentModel.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\SupplierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

@@ -65,12 +65,15 @@ namespace IdentityAutoPart.Models
         {
             // Set the database intializer which is run once during application start
             // This seeds the database with admin user credentials and admin role
-            Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+            //  Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+            Database.SetInitializer<ApplicationDbContext>(null);  // doesn't re-create DB
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<AutoPartsWebSite.Models.Supplier> Suppliers { get; set; }
     }
 }
