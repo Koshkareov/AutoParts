@@ -69,7 +69,7 @@
 
     public virtual Order Order { get; set; }
 
-        public List<SelectListItem> getOrderItemStates()
+    public List<SelectListItem> getOrderItemStates()
         {
             List<SelectListItem> StateItems = new List<SelectListItem>();
             StateItems.Add(new SelectListItem

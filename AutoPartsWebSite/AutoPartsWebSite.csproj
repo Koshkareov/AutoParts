@@ -254,6 +254,7 @@
     <Content Include="Views\Rates\Details.cshtml" />
     <Content Include="Views\Rates\Edit.cshtml" />
     <Content Include="Views\Rates\Index.cshtml" />
+    <Content Include="Views\Rates\IndexUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -7,17 +7,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
+using System.Threading.Tasks;
+using IdentityAutoPart.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AutoPartsWebSite.Controllers
 {
     public class RatesController : Controller
     {
         private RateModel db = new RateModel();
+        private SupplierModel db_supplier = new SupplierModel();
+        
+        private string UserId = "";
 
         // GET: Rates
         public ActionResult Index()
         {
-            return View(db.Rates.ToList());
+            return RedirectToAction("Index", "UsersAdmin");
+            //return View(db.Rates.ToList());
         }
 
         // GET: Rates/Details/5
@@ -36,9 +43,22 @@ namespace AutoPartsWebSite.Controllers
         }
 
         // GET: Rates/Create
-        public ActionResult Create()
+        public ActionResult Create(string UserId)
         {
-            return View();
+            if (UserId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ViewBag.UserId = UserId;
+            ViewBag.Data = System.DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.SuppliersList = new SelectList(GetSuplliersList(), "Value", "Text");
+
+            var rate = new Rate();
+            rate.Suppliers = from supplier in db_supplier.Suppliers
+                             select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
+
+            return View(rate);
         }
 
         // POST: Rates/Create
@@ -52,9 +72,9 @@ namespace AutoPartsWebSite.Controllers
             {
                 db.Rates.Add(rate);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexUser", "Rates", new { id = rate.UserId });
             }
-
+            //rate.Suppliers = new SelectList(GetSuplliersList(), "Value", "Text");
             return View(rate);
         }
 
@@ -70,6 +90,8 @@ namespace AutoPartsWebSite.Controllers
             {
                 return HttpNotFound();
             }
+            rate.Suppliers = from supplier in db_supplier.Suppliers
+                             select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             return View(rate);
         }
 
@@ -84,7 +106,7 @@ namespace AutoPartsWebSite.Controllers
             {
                 db.Entry(rate).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexUser", "Rates", new { id = rate.UserId });
             }
             return View(rate);
         }
@@ -112,10 +134,67 @@ namespace AutoPartsWebSite.Controllers
             Rate rate = db.Rates.Find(id);
             db.Rates.Remove(rate);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexUser", "Rates", new { id = rate.UserId });
         }
 
-        protected override void Dispose(bool disposing)
+
+        public async Task<ActionResult> IndexUser(string id)
+        {
+            ApplicationUserManager UserManager = HttpContext.GetOwinContext()
+                                            .GetUserManager<ApplicationUserManager>();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            // set class var
+            UserId = id;
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var userRate = (from s in db.Rates
+                               select s).Take(1000);
+            userRate = userRate.Where(s => s.UserId.Equals(id));
+            
+            ViewBag.UserId = id;
+            ViewBag.UserFullName = user.FullName;
+            ViewBag.UserName = user.UserName;
+            ViewBag.SuppliersList = GetSuplliersList();
+
+
+            return View(userRate.ToList());
+        }
+
+        public List<Rate> GetUserRates(string id)
+        {
+            var userRates = (from s in db.Rates
+                                select s).Take(1000);
+            userRates = userRates.Where(s => s.UserId.Equals(id));
+            return userRates.ToList();
+        }
+        
+        public List<SelectListItem> GetSuplliersList()
+        {
+            var suppliers = (from s in db_supplier.Suppliers
+                             select s).Take(1000);
+
+            List<SelectListItem> suplliersList = new List<SelectListItem>();
+            foreach (var supplier in suppliers.ToList())
+            {
+                suplliersList.Add(new SelectListItem()
+                {                    
+                    Text = supplier.Name.ToString(),
+                    Value = supplier.Id.ToString()
+                });
+            }            
+            return suplliersList;
+        }
+        
+
+
+    protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
