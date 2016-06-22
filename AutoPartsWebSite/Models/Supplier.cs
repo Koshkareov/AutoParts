@@ -19,7 +19,7 @@
         [StringLength(50)]
         public string Code { get; set; }
 
-        [Display(Name = "Базовая надбавка %")]
+        [Display(Name = "Базовая наценка %")]
         [Column(TypeName = "numeric")]
         public decimal? Rate { get; set; }
     }

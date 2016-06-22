@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Ставка</h4>
+        <h4>Наценка</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*<div class="form-group">
@@ -57,5 +57,5 @@
 }
 
 <div>
-    @Html.ActionLink("Вернуться к списку ставок", "Index")
+    @Html.ActionLink("Вернуться к списку наценок", "Index")
 </div>
