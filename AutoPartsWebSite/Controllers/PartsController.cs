@@ -180,6 +180,10 @@ namespace AutoPartsWebSite.Controllers
                 //autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
 
             }
+            foreach (Part part in autoparts)
+            {
+                part.Price = CalcUserPrice(part.Id);
+            }
             //Session["AutopartsSearchResult"] = autoparts; //.ToList();
             Session["AutopartNumbersList"] = autopartNumbersList;            
             return View(autoparts);
@@ -191,7 +195,12 @@ namespace AutoPartsWebSite.Controllers
             string[] autopartNumbersList = (string[])Session["AutopartNumbersList"];
             var autoparts = (from s in db.Parts
                              where autopartNumbersList.Contains(s.Number)
-                             select new { s.Id, s.Brand, s.Name, s.Details, s.Size, s.Weight, s.Quantity, s.Price, s.Supplier, s.DeliveryTime}).Take(1000);
+                             select s).Take(1000);
+                             //select new { s.Id, s.Brand, s.Name, s.Details, s.Size, s.Weight, s.Quantity, s.Price, s.Supplier, s.DeliveryTime}).Take(1000);
+            foreach (Part part in autoparts)
+            {
+                part.Price = CalcUserPrice(part.Id);
+            }
             using (ExcelPackage pck = new ExcelPackage())
             {
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("ALFAPARTS-SearchResult");
@@ -225,6 +234,42 @@ namespace AutoPartsWebSite.Controllers
                 return 1;
             }
             return user.SearchLimit;
+        }
+
+        public string CalcUserPrice(int PartId)
+        {
+            decimal defaultRate = 10;
+
+            Part part = db.Parts.Find(PartId);
+            if (part == null) // if part not exists - return 0
+            {
+                return "0";
+            }
+
+            Supplier supplier = db.Suppliers.Find(part.SupplierId);
+            if (supplier == null)  // if supplier not exists - return price + defaultRate
+            {
+                return ((100 + defaultRate) * Convert.ToDecimal(part.Price)/100).ToString();
+            }
+
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUserManager UserManager = HttpContext.GetOwinContext()
+                                           .GetUserManager<ApplicationUserManager>();
+            var user = UserManager.FindById(currentUserId);
+            if (user == null)  // if not defined user - return price + SuppliersRate
+            {
+                return ((100 + supplier.Rate) * Convert.ToDecimal(part.Price) / 100).ToString(); 
+            }
+
+            var rate = (from r in db.Rates
+                where r.UserId.Equals(currentUserId) && r.SupplierId.Equals(part.SupplierId) 
+                select r).FirstOrDefault();
+            if (rate == null)  // if rate not exists - return price +  SuppliersRate
+            {
+                return ((100 + supplier.Rate) * Convert.ToDecimal(part.Price) / 100).ToString();
+            }
+
+            return ((100 + rate.Value) * Convert.ToDecimal(part.Price) / 100).ToString();
         }
 
         protected override void Dispose(bool disposing)

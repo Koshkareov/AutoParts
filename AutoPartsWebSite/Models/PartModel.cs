@@ -13,6 +13,8 @@ namespace AutoPartsWebSite.Models
         }
 
         public virtual DbSet<Part> Parts { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Rate> Rates { get; set; }
 
         //public virtual DbSet<Cart> Carts { get; set; }
 

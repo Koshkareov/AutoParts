@@ -59,5 +59,8 @@
 
         [Display(Name = "Стоимость")]
         public decimal? Total { get { return Amount * (Convert.ToDecimal(Price)); } }
+
+        [Display(Name = "Базовая цена")]
+        public string BasePrice { get; set; }
     }
 }

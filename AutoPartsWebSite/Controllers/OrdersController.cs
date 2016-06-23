@@ -174,7 +174,8 @@ namespace AutoPartsWebSite.Controllers
                     Amount = cartItem.Amount,
                     Data = cartItem.Data,
                     State = 1, // new added orderItem
-                    OrderId = order.Id
+                    OrderId = order.Id,
+                    BasePrice = cartItem.BasePrice
                 };
                 //db.OrderItems.Add(orderItem);
                 orderItems.Add(orderItem);                

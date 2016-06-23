@@ -47,7 +47,10 @@
     [Display(Name = "Цена")]
     public string Price { get; set; }
 
-    [Display(Name = "Поставщик")]
+    [Display(Name = "Базовая цена")]
+    public string BasePrice { get; set; }
+
+        [Display(Name = "Поставщик")]
     public string Supplier { get; set; }
 
     [Display(Name = "Срок поставки")]

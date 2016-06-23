@@ -293,13 +293,14 @@ namespace AutoPartsWebSite.Controllers
                             cart.Weight = autopart.Weight;
                             cart.Quantity = autopart.Quantity;
                             cart.Supplier = autopart.Supplier;
-                            cart.Price = autopart.Price;
+                            cart.Price = CalcUserPrice(autopart.Id); // autopart.Price;
                             cart.DeliveryTime = autopart.DeliveryTime;
                             cart.Amount = Amount;
                             cart.Data = DateTime.Now;
+                            cart.BasePrice = autopart.Price;
 
 
-                            if (ModelState.IsValid)
+                    if (ModelState.IsValid)
                             {
                                 db.Carts.Add(cart);
                                 db.SaveChanges();
@@ -409,6 +410,42 @@ namespace AutoPartsWebSite.Controllers
             // Call CreatUserOrder action from Order controller
 
             return RedirectToAction("CreateUserOrder", "Orders");
+        }
+
+        public string CalcUserPrice(int PartId)
+        {
+            decimal defaultRate = 10;
+
+            Part part = db.Parts.Find(PartId);
+            if (part == null) // if part not exists - return 0
+            {
+                return "0";
+            }
+
+            Supplier supplier = db.Suppliers.Find(part.SupplierId);
+            if (supplier == null)  // if supplier not exists - return price + defaultRate
+            {
+                return ((100 + defaultRate) * Convert.ToDecimal(part.Price) / 100).ToString();
+            }
+
+            string currentUserId = User.Identity.GetUserId();
+            ApplicationUserManager UserManager = HttpContext.GetOwinContext()
+                                           .GetUserManager<ApplicationUserManager>();
+            var user = UserManager.FindById(currentUserId);
+            if (user == null)  // if not defined user - return price + SuppliersRate
+            {
+                return ((100 + supplier.Rate) * Convert.ToDecimal(part.Price) / 100).ToString();
+            }
+
+            var rate = (from r in db.Rates
+                        where r.UserId.Equals(currentUserId) && r.SupplierId.Equals(part.SupplierId)
+                        select r).FirstOrDefault();
+            if (rate == null)  // if rate not exists - return price +  SuppliersRate
+            {
+                return ((100 + supplier.Rate) * Convert.ToDecimal(part.Price) / 100).ToString();
+            }
+
+            return ((100 + rate.Value) * Convert.ToDecimal(part.Price) / 100).ToString();
         }
 
         protected override void Dispose(bool disposing)

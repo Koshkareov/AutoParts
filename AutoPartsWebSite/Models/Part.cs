@@ -40,6 +40,9 @@
         [Display(Name = "Поставщик")]
         public string Supplier { get; set; }
 
+        [Display(Name = "Номер поставщика")]
+        public int SupplierId { get; set; }
+
         [Display(Name = "Количество")]
         public string DeliveryTime { get; set; }
     }
