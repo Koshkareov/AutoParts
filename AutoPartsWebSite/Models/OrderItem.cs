@@ -44,6 +44,7 @@
     [Display(Name = "Наличие")]
     public string Quantity { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
     [Display(Name = "Цена")]
     public string Price { get; set; }
 
@@ -60,7 +61,7 @@
     public int? Amount { get; set; }
 
     [DataType(DataType.Date)]
-    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+    [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
     [Display(Name = "Дата")]
     public DateTime? Data { get; set; }
 

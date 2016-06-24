@@ -114,7 +114,7 @@
                 @Html.DisplayFor(modelItem => item.DeliveryTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Math.Round(Convert.ToDecimal(item.Price), 2).ToString()                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Supplier)

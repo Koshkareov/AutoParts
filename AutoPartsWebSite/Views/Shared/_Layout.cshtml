@@ -24,7 +24,25 @@
                     <li>@Html.ActionLink("Поиск", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>                                       
-                    @*<li>@Html.Action("Заказы", "Index", "Orders")</li>*@
+                    
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               href="#">
+                                Админ
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- links -->
+                                <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
+                                <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>
+                                <li>@Html.ActionLink("Заказы клиентов", "Index", "OrdersAdmin")</li>
+                                <li>@Html.ActionLink("Поставщики", "Index", "Suppliers")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul> 
                 
                 
@@ -32,30 +50,11 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
-                    {                                            
-                        <li>@Html.Action("CartSummary", "Carts")</li>
-                        <li>@Html.ActionLink("Заказы", "Index", "Orders")</li>
-                    }
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle"
-                                   data-toggle="dropdown"
-                                   href="#">
-                                    Админ
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- links -->
-                                    <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
-                                    <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>
-                                    <li>@Html.ActionLink("Заказы", "Index", "OrdersAdmin")</li>
-                                    <li>@Html.ActionLink("Поставщики", "Index", "Suppliers")</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    }
+                        <li>@Html.ActionLink("Мои заказы", "Index", "Orders")</li>
+                        <li>@Html.Action("CartSummary", "Carts")</li>
+                        
+                    }                    
                 </ul>
 
             </div>

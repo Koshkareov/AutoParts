@@ -1,10 +1,15 @@
 ﻿
 @model AutoPartsWebSite.Controllers.CartSummaryResult
 
-<div class="help-block">
-    @Html.ActionLink("Корзина", "Index", "Carts")
+@*<div class="help-block">*@
+    @*@Html.ActionLink("Корзина", "Index", "Carts")    
+    Выбрано:@Model.Cart$ Доступно:@Model.Balans$*@
+
+    @Html.ActionLink("Корзина Выбрано:" + @Model.Cart + "$ Доступно:" + @Model.Balans + "$", "Index", "Carts")
     
-    Выбрано:@Model.Cart$ Доступно:@Model.Balans$
+
+
+
     @*@Model.Cart/@Model.Balans*@
     @*@Model.Cart/@Model.Balans (L= @Model.Limit P= @Model.Payments O= @Model.Orders)*@
     

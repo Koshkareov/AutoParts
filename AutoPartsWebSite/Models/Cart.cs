@@ -40,6 +40,7 @@
         [Display(Name = "Наличие")]
         public string Quantity { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
         [Display(Name = "Цена")]
         public string Price { get; set; }
 
