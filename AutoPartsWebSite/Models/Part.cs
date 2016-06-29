@@ -38,8 +38,20 @@
         [Display(Name = "Цена")]
         public string Price { get; set; }
 
-        [Display(Name = "Поставщик")]
-        public string Supplier { get; set; }
+        [Display(Name = "Поставщик")]        
+        public string Supplier
+        { get
+            {
+                SupplierModel db = new SupplierModel();
+                Supplier supplier = db.Suppliers.Find(SupplierId);
+                if (supplier == null)
+                {
+                    return "";
+                }
+                return supplier.Name.ToString();
+                
+            }
+        }
 
         [Display(Name = "Номер поставщика")]
         public int SupplierId { get; set; }
