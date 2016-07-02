@@ -20,5 +20,7 @@ namespace AutoPartsWebSite.Models
                 .Property(e => e.Value)
                 .HasPrecision(7, 2);
         }
+
+        public System.Data.Entity.DbSet<AutoPartsWebSite.Models.Import> Imports { get; set; }
     }
 }

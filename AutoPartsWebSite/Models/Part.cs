@@ -31,7 +31,7 @@
         [Display(Name = "Вес")]
         public string Weight { get; set; }
 
-        [Display(Name = "Наличие")]
+        [Display(Name = "Количество")]
         public string Quantity { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
@@ -56,7 +56,7 @@
         [Display(Name = "Номер поставщика")]
         public int SupplierId { get; set; }
 
-        [Display(Name = "Количество")]
+        [Display(Name = "Срок поставки")]
         public string DeliveryTime { get; set; }
     }
 }

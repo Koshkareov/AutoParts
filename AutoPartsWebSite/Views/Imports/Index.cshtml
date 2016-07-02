@@ -1,0 +1,76 @@
+﻿@using IdentityAutoPart.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+
+@model IEnumerable<AutoPartsWebSite.Models.Import>
+
+@{
+    ViewBag.Title = "Импорт";
+}
+
+<h2>Импорт</h2>
+
+<p>
+    @Html.ActionLink("Новый импорт", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            Пользователь
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @{
+                string userFN = "";
+                ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = userManager.FindById(item.UserId);
+                if (user != null)
+                {
+                    userFN = user.FullName;
+                }
+            }
+            @userFN            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @*@Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
+    @Html.ActionLink("Details", "Просмотр", new { id=item.Id }) |*@
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

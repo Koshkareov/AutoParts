@@ -255,6 +255,11 @@
     <Content Include="Views\Rates\Edit.cshtml" />
     <Content Include="Views\Rates\Index.cshtml" />
     <Content Include="Views\Rates\IndexUser.cshtml" />
+    <Content Include="Views\Imports\Create.cshtml" />
+    <Content Include="Views\Imports\Delete.cshtml" />
+    <Content Include="Views\Imports\Details.cshtml" />
+    <Content Include="Views\Imports\Edit.cshtml" />
+    <Content Include="Views\Imports\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,6 +342,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderItemsAdminController.cs" />
     <Compile Include="Controllers\OrdersAdminController.cs" />
@@ -364,6 +370,8 @@
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Import.cs" />
+    <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
