@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -38,7 +39,13 @@ namespace AutoPartsWebSite.Controllers
         // GET: Imports/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.UserId = User.Identity.GetUserId();
+            ViewBag.Data = System.DateTime.Now.ToString("dd-MM-yyyy");
+
+            Import import = new Import();
+            import.Suppliers = from supplier in db.Suppliers
+                             select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
+            return View(import);
         }
 
         // POST: Imports/Create
@@ -46,15 +53,27 @@ namespace AutoPartsWebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date,UserId,SupplierId,DeliveryTime,FileName")] Import import)
-        {
+        public ActionResult Create([Bind(Include = "Id,Date,UserId,SupplierId,DeliveryTime,FileName")] Import import, HttpPostedFileBase upload)
+        {       
+                           
             if (ModelState.IsValid)
             {
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    // get filename
+                    string fileName = System.IO.Path.GetFileName(upload.FileName);
+                    // save file into ImportFiles folder                       
+                    upload.SaveAs(Server.MapPath("~/ImportFiles/" + fileName));
+                    import.FileName = fileName;
+                    // toDo: parse data from XSLT file and store it into DB
+                }
+                import.UserId = User.Identity.GetUserId();
+                import.Date = System.DateTime.Now;
+                // store data into DB
                 db.Imports.Add(import);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-
+            }            
             return View(import);
         }
 
@@ -113,6 +132,23 @@ namespace AutoPartsWebSite.Controllers
             db.Imports.Remove(import);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public List<SelectListItem> GetSuplliersList()
+        {
+            var suppliers = (from s in db.Suppliers
+                             select s).Take(1000);
+
+            List<SelectListItem> suplliersList = new List<SelectListItem>();
+            foreach (var supplier in suppliers.ToList())
+            {
+                suplliersList.Add(new SelectListItem()
+                {
+                    Text = supplier.Name.ToString(),
+                    Value = supplier.Id.ToString()
+                });
+            }
+            return suplliersList;
         }
 
         protected override void Dispose(bool disposing)

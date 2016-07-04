@@ -22,5 +22,9 @@
         [Display(Name = "Базовая наценка %")]
         [Column(TypeName = "numeric")]
         public decimal? Rate { get; set; }
+
+        [Display(Name = "Срок поставки")]
+        [StringLength(10)]
+        public string DeliveryTime { get; set; }
     }
 }

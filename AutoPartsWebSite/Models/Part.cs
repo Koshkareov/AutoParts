@@ -57,6 +57,19 @@
         public int SupplierId { get; set; }
 
         [Display(Name = "Срок поставки")]
-        public string DeliveryTime { get; set; }
+        public string DeliveryTime
+        {
+            get
+            {
+                SupplierModel db = new SupplierModel();
+                Supplier supplier = db.Suppliers.Find(SupplierId);
+                if (supplier == null)
+                {
+                    return "";
+                }
+                return supplier.DeliveryTime.ToString();
+
+            }
+        }
     }
 }

@@ -1,4 +1,8 @@
-﻿@model AutoPartsWebSite.Models.Import
+﻿@using IdentityAutoPart.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+
+@model AutoPartsWebSite.Models.Import
 
 @{
     ViewBag.Title = "Details";
@@ -22,8 +26,17 @@
             @Html.DisplayNameFor(model => model.UserId)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
+        <dd>            
+            @{
+                string userFN = "";
+                ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = userManager.FindById(Model.UserId);
+                if (user != null)
+                {
+                    userFN = user.FullName;
+                }
+            }
+            @userFN            
         </dd>
 
         <dt>

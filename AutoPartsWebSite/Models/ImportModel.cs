@@ -13,6 +13,8 @@ namespace AutoPartsWebSite.Models
         }
 
         public virtual DbSet<Import> Imports { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

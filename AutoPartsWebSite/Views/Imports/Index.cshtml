@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            Пользователь
+            @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Supplier)
@@ -45,16 +45,7 @@
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @{
-                string userFN = "";
-                ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = userManager.FindById(item.UserId);
-                if (user != null)
-                {
-                    userFN = user.FullName;
-                }
-            }
-            @userFN            
+            @Html.DisplayFor(modelItem => item.UserName)          
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Supplier)

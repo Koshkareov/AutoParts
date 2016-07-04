@@ -6,6 +6,11 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    using IdentityAutoPart.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using System.Web;
+    using System.Web.Mvc;
     [Table("Import")]
     public partial class Import
     {
@@ -20,6 +25,27 @@
 
         [StringLength(128)]
         public string UserId { get; set; }
+
+        [Display(Name = "Пользователь")]
+        [StringLength(128)]
+        public string UserName
+        {
+            get
+            {                
+                ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = userManager.FindById(UserId);
+                if (user != null)
+                {
+                    return user.FullName;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
+
 
         [Display(Name = "Поставщик")]
         public string Supplier
@@ -39,10 +65,24 @@
 
         [Display(Name = "Номер поставщика")]
         public int? SupplierId { get; set; }
+        public IEnumerable<SelectListItem> Suppliers { get; set; }
 
         [Display(Name = "Срок поставки")]
         [StringLength(10)]
-        public string DeliveryTime { get; set; }
+        public string DeliveryTime
+        {
+            get
+            {
+                SupplierModel db = new SupplierModel();
+                Supplier supplier = db.Suppliers.Find(SupplierId);
+                if (supplier == null)
+                {
+                    return "";
+                }
+                return supplier.DeliveryTime.ToString();
+
+            }
+        }
 
         [Display(Name = "Имя файла")]
         public string FileName { get; set; }
