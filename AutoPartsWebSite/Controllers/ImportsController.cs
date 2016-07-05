@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
 using Microsoft.AspNet.Identity;
+using OfficeOpenXml;
+using System.IO;
+
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -42,10 +45,13 @@ namespace AutoPartsWebSite.Controllers
             ViewBag.UserId = User.Identity.GetUserId();
             ViewBag.Data = System.DateTime.Now.ToString("dd-MM-yyyy");
 
+           
             Import import = new Import();
-            import.Suppliers = from supplier in db.Suppliers
-                             select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
-            return View(import);
+            ViewBag.SuppliersList = from supplier in db.Suppliers
+                               select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
+            //import.Suppliers = from supplier in db.Suppliers
+            //                   select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };                     
+            return View(import);           
         }
 
         // POST: Imports/Create
@@ -54,25 +60,35 @@ namespace AutoPartsWebSite.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Date,UserId,SupplierId,DeliveryTime,FileName")] Import import, HttpPostedFileBase upload)
-        {       
-                           
+        {                  
             if (ModelState.IsValid)
             {
                 if (upload != null && upload.ContentLength > 0)
                 {
-                    // get filename
-                    string fileName = System.IO.Path.GetFileName(upload.FileName);
-                    // save file into ImportFiles folder                       
-                    upload.SaveAs(Server.MapPath("~/ImportFiles/" + fileName));
-                    import.FileName = fileName;
-                    // toDo: parse data from XSLT file and store it into DB
+                    try
+                    {
+                        // get filename
+                        string fileName = System.IO.Path.GetFileName(upload.FileName);
+                        // save file into ImportFiles folder                       
+                        upload.SaveAs(Server.MapPath("~/ImportFiles/" + fileName));
+                        import.FileName = fileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                    
                 }
                 import.UserId = User.Identity.GetUserId();
                 import.Date = System.DateTime.Now;
                 // store data into DB
                 db.Imports.Add(import);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                // toDo: parse data from XSLT file and store it into DB
+                if (LoadImportData(import.Id))
+                {
+                    return RedirectToAction("Index");
+                }                
             }            
             return View(import);
         }
@@ -149,6 +165,80 @@ namespace AutoPartsWebSite.Controllers
                 });
             }
             return suplliersList;
+        }
+        private bool LoadImportData(int ImportId)
+        {
+            try
+            {
+                int firstDataRow = 3;
+            Import import = db.Imports.Find(ImportId);
+            FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
+            
+            using (ExcelPackage package = new ExcelPackage(autopartsFile))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
+                {
+                    Part part = new Part
+                    {
+                        ImportId = import.Id,
+                        Brand = worksheet.Cells["A" + i.ToString()].Value.ToString(),
+                        Number = worksheet.Cells["B" + i.ToString()].Value.ToString(),
+                        Name = worksheet.Cells["D" + i.ToString()].Value.ToString(),
+                        Details = worksheet.Cells["C" + i.ToString()].Value.ToString(),
+                        Size = worksheet.Cells["F" + i.ToString()].Value.ToString(),
+                        Weight = worksheet.Cells["E" + i.ToString()].Value.ToString(),
+                        Quantity = worksheet.Cells["J" + i.ToString()].Value.ToString(),
+                        Price = worksheet.Cells["H" + i.ToString()].Value.ToString(),
+                        SupplierId = Convert.ToInt32(import.SupplierId)
+                    };
+                    db.Parts.Add(part);
+                }
+            }
+            db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Ошибка:" + ex.Message.ToString();
+                return false;
+            }
+        }
+
+
+        private bool LoadImportDataNew(int ImportId)
+        {
+            int firstDataRow = 3;
+            Import import = db.Imports.Find(ImportId);
+            FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
+
+            ExcelPackage package = new ExcelPackage();
+            
+            package.Load(autopartsFile.OpenRead());
+            
+            //using (ExcelPackage package = new ExcelPackage(autopartsFile))
+            { 
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
+                {
+                    Part part = new Part
+                    {
+                        ImportId = import.Id,
+                        Brand = worksheet.Cells["A" + i.ToString()].Value.ToString(),
+                        Number = worksheet.Cells["B" + i.ToString()].Value.ToString(),
+                        Name = worksheet.Cells["D" + i.ToString()].Value.ToString(),
+                        Details = worksheet.Cells["C" + i.ToString()].Value.ToString(),
+                        Size = worksheet.Cells["F" + i.ToString()].Value.ToString(),
+                        Weight = worksheet.Cells["E" + i.ToString()].Value.ToString(),
+                        Quantity = worksheet.Cells["J" + i.ToString()].Value.ToString(),
+                        Price = worksheet.Cells["H" + i.ToString()].Value.ToString(),
+                        SupplierId = Convert.ToInt32(import.SupplierId)
+                    };
+                    db.Parts.Add(part);
+                }
+            }
+            db.SaveChanges();
+            return true;
         }
 
         protected override void Dispose(bool disposing)
