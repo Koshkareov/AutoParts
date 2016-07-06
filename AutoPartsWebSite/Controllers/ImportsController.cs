@@ -14,6 +14,7 @@ using System.IO;
 
 namespace AutoPartsWebSite.Controllers
 {
+
     public class ImportsController : Controller
     {
         private ImportModel db = new ImportModel();
@@ -60,36 +61,40 @@ namespace AutoPartsWebSite.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Date,UserId,SupplierId,DeliveryTime,FileName")] Import import, HttpPostedFileBase upload)
-        {                  
+        {
+            ViewBag.SuppliersList = from supplier in db.Suppliers
+                                    select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             if (ModelState.IsValid)
             {
-                if (upload != null && upload.ContentLength > 0)
+                try
                 {
-                    try
-                    {
+                    if (upload != null && upload.ContentLength > 0)
+                    {                        
                         // get filename
                         string fileName = System.IO.Path.GetFileName(upload.FileName);
                         // save file into ImportFiles folder                       
                         upload.SaveAs(Server.MapPath("~/ImportFiles/" + fileName));
-                        import.FileName = fileName;
+                        import.FileName = fileName;                                            
                     }
-                    catch (Exception ex)
+                    import.UserId = User.Identity.GetUserId();
+                    import.Date = System.DateTime.Now;
+                    // store data into DB
+                    db.Imports.Add(import);
+                    db.SaveChanges();
+                    // toDo: parse data from XSLT file and store it into DB
+                    if (LoadImportDataTEST(import.Id))
                     {
-                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                    }
-                    
+                        ViewBag.Message = "Импорт завершен.";
+                        return RedirectToAction("Index");                     
+                    }                
                 }
-                import.UserId = User.Identity.GetUserId();
-                import.Date = System.DateTime.Now;
-                // store data into DB
-                db.Imports.Add(import);
-                db.SaveChanges();
-                // toDo: parse data from XSLT file and store it into DB
-                if (LoadImportData(import.Id))
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Index");
-                }                
-            }            
+                    ViewBag.Message = "Ошибка импорта:" + ex.Message.ToString();
+                    
+                    return View(import);
+                }
+            }
             return View(import);
         }
 
@@ -142,11 +147,15 @@ namespace AutoPartsWebSite.Controllers
         // POST: Imports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async System.Threading.Tasks.Task<ActionResult> DeleteConfirmed(int id)
         {
+            // Delete imported Parts by ImportId
+            db.Parts.RemoveRange(db.Parts.Where(x => x.ImportId == id));
+
+            // Delete Import by Id
             Import import = db.Imports.Find(id);
             db.Imports.Remove(import);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -206,39 +215,74 @@ namespace AutoPartsWebSite.Controllers
         }
 
 
-        private bool LoadImportDataNew(int ImportId)
+        private bool LoadImportDataTEST(int ImportId)
         {
-            int firstDataRow = 3;
-            Import import = db.Imports.Find(ImportId);
-            FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
+            try
+            {
+                int firstDataRow = 3;
+                Import import = db.Imports.Find(ImportId);
+                int importId = import.Id;
+                int supplierId = Convert.ToInt32(import.SupplierId);
+                int linesNumber = 0;          
 
-            ExcelPackage package = new ExcelPackage();
-            
-            package.Load(autopartsFile.OpenRead());
-            
-            //using (ExcelPackage package = new ExcelPackage(autopartsFile))
-            { 
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
-                for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
+                FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
+
+                using (ExcelPackage package = new ExcelPackage(autopartsFile))
                 {
-                    Part part = new Part
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                    int maxRow = worksheet.Dimension.End.Row;
+                    Dictionary<string, string> dicPart = new Dictionary<string, string>();
+                    for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
                     {
-                        ImportId = import.Id,
-                        Brand = worksheet.Cells["A" + i.ToString()].Value.ToString(),
-                        Number = worksheet.Cells["B" + i.ToString()].Value.ToString(),
-                        Name = worksheet.Cells["D" + i.ToString()].Value.ToString(),
-                        Details = worksheet.Cells["C" + i.ToString()].Value.ToString(),
-                        Size = worksheet.Cells["F" + i.ToString()].Value.ToString(),
-                        Weight = worksheet.Cells["E" + i.ToString()].Value.ToString(),
-                        Quantity = worksheet.Cells["J" + i.ToString()].Value.ToString(),
-                        Price = worksheet.Cells["H" + i.ToString()].Value.ToString(),
-                        SupplierId = Convert.ToInt32(import.SupplierId)
-                    };
-                    db.Parts.Add(part);
+                        dicPart.Clear();
+                        dicPart.Add("Id", Convert.ToString(importId));   // import ID                        
+                        dicPart.Add("Brand", Convert.ToString(worksheet.Cells["A" + i.ToString()].Value));   //  Brand = 1
+                        dicPart.Add("Number", Convert.ToString(worksheet.Cells["B" + i.ToString()].Value));   //  Number = 2
+                        dicPart.Add("Name", Convert.ToString(worksheet.Cells["D" + i.ToString()].Value));   //  Name = 4
+                        dicPart.Add("Details", Convert.ToString(worksheet.Cells["C" + i.ToString()].Value));   //  Details = 3
+                        dicPart.Add("Size", Convert.ToString(worksheet.Cells["F" + i.ToString()].Value));   //  Size = 6
+                        dicPart.Add("Weight", Convert.ToString(worksheet.Cells["E" + i.ToString()].Value));   //  Weight = 5
+                        dicPart.Add("Quantity", Convert.ToString(worksheet.Cells["J" + i.ToString()].Value));   //  Quantity = 10
+                        dicPart.Add("Price", Convert.ToString(worksheet.Cells["H" + i.ToString()].Value));   //  Price = 8                        
+                        dicPart.Add("SupplierId", Convert.ToString(supplierId));   //  SupplierId = 7                        
+                
+                        AddPartData(ref dicPart);
+                        linesNumber++;
+                    }
                 }
+                ViewBag.Message = "Импорт завершен.";
+                import.LinesNumber = linesNumber;
+                db.SaveChanges();
+                return true;
             }
-            db.SaveChanges();
-            return true;
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Ошибка импорта:" + ex.Message.ToString();               
+                return false;
+            }
+        }
+
+        public static void AddPartData(ref Dictionary<string, string> dicPartData)
+        {
+            using (PartModel db_Parts = new PartModel())
+            {
+                var autopart = new Part
+                {
+                    ImportId = Convert.ToInt32(dicPartData["Id"]),
+                    Brand = dicPartData["Brand"],
+                    Number = dicPartData["Number"],
+                    Name = dicPartData["Name"],
+                    Details = dicPartData["Details"],
+                    Size = dicPartData["Size"],
+                    Weight = dicPartData["Weight"],
+                    Quantity = dicPartData["Quantity"],
+                    Price = dicPartData["Price"],
+                    SupplierId = Convert.ToInt32(dicPartData["SupplierId"])
+                };
+
+                db_Parts.Parts.Add(autopart);
+                db_Parts.SaveChanges();
+            }
         }
 
         protected override void Dispose(bool disposing)

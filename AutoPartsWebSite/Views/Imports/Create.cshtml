@@ -73,6 +73,8 @@
     </div>
 }
 
+@ViewBag.Message
+
 @*@Html.TextBoxFor(model => model.FileName, new { htmlAttributes = new { @class = "input-file form-control", type = "file", accept = ".xlsx" , name = "upload" } })*@
 <div>
     @Html.ActionLink("Вернуться к списку импортов", "Index")

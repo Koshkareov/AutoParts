@@ -86,5 +86,8 @@
 
         [Display(Name = "Имя файла")]
         public string FileName { get; set; }
+
+        [Display(Name = "К-во позиций")]
+        public int LinesNumber { get; set; }
     }
 }
