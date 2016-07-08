@@ -48,7 +48,7 @@
                 {
                     return "";
                 }
-                return supplier.Name.ToString();
+                return supplier.Code.ToString();
                 
             }
         }

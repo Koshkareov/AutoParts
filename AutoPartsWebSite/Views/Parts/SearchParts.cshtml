@@ -50,10 +50,7 @@
         </th>
         <th>
             @Html.DisplayName("Номер")
-        </th>
-        <th>
-            @Html.DisplayName("Название")
-        </th>
+        </th>        
         <th>
             @Html.DisplayName("Описание")
         </th>
@@ -97,11 +94,8 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
+            </td>            
+            <td  TITLE="@Html.DisplayFor(modelItem => item.Name)">
                 @Html.DisplayFor(modelItem => item.Details)
             </td>
             <td>

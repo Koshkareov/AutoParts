@@ -69,10 +69,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Name)
-        </th>
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Details)
         </th>
@@ -126,11 +123,8 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
+            </td>            
+            <td TITLE="@Html.DisplayFor(modelItem => item.Name)">
                 @Html.DisplayFor(modelItem => item.Details)
             </td>
             <td>
