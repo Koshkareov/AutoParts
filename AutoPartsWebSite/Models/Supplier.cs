@@ -26,5 +26,21 @@
         [Display(Name = "Срок поставки")]
         [StringLength(10)]
         public string DeliveryTime { get; set; }
+
+        public int ImportTemplateId { get; set; }
+        [Display(Name = "Шаблон импорта")]
+        public string ImportTemplate
+        {
+            get
+            {
+                ImportTemplateModel db = new ImportTemplateModel();
+                ImportTemplate importTemplate = db.ImportTemplates.Find(ImportTemplateId);
+                if (importTemplate == null)
+                {
+                    return "";
+                }
+                return importTemplate.Name.ToString();
+            }
+        }
     }
 }

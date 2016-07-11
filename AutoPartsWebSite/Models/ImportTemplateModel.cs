@@ -5,21 +5,18 @@ namespace AutoPartsWebSite.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class SupplierModel : DbContext
+    public partial class ImportTemplateModel : DbContext
     {
-        public SupplierModel()
+        public ImportTemplateModel()
             : base("name=AutoPartsDB")
         {
         }
 
-        public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<ImportTemplate> ImportTemplates { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Supplier>()
-                .Property(e => e.Rate)
-                .HasPrecision(7, 2);
         }
     }
 }

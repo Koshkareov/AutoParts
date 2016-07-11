@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.DeliveryTime)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImportTemplate)
+        </th>
         <th></th>
     </tr>
 
@@ -39,6 +42,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DeliveryTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImportTemplate)
         </td>
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |

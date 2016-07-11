@@ -7,118 +7,124 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AutoPartsWebSite.Controllers
 {
-    public class SuppliersController : Controller
+    public class ImportTemplatesController : Controller
     {
-        private SupplierModel db = new SupplierModel();
+        private ImportTemplateModel db = new ImportTemplateModel();
 
-        // GET: Suppliers
+        // GET: ImportTemplates
         public ActionResult Index()
         {
-            return View(db.Suppliers.ToList());
+            return View(db.ImportTemplates.ToList());
         }
 
-        // GET: Suppliers/Details/5
+        // GET: ImportTemplates/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = db.Suppliers.Find(id);
-            if (supplier == null)
+            ImportTemplate importTemplate = db.ImportTemplates.Find(id);
+            if (importTemplate == null)
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+            return View(importTemplate);
         }
 
-        // GET: Suppliers/Create
+        // GET: ImportTemplates/Create
         public ActionResult Create()
         {
-            ViewBag.ImportTemplatesList = from importTemplate in db.ImportTemplates
-                                          select new SelectListItem { Text = importTemplate.Name, Value = importTemplate.Id.ToString() };
             return View();
         }
 
-        // POST: Suppliers/Create
+        // POST: ImportTemplates/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Code,Rate,DeliveryTime,ImportTemplateId")] Supplier supplier)
+        public ActionResult Create([Bind(Include = "Id,Date,UserId,Name,StartRow,BrandColumn,NumberColumn,NameColumn,DetailsColumn,SizeColumn,WeightColumn,QuantityColumn,PriceColumn")] ImportTemplate importTemplate)
         {
-            ViewBag.ImportTemplatesList = from importTemplate in db.ImportTemplates
-                                          select new SelectListItem { Text = importTemplate.Name, Value = importTemplate.Id.ToString() };
             if (ModelState.IsValid)
             {
-                db.Suppliers.Add(supplier);
+                importTemplate.UserId = User.Identity.GetUserId();
+                importTemplate.Date = System.DateTime.Now;
+                db.ImportTemplates.Add(importTemplate);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(supplier);
+            return View(importTemplate);
         }
 
-        // GET: Suppliers/Edit/5
+        // GET: ImportTemplates/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = db.Suppliers.Find(id);
-            if (supplier == null)
+            ImportTemplate importTemplate = db.ImportTemplates.Find(id);
+            if (importTemplate == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ImportTemplatesList = from importTemplate in db.ImportTemplates
-                                          select new SelectListItem { Text = importTemplate.Name, Value = importTemplate.Id.ToString() };
-            return View(supplier);
+            return View(importTemplate);
         }
 
-        // POST: Suppliers/Edit/5
+        // POST: ImportTemplates/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Code,Rate,DeliveryTime,ImportTemplateId")] Supplier supplier)
+        public ActionResult Edit([Bind(Include = "Id,Date,UserId,Name,StartRow,BrandColumn,NumberColumn,NameColumn,DetailsColumn,SizeColumn,WeightColumn,QuantityColumn,PriceColumn")] ImportTemplate importTemplate)
         {
-            ViewBag.ImportTemplatesList = from importTemplate in db.ImportTemplates
-                                          select new SelectListItem { Text = importTemplate.Name, Value = importTemplate.Id.ToString() };
             if (ModelState.IsValid)
             {
-                db.Entry(supplier).State = EntityState.Modified;
+                importTemplate.UserId = User.Identity.GetUserId();
+                importTemplate.Date = System.DateTime.Now;
+                db.Entry(importTemplate).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(supplier);
+            return View(importTemplate);
         }
 
-        // GET: Suppliers/Delete/5
+        // GET: ImportTemplates/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Supplier supplier = db.Suppliers.Find(id);
-            if (supplier == null)
+            ImportTemplate importTemplate = db.ImportTemplates.Find(id);
+            if (importTemplate == null)
             {
                 return HttpNotFound();
             }
-            return View(supplier);
+            return View(importTemplate);
         }
 
-        // POST: Suppliers/Delete/5
+        // POST: ImportTemplates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Supplier supplier = db.Suppliers.Find(id);
-            db.Suppliers.Remove(supplier);
+            ImportTemplate importTemplate = db.ImportTemplates.Find(id);
+
+            var supplier = (from s in db.Suppliers
+                            select s).Where(c => c.ImportTemplateId.Equals(id));
+            if (supplier.FirstOrDefault() != null)
+            {
+                ModelState.AddModelError(string.Empty, "Этот шаблон нельзя удалить, - он используется.");
+                return View(importTemplate);
+            }
+
+            db.ImportTemplates.Remove(importTemplate);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
