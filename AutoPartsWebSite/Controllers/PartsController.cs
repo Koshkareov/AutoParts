@@ -145,8 +145,8 @@ namespace AutoPartsWebSite.Controllers
             if (!String.IsNullOrEmpty(autopartNumbers))
             {
                 // string txt = TextBox1.Text;
-                string[] delimiter = { Environment.NewLine }; //new Char[] { '\n', '\r' }
-                autopartNumbersList = autopartNumbers.Split(delimiter, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
+                string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
+                autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
 
                 var numbersList = new List<string>(autopartNumbersList);
 

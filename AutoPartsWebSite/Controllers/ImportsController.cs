@@ -178,33 +178,35 @@ namespace AutoPartsWebSite.Controllers
         private bool LoadImportData(int ImportId)
         {
             try
-            {
-                int firstDataRow = 3;
-            Import import = db.Imports.Find(ImportId);
-            FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
-            
-            using (ExcelPackage package = new ExcelPackage(autopartsFile))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
-                for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
+            {                
+                Import import = db.Imports.Find(ImportId);
+                Supplier supplier = db.Suppliers.Find(import.SupplierId);
+                ImportTemplate importTemplate = db.ImportTemplates.Find(supplier.ImportTemplateId);
+                FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
+                int firstDataRow = importTemplate.StartRow;
+
+                using (ExcelPackage package = new ExcelPackage(autopartsFile))
                 {
-                    Part part = new Part
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+                    for (int i = firstDataRow; i < worksheet.Dimension.End.Row; i++)
                     {
-                        ImportId = import.Id,
-                        Brand = worksheet.Cells["A" + i.ToString()].Value.ToString(),
-                        Number = worksheet.Cells["B" + i.ToString()].Value.ToString(),
-                        Name = worksheet.Cells["D" + i.ToString()].Value.ToString(),
-                        Details = worksheet.Cells["C" + i.ToString()].Value.ToString(),
-                        Size = worksheet.Cells["F" + i.ToString()].Value.ToString(),
-                        Weight = worksheet.Cells["E" + i.ToString()].Value.ToString(),
-                        Quantity = worksheet.Cells["J" + i.ToString()].Value.ToString(),
-                        Price = worksheet.Cells["H" + i.ToString()].Value.ToString(),
-                        SupplierId = Convert.ToInt32(import.SupplierId)
-                    };
-                    db.Parts.Add(part);
+                        Part part = new Part
+                        {
+                            ImportId = import.Id,
+                            Brand = worksheet.Cells[importTemplate.BrandColumn + i.ToString()].Value.ToString(),
+                            Number = worksheet.Cells[importTemplate.NumberColumn + i.ToString()].Value.ToString(),
+                            Name = worksheet.Cells[importTemplate.NameColumn + i.ToString()].Value.ToString(),
+                            Details = worksheet.Cells[importTemplate.DetailsColumn + i.ToString()].Value.ToString(),
+                            Size = worksheet.Cells[importTemplate.SizeColumn + i.ToString()].Value.ToString(),
+                            Weight = worksheet.Cells[importTemplate.WeightColumn + i.ToString()].Value.ToString(),
+                            Quantity = worksheet.Cells[importTemplate.QuantityColumn + i.ToString()].Value.ToString(),
+                            Price = worksheet.Cells[importTemplate.PriceColumn + i.ToString()].Value.ToString(),
+                            SupplierId = Convert.ToInt32(import.SupplierId)
+                        };
+                        db.Parts.Add(part);
+                    }
                 }
-            }
-            db.SaveChanges();
+                db.SaveChanges();
                 return true;
             }
             catch (Exception ex)
@@ -218,12 +220,15 @@ namespace AutoPartsWebSite.Controllers
         private bool LoadImportDataTEST(int ImportId)
         {
             try
-            {
-                int firstDataRow = 3;
+            {                
                 Import import = db.Imports.Find(ImportId);
                 int importId = import.Id;
                 int supplierId = Convert.ToInt32(import.SupplierId);
-                int linesNumber = 0;          
+                int linesNumber = 0;
+
+                Supplier supplier = db.Suppliers.Find(import.SupplierId);
+                ImportTemplate importTemplate = db.ImportTemplates.Find(supplier.ImportTemplateId);                
+                int firstDataRow = importTemplate.StartRow;
 
                 FileInfo autopartsFile = new FileInfo(Server.MapPath("~/ImportFiles/" + import.FileName));
 
@@ -236,14 +241,14 @@ namespace AutoPartsWebSite.Controllers
                     {
                         dicPart.Clear();
                         dicPart.Add("Id", Convert.ToString(importId));   // import ID                        
-                        dicPart.Add("Brand", Convert.ToString(worksheet.Cells["A" + i.ToString()].Value));   //  Brand = 1
-                        dicPart.Add("Number", Convert.ToString(worksheet.Cells["B" + i.ToString()].Value));   //  Number = 2
-                        dicPart.Add("Name", Convert.ToString(worksheet.Cells["D" + i.ToString()].Value));   //  Name = 4
-                        dicPart.Add("Details", Convert.ToString(worksheet.Cells["C" + i.ToString()].Value));   //  Details = 3
-                        dicPart.Add("Size", Convert.ToString(worksheet.Cells["F" + i.ToString()].Value));   //  Size = 6
-                        dicPart.Add("Weight", Convert.ToString(worksheet.Cells["E" + i.ToString()].Value));   //  Weight = 5
-                        dicPart.Add("Quantity", Convert.ToString(worksheet.Cells["J" + i.ToString()].Value));   //  Quantity = 10
-                        dicPart.Add("Price", Convert.ToString(worksheet.Cells["H" + i.ToString()].Value));   //  Price = 8                        
+                        dicPart.Add("Brand", Convert.ToString(worksheet.Cells[importTemplate.BrandColumn + i.ToString()].Value));   //  Brand = 1
+                        dicPart.Add("Number", Convert.ToString(worksheet.Cells[importTemplate.NumberColumn + i.ToString()].Value));   //  Number = 2
+                        dicPart.Add("Name", Convert.ToString(worksheet.Cells[importTemplate.NameColumn + i.ToString()].Value));   //  Name = 4
+                        dicPart.Add("Details", Convert.ToString(worksheet.Cells[importTemplate.DetailsColumn + i.ToString()].Value));   //  Details = 3
+                        dicPart.Add("Size", Convert.ToString(worksheet.Cells[importTemplate.SizeColumn + i.ToString()].Value));   //  Size = 6
+                        dicPart.Add("Weight", Convert.ToString(worksheet.Cells[importTemplate.WeightColumn + i.ToString()].Value));   //  Weight = 5
+                        dicPart.Add("Quantity", Convert.ToString(worksheet.Cells[importTemplate.QuantityColumn + i.ToString()].Value));   //  Quantity = 10
+                        dicPart.Add("Price", Convert.ToString(worksheet.Cells[importTemplate.PriceColumn + i.ToString()].Value));   //  Price = 8                        
                         dicPart.Add("SupplierId", Convert.ToString(supplierId));   //  SupplierId = 7                        
                 
                         AddPartData(ref dicPart);
