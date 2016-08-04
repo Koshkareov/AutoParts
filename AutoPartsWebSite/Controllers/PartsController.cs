@@ -240,6 +240,11 @@ namespace AutoPartsWebSite.Controllers
         {
             decimal defaultRate = 10;
 
+            // Random rnd = new Random();
+            Random rnd = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            decimal anRegistredUserRate = rnd.Next(5, 8); // issue #24
+
+
             Part part = db.Parts.Find(PartId);
             if (part == null) // if part not exists - return 0
             {
@@ -258,7 +263,8 @@ namespace AutoPartsWebSite.Controllers
             var user = UserManager.FindById(currentUserId);
             if (user == null)  // if not defined user - return price + SuppliersRate
             {
-                return ((100 + supplier.Rate) * Convert.ToDecimal(part.Price) / 100).ToString(); 
+                // return ((100 + supplier.Rate) * Convert.ToDecimal(part.Price) / 100).ToString();
+                return ((100 + anRegistredUserRate) * Convert.ToDecimal(part.Price) / 100).ToString(); 
             }
 
             var rate = (from r in db.Rates
