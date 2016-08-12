@@ -100,6 +100,12 @@
         <th>
             @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().State)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Reference1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderItems.FirstOrDefault().Reference2)
+        </th>
         <th></th>
     </tr>
 
@@ -154,6 +160,12 @@
             <td>
                 @*@Html.DisplayFor(modelItem => item.State)*@
                 @item.getOrderItemStates().First(itm => itm.Value == item.State.ToString()).Text
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reference1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reference2)
             </td>
             <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

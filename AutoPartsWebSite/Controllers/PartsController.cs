@@ -120,18 +120,18 @@ namespace AutoPartsWebSite.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SearchPart(string autopartNumber)
-        {
-            var autoparts = (from s in db.Parts
-                             select s).Take(0);
-            if (!String.IsNullOrEmpty(autopartNumber))
-            {
-                autoparts = (from s in db.Parts
-                                 select s).Take(100);
-                autoparts = autoparts.Where(c => c.Number.Contains(autopartNumber));
-            }
-            return View(autoparts);
-        }
+        //public ActionResult SearchPart(string autopartNumber)
+        //{
+        //    var autoparts = (from s in db.Parts
+        //                     select s).Take(0);
+        //    if (!String.IsNullOrEmpty(autopartNumber))
+        //    {
+        //        autoparts = (from s in db.Parts
+        //                         select s).Take(100);
+        //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumber));
+        //    }
+        //    return View(autoparts);
+        //}
 
         //[Authorize(Roles = "RegistredUser")]
         public ActionResult SearchParts(string autopartNumbers) //, int? maxItemCount)
@@ -183,6 +183,7 @@ namespace AutoPartsWebSite.Controllers
             foreach (Part part in autoparts)
             {
                 part.Price = CalcUserPrice(part.Id);
+                part.Quantity = CalcUserQuantity(part.Id);
             }
             //Session["AutopartsSearchResult"] = autoparts; //.ToList();
             Session["AutopartNumbersList"] = autopartNumbersList;            
@@ -200,6 +201,7 @@ namespace AutoPartsWebSite.Controllers
             foreach (Part part in autoparts)
             {
                 part.Price = CalcUserPrice(part.Id);
+                part.Quantity = CalcUserQuantity(part.Id);
             }
             using (ExcelPackage pck = new ExcelPackage())
             {
@@ -236,7 +238,7 @@ namespace AutoPartsWebSite.Controllers
             return user.SearchLimit;
         }
 
-        public string CalcUserPrice(int PartId)
+        private string CalcUserPrice(int PartId)
         {
             decimal defaultRate = 10;
 
@@ -276,6 +278,30 @@ namespace AutoPartsWebSite.Controllers
             }
 
             return ((100 + rate.Value) * Convert.ToDecimal(part.Price) / 100).ToString();
+        }
+
+        private string CalcUserQuantity(int PartId)
+        {
+            Part part = db.Parts.Find(PartId);
+            if (part == null) // if part not exists - return 0
+            {
+                return "0";
+            }
+            if (Convert.ToInt32(part.Quantity) > 10)
+            {
+                int operand1 = Convert.ToInt32(part.Quantity);
+                int operand2 = Convert.ToInt32(System.Math.Pow(10, (part.Quantity.Length - 1)));                
+                return ((operand1 / operand2) * operand2).ToString();
+            }
+            if (Convert.ToInt32(part.Quantity) > 5)
+            {
+                return "5";
+            }
+            if (Convert.ToInt32(part.Quantity) <= 5)
+            {
+                return part.Quantity;
+            }
+            return "0"; //something going wrong
         }
 
         protected override void Dispose(bool disposing)

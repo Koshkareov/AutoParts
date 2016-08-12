@@ -63,5 +63,13 @@
 
         [Display(Name = "Базовая цена")]
         public string BasePrice { get; set; }
+
+        [Display(Name = "Ref1")]
+        [StringLength(10)]
+        public string Reference1 { get; set; }
+
+        [Display(Name = "Ref2")]
+        [StringLength(10)]
+        public string Reference2 { get; set; }
     }
 }

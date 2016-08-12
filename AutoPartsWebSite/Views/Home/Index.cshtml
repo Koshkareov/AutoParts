@@ -5,8 +5,8 @@
 }
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
-    maxSearchItemCount = 10; //toDo: teake it from DB
-    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
+    maxSearchItemCount = 10; //--toDo: take it from DB
+    maxSearchRowsCount = 10; //--toDo: good to change it to maxSearchItemCount and add scroling
 }
 <div class="jumbotron">
     <h2>Поиск запчастей</h2>
@@ -15,16 +15,12 @@
         @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
         {
         <p>
-            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })
-            @*@Html.Hidden("maxItemCount", maxSearchItemCount)*@
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60, placeholder = "тут текст из параметра" })
             <input type="submit" value="Поиск" />
      </p>
         }       
 
 </div>
-@*<p>
-    @Html.ActionLink("Экспорт результатов в Excel", "Excel")
-</p>*@
 
 
 
