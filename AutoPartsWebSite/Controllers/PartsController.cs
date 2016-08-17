@@ -119,19 +119,7 @@ namespace AutoPartsWebSite.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //public ActionResult SearchPart(string autopartNumber)
-        //{
-        //    var autoparts = (from s in db.Parts
-        //                     select s).Take(0);
-        //    if (!String.IsNullOrEmpty(autopartNumber))
-        //    {
-        //        autoparts = (from s in db.Parts
-        //                         select s).Take(100);
-        //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumber));
-        //    }
-        //    return View(autoparts);
-        //}
+        
 
         //[Authorize(Roles = "RegistredUser")]
         public ActionResult SearchParts(string autopartNumbers) //, int? maxItemCount)
@@ -156,8 +144,8 @@ namespace AutoPartsWebSite.Controllers
 
                 if (maxItemCount < numbersList.Count)
                 {
-                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count()- (int)maxItemCount);
-                }                
+                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
+                }
                 autopartNumbersList = numbersList.ToArray();
 
                 //foreach (string autopartNumber in autopartNumbersList)
@@ -186,18 +174,247 @@ namespace AutoPartsWebSite.Controllers
                 part.Quantity = CalcUserQuantity(part.Id);
             }
             //Session["AutopartsSearchResult"] = autoparts; //.ToList();
-            Session["AutopartNumbersList"] = autopartNumbersList;            
+            Session["AutopartNumbersList"] = autopartNumbersList;
             return View(autoparts);
+        }
+
+        //[Authorize(Roles = "RegistredUser")]
+        public ActionResult Search(string autopartNumbers) 
+        {
+            string[] autopartNumbersList = new string[] { };
+            int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
+            ViewBag.SearchLimit = maxItemCount;
+
+            if (String.IsNullOrEmpty(autopartNumbers))
+            {
+                TempData["shortMessage"] = "Данных не обнаружено, уточните запрос."; //"Тут рыбы нет !";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
+                autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
+
+                var numbersList = new List<string>(autopartNumbersList);
+
+                // two digits for search item message
+                ViewBag.SearchLimit = maxItemCount;
+                ViewBag.ItemsToSearch = numbersList.Count;
+
+                if (maxItemCount < numbersList.Count)
+                {
+                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
+                }
+                autopartNumbersList = numbersList.ToArray();
+
+                // read about ".Select(x => new Part"  by link  
+                // http://stackoverflow.com/questions/5325797/the-entity-cannot-be-constructed-in-a-linq-to-entities-query
+                var autoparts = (from p in db.Parts
+                                 join a in db.PartAliases on p.Number equals a.Number into ps
+                                 from a in ps.DefaultIfEmpty()
+                                 where autopartNumbersList.Contains(p.Number)
+                                 //select p
+                                 select new 
+                                 {
+                                     Id = p.Id,
+                                     ImportId = p.ImportId,
+                                     Brand = p.Brand,
+                                     Number = p.Number,
+                                     Name = !string.IsNullOrEmpty(a.Name) ? a.Name : p.Name,
+                                     Details = p.Details,
+                                     Size = !string.IsNullOrEmpty(a.Size) ? a.Size : p.Size,
+                                     Weight = !string.IsNullOrEmpty(a.Weight) ? a.Weight : p.Weight,
+                                     Quantity = p.Quantity,
+                                     Price = p.Price,
+                                     //Supplier = p.Supplier,
+                                     //DeliveryTime = p.DeliveryTime,
+                                     SupplierId = p.SupplierId
+                                 }
+                                 ).ToList()
+                                 .Select(x => new Part
+                                 {
+                                     Id = x.Id,
+                                     ImportId = x.ImportId,
+                                     Brand = x.Brand,
+                                     Number = x.Number,
+                                     Name = x.Name,
+                                     Details = x.Details,
+                                     Size = x.Size,
+                                     Weight = x.Weight,
+                                     Quantity = x.Quantity,
+                                     Price = x.Price,
+                                     //Supplier = x.Supplier,
+                                     //DeliveryTime = x.DeliveryTime,
+                                     SupplierId = x.SupplierId
+                                 }).Take(1000); 
+                if (autoparts.Count() <= 0) // not found any numbers
+                {
+                    TempData["shortMessage"] = "Данных не обнаружено, уточните запрос."; //"Тут рыбы нет !";
+                    return RedirectToAction("Index", "Home");
+                }
+                    
+                foreach (Part part in autoparts)
+                {
+                    part.Price = CalcUserPrice(part.Id);
+                    part.Quantity = CalcUserQuantity(part.Id);
+                }
+
+                Session["AutopartNumbersList"] = autopartNumbersList;                
+                return View(autoparts);
+            }
+        }
+
+        private ActionResult SearchTEMP(string autopartNumbers) //, int? maxItemCount)
+        {
+            string[] autopartNumbersList = new string[] { };
+            int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
+            ViewBag.SearchLimit = maxItemCount;
+            //var autoparts = (IQueryable<Part>)(from p in db.Parts
+            //                 select new
+            //                 {
+            //                     p.Id,
+            //                     p.ImportId,
+            //                     p.Brand,
+            //                     p.Number,
+            //                     p.Name,
+            //                     p.Details,
+            //                     p.Size,
+            //                     p.Weight,
+            //                     p.Quantity,
+            //                     p.Price,
+            //                     p.Supplier,
+            //                     p.DeliveryTime,
+            //                     p.SupplierId
+            //                 }
+            //                 ).Take(0);
+
+            //var autoparts = (from p in db.Parts
+            //                 select p).Take(0);
+
+            if (!String.IsNullOrEmpty(autopartNumbers))
+            {
+                // string txt = TextBox1.Text;
+                string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
+                autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
+
+                var numbersList = new List<string>(autopartNumbersList);
+
+                // two digits for search item message
+                ViewBag.SearchLimit = maxItemCount;
+                ViewBag.ItemsToSearch = numbersList.Count;
+
+                if (maxItemCount < numbersList.Count)
+                {
+                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
+                }
+                // find and add replacement to numbers list
+                var autopartsReplacement = (from s in db.PartReplacement
+                                            where numbersList.Contains(s.Number)
+                                            select s.Replacement).ToList();
+                numbersList.AddRange(autopartsReplacement);
+
+                autopartNumbersList = numbersList.ToArray();
+
+
+                //foreach (string autopartNumber in autopartNumbersList)
+                //{
+                //    if (!String.IsNullOrEmpty(autopartNumber))
+                //    {
+                //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
+                //    }
+                //}
+
+
+                //assemble an array of ID values
+                //int[] customerIds = new int[] { 1, 2, 3 };
+                //string autopartNumbersString = autopartNumbersList.ToString(", ");
+
+                //autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
+
+                //autoparts = (from s in db.Parts
+                //             where autopartNumbersList.Contains(s.Number)
+                //             select s).Take(1000);
+
+                var autoparts = (IEnumerable<AutoPartsWebSite.Models.Part>)(from p in db.Parts
+                                                                            join a in db.PartAliases on p.Number equals a.Number into ps
+                                                                            from a in ps.DefaultIfEmpty()
+                                                                            where autopartNumbersList.Contains(p.Number)
+                                                                            select new
+                                                                            {
+                                                                                p.Id,
+                                                                                p.ImportId,
+                                                                                p.Brand,
+                                                                                p.Number,
+                                                                                p.Name,
+                                                                                p.Details,
+                                                                                p.Size,
+                                                                                p.Weight,
+                                                                                p.Quantity,
+                                                                                p.Price,
+                                                                                p.Supplier,
+                                                                                p.DeliveryTime,
+                                                                                p.SupplierId
+                                                                            }
+                             ).Take(1000);
+
+                foreach (Part part in autoparts)
+                {
+                    part.Price = CalcUserPrice(part.Id);
+                    part.Quantity = CalcUserQuantity(part.Id);
+                }
+                //Session["AutopartsSearchResult"] = autoparts; //.ToList();
+                Session["AutopartNumbersList"] = autopartNumbersList;
+                return View(autoparts);
+            }
+            return View();
         }
 
 
         public ActionResult Excel()
         {
             string[] autopartNumbersList = (string[])Session["AutopartNumbersList"];
-            var autoparts = (from s in db.Parts
-                             where autopartNumbersList.Contains(s.Number)
-                             select s).Take(1000);
-                             //select new { s.Id, s.Brand, s.Name, s.Details, s.Size, s.Weight, s.Quantity, s.Price, s.Supplier, s.DeliveryTime}).Take(1000);
+            //var autoparts = (from s in db.Parts
+            //                 where autopartNumbersList.Contains(s.Number)
+            //                 select s).Take(1000);
+            var autoparts = (from p in db.Parts
+                             join a in db.PartAliases on p.Number equals a.Number into ps
+                             from a in ps.DefaultIfEmpty()
+                             where autopartNumbersList.Contains(p.Number)
+                             //select p
+                             select new
+                             {
+                                 Id = p.Id,
+                                 ImportId = p.ImportId,
+                                 Brand = p.Brand,
+                                 Number = p.Number,
+                                 Name = !string.IsNullOrEmpty(a.Name) ? a.Name : p.Name,
+                                 Details = p.Details,
+                                 Size = !string.IsNullOrEmpty(a.Size) ? a.Size : p.Size,
+                                 Weight = !string.IsNullOrEmpty(a.Weight) ? a.Weight : p.Weight,
+                                 Quantity = p.Quantity,
+                                 Price = p.Price,
+                                 //Supplier = p.Supplier,
+                                 //DeliveryTime = p.DeliveryTime,
+                                 SupplierId = p.SupplierId
+                             }
+                                 ).ToList()
+                                 .Select(x => new Part
+                                 {
+                                     Id = x.Id,
+                                     ImportId = x.ImportId,
+                                     Brand = x.Brand,
+                                     Number = x.Number,
+                                     Name = x.Name,
+                                     Details = x.Details,
+                                     Size = x.Size,
+                                     Weight = x.Weight,
+                                     Quantity = x.Quantity,
+                                     Price = x.Price,
+                                     //Supplier = x.Supplier,
+                                     //DeliveryTime = x.DeliveryTime,
+                                     SupplierId = x.SupplierId
+                                 }).Take(1000);
+
             foreach (Part part in autoparts)
             {
                 part.Price = CalcUserPrice(part.Id);
@@ -225,7 +442,7 @@ namespace AutoPartsWebSite.Controllers
             return RedirectToAction("Index");
         }
 
-        public int GetSearchLimit()
+        private int GetSearchLimit()
         {
             string currentUserId = User.Identity.GetUserId();
             ApplicationUserManager UserManager = HttpContext.GetOwinContext()

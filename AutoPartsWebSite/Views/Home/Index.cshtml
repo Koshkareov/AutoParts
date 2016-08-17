@@ -5,22 +5,24 @@
 }
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
-    maxSearchItemCount = 10; //--toDo: take it from DB
-    maxSearchRowsCount = 10; //--toDo: good to change it to maxSearchItemCount and add scroling
+    maxSearchItemCount = 10;
+    maxSearchRowsCount = 10; 
 }
 <div class="jumbotron">
     <h2>Поиск запчастей</h2>
 
     <p>
-        @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
+        @using (Html.BeginForm("Search", "Parts", FormMethod.Post))
         {
         <p>
-            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60, placeholder = "тут текст из параметра" })
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60, placeholder = "КОД ЗАПЧАСТИ" })
             <input type="submit" value="Поиск" />
      </p>
         }       
 
 </div>
+
+@ViewBag.Message
 
 
 

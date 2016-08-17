@@ -11,7 +11,7 @@
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
     maxSearchItemCount = ViewBag.SearchLimit;
-    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
+    maxSearchRowsCount = 10; 
     searchMsgText = "Результат для поиска " + @ViewBag.SearchLimit + " позиций из " + @ViewBag.ItemsToSearch;
 }
 
@@ -22,8 +22,7 @@
         @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
         {
         <p>
-            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })
-            @*@Html.Hidden("maxItemCount", maxSearchItemCount)*@            
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })                     
             <input type="submit" value="Поиск" />
         </p>
         }       
@@ -36,15 +35,8 @@
         }
     </div>
 
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
 <table class="table">
     <tr>
-        @*<th>
-                @Html.DisplayNameFor(model => model.ImportId)
-            </th>*@
         <th>
             @Html.DisplayName("Марка")
         </th>
@@ -86,9 +78,6 @@
     foreach (var item in Model)
     {
         <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.ImportId)
-                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
@@ -121,38 +110,7 @@
                 <td>             
                     @Html.TextBox("Amount" + item.Id, "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })                
                 </td>
-            }
-
-            @*<td>*@
-                @*<input type="number" name="quantity" min="1" max="5">*@                
-                @*@Html.TextBoxFor(modelItem => item.Number, "0", new { id = item.Id,  type= "number", min="0",max = item.Quantity })*@
-                @*ToDo: Set and read values and id via script
-                http://www.dotnet-tricks.com/Tutorial/mvc/K18L190813-How-to-get-textboxes-values-in-MVC4-created-by-jQuery.html*@
-           @*</td>*@
-            
-                @*@using (Html.BeginForm("AddToCart", "Carts"))
-                {
-                    <td>
-                        <div class="pull-right">
-                            @Html.TextBox("Amount", "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })
-                        </div>
-                    </td>
-                    <td>
-                        <div class="pull-right">
-                            @Html.Hidden("PartId", item.Id)
-                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                            <input type="submit" class="btn btn-success" value="Добавить в корзину" />
-                        </div>
-                    </td>
-                    
-                }*@
-            
-
-            @*<td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>*@
+            }           
         </tr>
     }
     if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))

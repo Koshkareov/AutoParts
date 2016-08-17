@@ -14,6 +14,11 @@ namespace IdentityAutoPart.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData["shortMessage"] == null)
+            {
+                return View();
+            }               
+            ViewBag.Message = TempData["shortMessage"].ToString();
             return View();
         }
                 
