@@ -7,39 +7,33 @@
     using System.Data.Entity.Spatial;
     using System.Web.Mvc;
 
-    [Table("Order")]
-    public partial class Order
+    [Table("InvoiceItem")]
+    public partial class InvoiceItem
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
-        {
-            OrderItems = new HashSet<OrderItem>();
-        }
+        //public InvoiceItem()
+        //{
+        //    InvoiceItemOrderItems = new HashSet<InvoiceItemOrderItem>();
+        //}
 
         [Key]
-        [Display(Name = "Номер")]
         public int Id { get; set; }
 
+        [ForeignKey("Invoice")]
         [Required]
-        public string UserId { get; set; }
+        public int InvoiceId { get; set; }
 
-        [Column(TypeName = "money")]
-        [DisplayFormat(DataFormatString = "{0:F2}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Сумма")]
-        public decimal? Summary { get; set; }
+        [Display(Name = "Номер")]
+        public string Number { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Дата")]
+        [Display(Name = "Количество")]
+        public string Quantity { get; set; }
+
         public DateTime? Data { get; set; }
 
         [Display(Name = "Статус")]
-        public int State { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderItem> OrderItems { get; set; }
-
-        public List<SelectListItem> getOrderStates()
+        public int? State { get; set; }
+        public List<SelectListItem> getInvoiceItemStates()
         {
             List<SelectListItem> StateItems = new List<SelectListItem>();
             StateItems.Add(new SelectListItem
@@ -60,5 +54,11 @@
             });
             return StateItems;
         }
+
+        public virtual Invoice Invoice { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<InvoiceItemOrderItem> InvoiceItemOrderItems { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }

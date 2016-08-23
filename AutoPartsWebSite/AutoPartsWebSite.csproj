@@ -395,6 +395,9 @@
     <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ImportTemplate.cs" />
     <Compile Include="Models\ImportTemplateModel.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoiceItem.cs" />
+    <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />

@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AutoPartsWebSite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ImportTemplatesController : Controller
     {
         private ImportTemplateModel db = new ImportTemplateModel();

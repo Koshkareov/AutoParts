@@ -14,7 +14,7 @@ using System.IO;
 
 namespace AutoPartsWebSite.Controllers
 {
-
+    [Authorize(Roles = "Admin")]
     public class ImportsController : Controller
     {
         private ImportModel db = new ImportModel();

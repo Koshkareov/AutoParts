@@ -10,6 +10,7 @@ using AutoPartsWebSite.Models;
 
 namespace AutoPartsWebSite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OrderItemsAdminController : Controller
     {
         private OrderModel db = new OrderModel();

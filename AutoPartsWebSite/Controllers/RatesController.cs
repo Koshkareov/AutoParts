@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AutoPartsWebSite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RatesController : Controller
     {
         private RateModel db = new RateModel();

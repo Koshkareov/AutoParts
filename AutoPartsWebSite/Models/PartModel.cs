@@ -23,5 +23,7 @@ namespace AutoPartsWebSite.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
+
+        public System.Data.Entity.DbSet<AutoPartsWebSite.Models.Invoice> Invoices { get; set; }
     }
 }
