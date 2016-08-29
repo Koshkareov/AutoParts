@@ -278,6 +278,11 @@
     <Content Include="Views\PartReplacements\Index.cshtml" />
     <Content Include="Views\PartReplacements\ExcelImport.cshtml" />
     <Content Include="Views\Parts\Search.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -362,6 +367,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportsController.cs" />
     <Compile Include="Controllers\ImportTemplatesController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderItemsAdminController.cs" />
     <Compile Include="Controllers\OrdersAdminController.cs" />
@@ -397,6 +403,7 @@
     <Compile Include="Models\ImportTemplateModel.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceItem.cs" />
+    <Compile Include="Models\InvoiceItemOrderItem.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />

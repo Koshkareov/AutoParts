@@ -33,9 +33,11 @@
             modelBuilder.Entity<InvoiceItem>()
                .HasMany(c => c.OrderItems)
                .WithMany(i => i.InvoiceItems)
-               .Map(t => t.MapLeftKey("InvoiceItemId")
-               .MapRightKey("OrderItemId")
-               .ToTable("InvoiceItemOrderItem"));
+               .Map(t =>
+                   { t.MapLeftKey("InvoiceItemId");
+                     t.MapRightKey("OrderItemId");
+                     t.ToTable("InvoiceItemOrderItem");
+                   });
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.Summary)
@@ -47,16 +49,16 @@
                 .WillCascadeOnDelete(false);
 
             //modelBuilder.Entity<OrderItem>()
-            //    .HasMany(e => e.InvoiceOrderItems)
+            //    .HasMany(e => e.InvoiceItems)
             //    .WithRequired(e => e.OrderItem)
             //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<OrderItem>()
-               .HasMany(c => c.InvoiceItems)
-               .WithMany(i => i.OrderItems)
-               .Map(t => t.MapLeftKey("InvoiceItemId")
-               .MapRightKey("OrderItemId")
-               .ToTable("InvoiceItemOrderItem"));
+            //modelBuilder.Entity<OrderItem>()
+            //   .HasMany(c => c.InvoiceItems)
+            //   .WithMany(i => i.OrderItems)
+            //   .Map(t => t.MapLeftKey("InvoiceItemId")
+            //   .MapRightKey("OrderItemId")
+            //   .ToTable("InvoiceItemOrderItem"));
         }
     }
 }
