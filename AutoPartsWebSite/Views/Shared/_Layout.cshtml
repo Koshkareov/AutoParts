@@ -10,12 +10,12 @@
 	<meta name="author" content="http://alfa-parts.com">
 	<link rel="shortcut icon" href="http://alfa-parts.com/favicon.ico">
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,200,300,100&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-	<base href="http://localhost:58611/">
+	<base href="http://37.59.156.70/AutoParts/">
 	<title>@ViewBag.Title - ALFA PARTS</title>
     @*<link href="/Content/site.css" rel="stylesheet">*@
 
-	@Styles.Render("~/Content/css")   
-	@Scripts.Render("~/bundles/modernizr")  
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
 </head>
 
 
@@ -43,8 +43,8 @@
 	<li>@Html.ActionLink("Главная", "Index", "Home")</li>
 	<li>@Html.ActionLink("Новости", "News", "Home")</li>
         <li>@Html.ActionLink("О Компании", "About", "Home")</li>
-        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>                                       
-                    
+        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
+
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Админка<b class="caret"></b></a>
@@ -56,7 +56,7 @@
 								<li>@Html.ActionLink("Поставщики", "Index", "Suppliers")</li>
                                 <li>@Html.ActionLink("Уточнения позиций", "Index", "PartAlias")</li>
                                 <li>@Html.ActionLink("Таблица замен", "Index", "PartReplacements")</li>
-                                <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>                                
+                                <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>
                                 <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
                             </ul>
                         </li>
@@ -66,17 +66,17 @@
 	</div>
 </div>
 </div>
-</header>  
+</header>
 
 <DIV class="bluebox">
 
 </DIV>
 
 <DIV class="main-box">
-	
+
 @RenderBody()
 
-</DIV> 
+</DIV>
 
 
 
@@ -88,4 +88,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
