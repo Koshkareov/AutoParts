@@ -205,6 +205,12 @@ namespace AutoPartsWebSite.Controllers
                 {
                     numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
                 }
+                // find and add replacement to numbers list
+                var autopartsReplacement = (from s in db.PartReplacement
+                                            where numbersList.Contains(s.Number)
+                                            select s.Replacement).ToList();
+                numbersList.AddRange(autopartsReplacement);
+                // create array from list
                 autopartNumbersList = numbersList.ToArray();
 
                 // read about ".Select(x => new Part"  by link  
