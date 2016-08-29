@@ -1,30 +1,26 @@
 ﻿@model AutoPartsWebSite.Models.Rate
 
 @{
-    ViewBag.Title = "Новая";
+    ViewBag.Title = "НОВАЯ НАЦЕНКА";
     Model.Suppliers = ViewBag.SuppliersList;
 }
 
-<h2>Новая</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Наценка</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
+            
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.SupplierId, Model.Suppliers, htmlAttributes: new { @class = "form-control" })
                 @*@Html.EditorFor(model => model.SupplierId, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -33,29 +29,22 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+            
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Data } })
-                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", placeholder="ПРОЦЕНТ" } })
                 @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
+                <input type="submit" value="ДОБАВИТЬ" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку наценок", "Index")
+</div><br>
+<div id="cntr">
+    @Html.ActionLink("Назад к списку наценок", "IndexUser", new { id = ViewBag.UserId })
+</div>
 </div>

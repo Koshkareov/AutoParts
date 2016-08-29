@@ -4,21 +4,20 @@
 @using Microsoft.AspNet.Identity.Owin;
 
 @{
-    ViewBag.Title = "Пользователи";
+    ViewBag.Title = "РЕЕСТР ПОЛЬЗОВАТЕЛЕЙ";
 }
+	<DIV class="main-text">
 
-<h2>Список пользователей</h2>
+	<h1 id="cntr">@ViewBag.Title</h1>
+	<br>
 
-<p>
-    @Html.ActionLink("Новый пользователь", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayName("E-Mail")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            @Html.DisplayName("Имя Фамилия")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Phone)
@@ -62,26 +61,30 @@
                     @item.Roles.Count                        
                 }                
             </td>
-            <td>                
+            <td id="cntr">                
                 @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Просмотр", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Удалить", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
                 @using (Html.BeginForm("IndexUser", "Payments", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("id", item.Id)
                     @*@Html.Hidden("returnUrl", Request.Url.PathAndQuery)*@
-                    <input type="submit" value="Платежи" class="btn btn-default" />
+                    <input type="submit" value="Платежи" class="btn btn-default but1" />
                 }
                 @using (Html.BeginForm("IndexUser", "Rates", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("id", item.Id)
                     @*@Html.Hidden("returnUrl", Request.Url.PathAndQuery)*@
-                    <input type="submit" value="Наценки" class="btn btn-default" />
+                    <input type="submit" value="Наценки" class="btn btn-default but2" />
                 }
             </td>
         </tr>
     }
 
 </table>
+</div>
+<div id="cntr">@Html.ActionLink("Добавить пользователя", "Create", htmlAttributes: new { @class = "alink1" }, routeValues: null )
+<br>
+</div><br>

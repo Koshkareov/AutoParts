@@ -1,23 +1,24 @@
 ﻿@model AutoPartsWebSite.Models.PartAlias
 
 @{
-    ViewBag.Title = "Изменить";
+    ViewBag.Title = "ИЗМЕНИТЬ УТОЧНЕНИЯ ПО ПОЗИЦИИ";
 }
 
-<h2>Изменить</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+
+<div class="reg-form">
+<br>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Уточнение описания детали</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">Номер
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
@@ -25,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            Описание
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -33,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+            Объем
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
@@ -41,7 +42,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
+            Вес
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
@@ -50,12 +51,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="СОХРАНИТЬ" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку", "Index")
+</div>
+<br />
+<div id="cntr">
+    @Html.ActionLink("Назад в уточнение позиций", "Index")
+</div>
 </div>

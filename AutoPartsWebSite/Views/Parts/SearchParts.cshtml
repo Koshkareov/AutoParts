@@ -11,20 +11,23 @@
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
     maxSearchItemCount = ViewBag.SearchLimit;
-    maxSearchRowsCount = 10; 
+    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
     searchMsgText = "Результат для поиска " + @ViewBag.SearchLimit + " позиций из " + @ViewBag.ItemsToSearch;
 }
+	<DIV class="main-text">
 
-<div class="jumbotron">
-    <h2>Поиск запчастей</h2>
+	<h2 id="cntr">ПОИСК ПО НОМЕРУ ЗАПЧАСТИ</h2>
 
-    <p>
+	<div class="reg-form">
+	<br>
+
         @using (Html.BeginForm("SearchParts", "Parts", FormMethod.Post))
         {
-        <p>
-            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })                     
-            <input type="submit" value="Поиск" />
-        </p>
+
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60 })
+            @*@Html.Hidden("maxItemCount", maxSearchItemCount)*@            
+            <input type="submit" value="НАЙТИ" />
+
         }       
 
         @if (ViewBag.SearchLimit < ViewBag.ItemsToSearch)
@@ -33,10 +36,18 @@
                 @searchMsgText
             </div>
         }
-    </div>
 
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+</div></div>
 <table class="table">
     <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.ImportId)
+            </th>*@
         <th>
             @Html.DisplayName("Марка")
         </th>
@@ -78,6 +89,9 @@
     foreach (var item in Model)
     {
         <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.ImportId)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
@@ -110,19 +124,22 @@
                 <td>             
                     @Html.TextBox("Amount" + item.Id, "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })                
                 </td>
-            }           
+            }
+            
         </tr>
     }
-    if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
-    {
-    <div class="pull-right">
-        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-        <input type="submit" class="btn btn-success" value="Добавить в корзину" />
-    </div>
-    }
- }
 
+if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+    {
+    <tr class="trCart"><td id="white" colspan="10">
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" id="cntr" class="btn btn-success but" value="ДОБАВИТЬ В КОРЗИНУ" />
+    </td></tr>
+    }
+}
 </table>
-<p>
+
+<div id="cntr"><br>
     @Html.ActionLink("Экспорт результатов в Excel", "Excel")
-</p>
+</div>
+<br>

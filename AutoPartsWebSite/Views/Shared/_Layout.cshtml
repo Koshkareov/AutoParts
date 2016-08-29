@@ -1,82 +1,91 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Автомобильные запчасти ALFA-PARTS</title>
-    <meta charset="utf-8" />
-    <META http-equiv="content-language" content="ru">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed|Open+Sans+Condensed:300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-    <title>@ViewBag.Title - ALFA PARTS</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")    
+	<meta charset="utf-8">
+	<META http-equiv="content-language" content="ru">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:image" content="http://alfa-parts.com/Alfa-Parts-logo.png" />
+	<meta name="description" content="Оптовая продажа оригинальных автомобильных запчастей и их аналогов с доставкой из Объединенных Арабских Эмиратов.">
+	<meta name="author" content="http://alfa-parts.com">
+	<link rel="shortcut icon" href="http://alfa-parts.com/favicon.ico">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,200,300,100&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<base href="http://localhost:58611/">
+	<title>@ViewBag.Title - ALFA PARTS</title>
+    @*<link href="/Content/site.css" rel="stylesheet">*@
 
+	@Styles.Render("~/Content/css")   
+	@Scripts.Render("~/bundles/modernizr")  
 </head>
+
+
+
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("ALFA PARTS", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Поиск", "Index", "Home")</li>*@
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>                                       
+<header>
+<div class="shapka"><div class="header-top">
+<aside class="service">
+@Html.Partial("_LoginPartial")
+</aside>
+	<div class="logo"><a href="../Autoparts/"><img src="Content/img/Alfa-Parts.png"></a></div>
+</div>
+<div class="header-down">
+	<aside class="contacts">
+	<ul class="cont">
+	<li class="ttt"><span class="ttt"></span></li>
+	<li><a class="tel" href="tel:+971520000000"><strong>+971(52) 000 0 000</strong></a></li>
+	<li id="milo"><a class="mail" href="mailto:info@alfa-parts.com">info@alfa-parts.com</a></li>
+	</ul>
+	</aside>
+	<div class="main-menu">
+	<ul class="main-nav">
+
+	<li>@Html.ActionLink("Главная", "Index", "Home")</li>
+	<li>@Html.ActionLink("Новости", "News", "Home")</li>
+        <li>@Html.ActionLink("О Компании", "About", "Home")</li>
+        <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>                                       
                     
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li class="dropdown">
-                            <a class="dropdown-toggle"
-                               data-toggle="dropdown"
-                               href="#">
-                                Админ
-                                <b class="caret"></b>
-                            </a>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Админка<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <!-- links -->
-                                <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
-                                <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>                                
-                                <li>@Html.ActionLink("Заказы клиентов", "Index", "OrdersAdmin")</li>
-                                <li>@Html.ActionLink("Поставщики", "Index", "Suppliers")</li>
-                                <li>@Html.ActionLink("Импорт", "Index", "Imports")</li>
+								<li>@Html.ActionLink("Заказы клиентов", "Index", "OrdersAdmin")</li>
+								<li>@Html.ActionLink("Импорт прайсов", "Index", "Imports")</li>
                                 <li>@Html.ActionLink("Шаблоны импорта", "Index", "ImportTemplates")</li>
-                                <li>@Html.ActionLink("Уточнение описания детали", "Index", "PartAlias")</li>
-                                <li>@Html.ActionLink("Таблица замен", "Index", "PartReplacements")</li>                                
+								<li>@Html.ActionLink("Поставщики", "Index", "Suppliers")</li>
+                                <li>@Html.ActionLink("Уточнения позиций", "Index", "PartAlias")</li>
+                                <li>@Html.ActionLink("Таблица замен", "Index", "PartReplacements")</li>
+                                <li>@Html.ActionLink("Пользователи", "Index", "UsersAdmin")</li>                                
+                                <li>@Html.ActionLink("Роли", "Index", "RolesAdmin")</li>
                             </ul>
                         </li>
                     }
-                </ul> 
-                
-                
-                @Html.Partial("_LoginPartial")
+	</ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
-                    {
-                        <li>@Html.ActionLink("Мои заказы", "Index", "Orders")</li>
-                        <li>@Html.Action("CartSummary", "Carts")</li>
-                        
-                    }                    
-                </ul>
+	</div>
+</div>
+</div>
+</header>  
 
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - ALFA PARTS TRADING FZE.</p>
-        </footer>
-    </div>
+<DIV class="bluebox">
+
+</DIV>
+
+<DIV class="main-box">
+	
+@RenderBody()
+
+</DIV> 
+
+
+
+<div class="footer">
+<p>© ALFA PARTS TRADING FZE. UNITED ARAB EMIRATES.<br>INFO@ALFA-PARTS.COM<br><span id="">+971 52 000 0 000</span></p>
+</div>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+

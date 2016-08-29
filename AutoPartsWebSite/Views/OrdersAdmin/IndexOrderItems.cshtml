@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.OrderItem>
 
 @{
-    ViewBag.Title = "Позиции заказа" + Model.FirstOrDefault().OrderId;
+    ViewBag.Title = "Позиции заказа № " + Model.FirstOrDefault().OrderId;
 }
 
-<h2>Позиции заказа # @Model.FirstOrDefault().OrderId</h2>
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+</div>
 <table class="table">
     <tr>
         <th>
@@ -62,7 +59,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Number)
         </td>        
-        <td TITLE="@Html.DisplayFor(modelItem => item.Name)">
+        <td>
             @Html.DisplayFor(modelItem => item.Details)
         </td>
         <td>
@@ -87,20 +84,17 @@
             @Html.DisplayFor(modelItem => item.Total)
         </td>        
         <td>
-            @*@Html.DisplayFor(modelItem => item.State)*@
             @item.getOrderItemStates().First(itm => itm.Value == item.State.ToString()).Text
         </td>
         <td>
-            @Html.ActionLink("Изменить", "EditOrderItems", new { id=item.Id })
-             @*|
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+            @Html.ActionLink("Изменить", "EditOrderItems", new { id=item.Id }) 
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
-
 </table>
 
-<div>
-    @Html.ActionLink("Вернуться к списку Заказов", "Index")
+<br>
+<div id="cntr">
+    @Html.ActionLink("Назад в заказы клиентов", "Index")
 </div>

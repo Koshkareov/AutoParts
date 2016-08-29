@@ -1,40 +1,27 @@
 ﻿@model AutoPartsWebSite.Models.PartReplacement
 
 @{
-    ViewBag.Title = "Удалить";
+    ViewBag.Title = "УДАЛЕНИЕ ЗАМЕНЫ";
 }
 
-<h2>Удалить</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
-<h3>Вы точно уверены, что хотите удалить ?</h3>
-<div>
-    <h4>Таблица замен</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Number)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Number)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Replacement)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Replacement)
-        </dd>
-
-    </dl>
+<h3>Внимание!</h3>
+<p>Номер: <span id="red">@Html.DisplayFor(model => model.Number)</span></p>
+<p>Замена: @Html.DisplayFor(model => model.Replacement)</p>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку", "Index")
+            <input type="submit" value="УДАЛИТЬ" class="btn btn-default" />
         </div>
     }
 </div>
+</div>
+<div id="cntr">
+@Html.ActionLink("Назад в таблицу замен", "Index")
+</div><br>

@@ -1,14 +1,17 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.Rate>
 
 @{
-    ViewBag.Title = "Наценки";
+ViewBag.Title = "НАЦЕНКИ ДЛЯ ПОЛЬЗОВАТЕЛЯ";
 }
+	<DIV class="main-text">
+	<h1>@ViewBag.Title</h1>
+	<h3 id="cntr">@ViewBag.UserName</h3>
+	<br>
 
-<h2>Наценки для @ViewBag.UserName</h2>
 
-<p>
-    @Html.ActionLink("Новая наценка", "Create", new { UserId = ViewBag.UserId })    
-</p>
+<div class="alink2" id="cntr">
+    @Html.ActionLink("ДОБАВИТЬ НАЦЕНКУ", "Create", new { UserId = ViewBag.UserId })
+</div><br>
 <table class="table">
     <tr>
         @*<th>
@@ -49,3 +52,10 @@
 }
 
 </table>
+
+<br>
+<div id="cntr">
+    @Html.ActionLink("Назад к реестру пользователей", "Index", "UsersAdmin")
+</div>
+
+</div>

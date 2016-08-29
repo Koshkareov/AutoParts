@@ -1,81 +1,52 @@
 ﻿@model AutoPartsWebSite.Models.Import
 
 @{
-    ViewBag.Title = "Новый";
+    ViewBag.Title = "НОВЫЙ ИМПОРТ";
 }
 
-<h2>Новый</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
 @using (Html.BeginForm("Create", "Imports", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Импорт</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.Data } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            Выбор поставщика:
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.UserId} })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Supplier, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.DropDownListFor(model => model.SupplierId, Model.Suppliers, htmlAttributes: new { @class = "form-control" })*@
-                @*@Html.EditorFor(model => model.SupplierId, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownListFor(model => model.SupplierId, (IEnumerable<SelectListItem>) ViewBag.SuppliersList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.DeliveryTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DeliveryTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DeliveryTime, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
-            @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
+            Имя файла:
             <div class="col-md-10">
-                <input type="file" id="FileName" name="upload" accept = ".xlsx" />
+<input type="file" name="upload" id="upload_hidden" onchange="document.getElementById('upload_visible').value = this.value;" accept = ".xlsx" />
+<input type="text" readonly="1" id="upload_visible" onclick="document.getElementById('upload_hidden').click();" />
+@* <button onclick="document.getElementById('upload_hidden').click();">Обзор</button> *@
+
                 @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
             </div>
         </div>
-
-       @*<div class="form-group">
-            @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" id="ImportFileName" name="upload" />
-                
-                @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })               
-            </div>
-        </div>*@
-
+<br>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
+                <input type="submit" value="ИМПОРТИРОВАТЬ" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 @ViewBag.Message
-
-@*@Html.TextBoxFor(model => model.FileName, new { htmlAttributes = new { @class = "input-file form-control", type = "file", accept = ".xlsx" , name = "upload" } })*@
-<div>
-    @Html.ActionLink("Вернуться к списку импортов", "Index")
+</div>
+</div>
+<div id="cntr">
+    @Html.ActionLink("Назад в импорт прайсов", "Index")
 </div>

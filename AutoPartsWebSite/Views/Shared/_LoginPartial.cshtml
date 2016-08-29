@@ -3,21 +3,10 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            @*<li>
-                @Html.ActionLink("Корзина", "Index", "Carts")                
-            </li>*@ 
-            <li>
-                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>            
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
-        </ul>
+<div class="avtorz"><span class="orders">@Html.ActionLink("Мои заказы", "Index", "Orders")</span><span class="logout"><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></span></div><div class="lang"><span class="cart">@Html.Action("CartSummary", "Carts")</span></div>
         
     }
 }
 else {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+<div class="avtorz"><span class="reg">@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</span><span class="login">@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</span></div><div class="lang"><a id="L10"><span>ENG</span></a><a class="active" id="L60"><span>РУС</span></a></div>
 }

@@ -196,6 +196,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\Alfa-Parts.png" />
+    <Content Include="Content\img\arr_d.png" />
+    <Content Include="Content\img\cart.png" />
+    <Content Include="Content\img\cart1.png" />
+    <Content Include="Content\img\cart2.png" />
+    <Content Include="Content\img\login.png" />
+    <Content Include="Content\img\logout.png" />
+    <Content Include="Content\img\mail.png" />
+    <Content Include="Content\img\mail1.png" />
+    <Content Include="Content\img\orders.png" />
+    <Content Include="Content\img\points.png" />
+    <Content Include="Content\img\red-mail.png" />
+    <Content Include="Content\img\reg.png" />
+    <Content Include="Content\img\tel.png" />
+    <Content Include="Content\img\tel1.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

@@ -3,13 +3,17 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Таблица замен";
+    ViewBag.Title = "ТАБЛИЦА ЗАМЕН";
 }
 
-<h2>Таблица замен</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+
+<div class="reg-form">
+<br>
 
 <p>
-    @Html.ActionLink("Новая", "Create") |
+    @Html.ActionLink("Новая замена", "Create") |
     @Html.ActionLink("Импорт (Excel)", "ExcelImport") |
     @Html.ActionLink("Экспорт (Excel)", "ExcelExport")
 </p>
@@ -18,18 +22,18 @@
 {
     <p>
         @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "КОД ЗАПЧАСТИ" })
-        <input type="submit" value="Найти" />
+        <input type="submit" value="НАЙТИ" />
     </p>
 }
-
+</DIV>
 <table class="table">
     <tr>
         <th>
-            @*@Html.DisplayNameFor(model => model.Number)*@
+            
             @Html.ActionLink("Номер", "Index", new { sortOrder = ViewBag.NumberSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Replacement)*@
+            
             @Html.ActionLink("Замена", "Index", new { sortOrder = ViewBag.ReplacementSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
@@ -45,7 +49,6 @@
         </td>
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
         </td>
     </tr>
@@ -53,7 +56,10 @@
 
 </table>
 <br />
+@*
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+*@
+</DIV>

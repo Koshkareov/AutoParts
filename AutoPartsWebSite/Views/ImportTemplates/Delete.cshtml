@@ -1,121 +1,29 @@
 ﻿@model AutoPartsWebSite.Models.ImportTemplate
 
 @{
-    ViewBag.Title = "Удалить";
+    ViewBag.Title = "УДАЛИТЬ ШАБЛОН ИМПОРТА";
 }
 
-<h2>Удалить</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
-<h3>Вы точно хотите удалить это?</h3>
-<div>
-    <h4>Шаблон импорта</h4>
-    <hr />
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartRow)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartRow)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BrandColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BrandColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumberColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NameColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NameColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DetailsColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DetailsColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SizeColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SizeColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WeightColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WeightColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QuantityColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuantityColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceColumn)
-        </dd>
-
-    </dl>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<h3>Внимание!</h3>
+<p>Название шаблона: <span id="red">@Html.DisplayFor(model => model.Name)</span></p>
+<p>Дата создания: @Html.DisplayFor(model => model.Date)</p>
+<p>Кем создан: @Html.DisplayFor(model => model.UserName)</p>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку шаблонов", "Index")
+            <input type="submit" value="УДАЛИТЬ" class="btn btn-default" />
         </div>
     }
+</div>
+</div>
+<div id="cntr">
+@Html.ActionLink("Назад в шаблоны импорта", "Index")
 </div>

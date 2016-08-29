@@ -1,114 +1,31 @@
 ﻿@model AutoPartsWebSite.Models.ImportTemplate
 
 @{
-    ViewBag.Title = "Просмотр";
+    ViewBag.Title = "ПРОСМОТР ШАБЛОНА ИМПОРТА";
 }
 
-<h2>Просмотр</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
-<div>
-    <h4>Шаблон импорта</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+<p>@Html.DisplayNameFor(model => model.Date): @Html.DisplayFor(model => model.Date)</p>
+<p>@Html.DisplayNameFor(model => model.UserName): @Html.DisplayFor(model => model.UserName)</p>
+<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</p>
+<p>@Html.DisplayNameFor(model => model.StartRow): @Html.DisplayFor(model => model.StartRow)</p>
+<p>@Html.DisplayNameFor(model => model.BrandColumn): @Html.DisplayFor(model => model.BrandColumn)</p>
+<p>@Html.DisplayNameFor(model => model.NumberColumn): @Html.DisplayFor(model => model.NumberColumn)</p>
+<p>@Html.DisplayNameFor(model => model.NameColumn): @Html.DisplayFor(model => model.NameColumn)</p>
+<p>@Html.DisplayNameFor(model => model.DetailsColumn): @Html.DisplayFor(model => model.DetailsColumn)</p>
+<p>@Html.DisplayNameFor(model => model.SizeColumn): @Html.DisplayFor(model => model.SizeColumn)</p>
+<p>@Html.DisplayNameFor(model => model.WeightColumn): @Html.DisplayFor(model => model.WeightColumn)</p>
+<p>@Html.DisplayNameFor(model => model.QuantityColumn): @Html.DisplayFor(model => model.QuantityColumn)</p>
+<p>@Html.DisplayNameFor(model => model.PriceColumn): @Html.DisplayFor(model => model.PriceColumn)</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+<div class="alink2">@Html.ActionLink("ИЗМЕНИТЬ", "Edit", new { id = Model.Id })</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartRow)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartRow)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BrandColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BrandColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumberColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NameColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NameColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DetailsColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DetailsColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SizeColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SizeColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WeightColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WeightColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QuantityColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuantityColumn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceColumn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceColumn)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Вернуться к списку шаблонов", "Index")
-</p>
+</div>
+
+<div id="cntr">@Html.ActionLink("Назад в шаблоны импорта", "Index")</div></br>

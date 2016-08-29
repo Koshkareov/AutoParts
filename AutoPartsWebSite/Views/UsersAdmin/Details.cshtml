@@ -1,75 +1,45 @@
 ﻿@model IdentityAutoPart.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Просмотр";
+    ViewBag.Title = "ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ";
 }
 
-<h2>Просмотр</h2>
+	<DIV class="main-text">
 
-<div>
-    <h4>Данные пользователя.</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MoneyLimit)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MoneyLimit)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SearchLimit)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SearchLimit)
-        </dd>
-    </dl>
-</div>
-<h4>Список ролей этого пользователя</h4>
+	<h1 id="cntr">@ViewBag.Title</h1>
+	<div class="reg-form">
+	<br>
+
+<h3>@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h3>
+<p>E-MAIL: @Html.DisplayFor(model => model.UserName)</p>
+<p>ТЕЛ: @Html.DisplayFor(model => model.Phone)</p>
+<p>ЛИМИТ: $@Html.DisplayFor(model => model.MoneyLimit)</p>
+<p>ПОИСК ПОЗИЦИЙ: @Html.DisplayFor(model => model.SearchLimit)</p>
+<br>
+<strong>РОЛИ:</strong>
+
 @if (ViewBag.RoleNames.Count == 0)
 {
-    <hr />
     <p>У этого пользователя нет ролей.</p>
 }
-
-<table class="table">
-
-    @foreach (var item in ViewBag.RoleNames)
-    {
-        <tr>
-            <td>
-                @item
-            </td>
-        </tr>
-    }
-</table>
-<p>
-    @Html.ActionLink("Изменить", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Вернуться к списку пользователей", "Index")
-</p>
+<ul id="lft mw100">
+@foreach (var item in ViewBag.RoleNames)
+{
+<li id="mw100">
+@item
+</li>
+}
+</ul>
+<br>
+<div class="alink2" id="cntr">
+    @Html.ActionLink("ИЗМЕНИТЬ", "Edit", new { id = Model.Id })
+</div>
+<br>
+</div>
+<br>
+<div id="cntr">
+    @Html.ActionLink("Назад", "Index")
+</div>
 
 
 

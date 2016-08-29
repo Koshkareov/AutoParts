@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.ImportTemplate>
 
 @{
-    ViewBag.Title = "Шаблоны импорта";
+    ViewBag.Title = "ШАБЛОНЫ ИМПОРТА";
 }
 
-<h2>Шаблоны импорта</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<br>
+<div class="alink2" id="cntr">
+    @Html.ActionLink("НОВЫЙ ШАБЛОН", "Create")
+</div><br>
 
-<p>
-    @Html.ActionLink("Новый шаблон", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -49,3 +51,4 @@
 }
 
 </table>
+</DIV></DIV>

@@ -1,60 +1,42 @@
 ﻿@model IdentityAutoPart.Models.LoginViewModel
 
 @{
-    ViewBag.Title = "Вход";
+    ViewBag.Title = "АВТОРИЗАЦИЯ ПОЛЬЗОВАТЕЛЯ";
+}
+	<DIV class="main-text">
+
+	<h2 id="cntr">@ViewBag.Title</h2>
+
+	<div class="reg-form">
+	<br>
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+@Html.AntiForgeryToken()
+
+@Html.ValidationSummary("", new { @class = "text-danger" })
+	
+	@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder="E-MAIL" })
+			
+	@Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder="ПАРОЛЬ" })
+				
+	<div class="checkbox">
+    @Html.CheckBoxFor(m => m.RememberMe)
+    @Html.LabelFor(m => m.RememberMe)
+    </div>
+	<input type="submit" value="ВОЙТИ" class="btn btn-default" />
+				
+    <p>
+    @Html.ActionLink("Зарегистрировать нового пользователя?", "Register")
+    </p>
+    <p>
+    @Html.ActionLink("Забыли пароль?", "ForgotPassword")
+    </p><br>
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
-                @Html.AntiForgeryToken()
-                <h4>Войти в систему.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Вход" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Зарегистрировать нового пользователя?", "Register")
-                </p>
-                <p>
-                    @Html.ActionLink("Забыли пароль?", "ForgotPassword")
-                </p>
-            }
-        </section>
-    </div>
-    @*<div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new IdentityAutoPart.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>*@
-</div>
+</DIV>
+</DIV>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

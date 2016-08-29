@@ -4,59 +4,28 @@
     ViewBag.Title = "Удалить";
 }
 
-<h2>Удалить</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
-<h3>Вы точно уверены, что хотите удалить этого поставщика?</h3>
-<div>
-    <h4>Поставщик</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<h3>Внимание!</h3>
+<p>Код поставщика: <span id="red">@Html.DisplayFor(model => model.Code)</span></p>
+<p>Название поставщика: @Html.DisplayFor(model => model.Name)</p>
+<p>Базовая наценка (%): @Html.DisplayFor(model => model.Rate)</p>
+<p>Срок доставки (дней): @Html.DisplayFor(model => model.DeliveryTime)</p>
+<p>Шаблон импорта: @Html.DisplayFor(model => model.ImportTemplate)</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Code)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Code)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeliveryTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DeliveryTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImportTemplate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImportTemplate)
-        </dd>
-
-    </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку поставщиков", "Index")
+            <input type="submit" value="УДАЛИТЬ" class="btn btn-default" />
         </div>
     }
+</div>
+</div>
+<div id="cntr">
+@Html.ActionLink("Назад в постащики", "Index")
 </div>

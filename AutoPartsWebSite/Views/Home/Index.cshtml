@@ -5,24 +5,34 @@
 }
 @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
 {
-    maxSearchItemCount = 10;
-    maxSearchRowsCount = 10; 
+    maxSearchItemCount = 10; //toDo: teake it from DB
+    maxSearchRowsCount = 10; //toDo: good to change it to maxSearchItemCount and add scroling
 }
-<div class="jumbotron">
-    <h2>Поиск запчастей</h2>
+	<DIV class="main-text">
 
-    <p>
+	<h2 id="cntr">ПОИСК ПО НОМЕРУ ЗАПЧАСТИ</h2>
+
+	<div class="reg-form">
+	<br>
+
+
         @using (Html.BeginForm("Search", "Parts", FormMethod.Post))
         {
-        <p>
-            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60, placeholder = "КОД ЗАПЧАСТИ" })
-            <input type="submit" value="Поиск" />
-     </p>
-        }       
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60, placeholder="КОД ЗАПЧАСТИ" })
+            @*@Html.Hidden("maxItemCount", maxSearchItemCount)*@
+          
+<input type="submit" name="" value="НАЙТИ" class="but" />
+}
+	</DIV>
 
-</div>
 
+@*<p>
+    @Html.ActionLink("Экспорт результатов в Excel", "Excel")
+</p>*@
+
+	</DIV>
 @ViewBag.Message
+
 
 
 

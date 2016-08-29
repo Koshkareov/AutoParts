@@ -3,32 +3,35 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Уточнение описания детали";
+    ViewBag.Title = "УТОЧНЕНИЯ ОПИСАНИЙ ПО ПОЗИЦИЯМ";
 }
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
 
-<h2>Уточнение описания детали</h2>
+<div class="reg-form">
+<br>
 
 <p>
-    @Html.ActionLink("Новое", "Create")
+    @Html.ActionLink("Добавить описание", "Create")
 </p>
 
 @using (Html.BeginForm("Index", "PartAlias", FormMethod.Get))
 {
     <p>
         @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "КОД ЗАПЧАСТИ" })
-        <input type="submit" value="Найти" />
+        <input type="submit" value="НАЙТИ" />
     </p>
 }
+
+</DIV>
 
 <table class="table">
     <tr>
         <th>
-            @*@Html.DisplayNameFor(model => model.Number)*@
             @Html.ActionLink("Номер", "Index", new { sortOrder = ViewBag.NumberSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Name)*@
-            @Html.ActionLink("Название", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Описание", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             Объем
@@ -55,7 +58,6 @@
         </td>
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
         </td>
     </tr>
@@ -67,3 +69,4 @@
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</DIV>

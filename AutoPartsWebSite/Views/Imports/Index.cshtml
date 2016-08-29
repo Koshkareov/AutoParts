@@ -5,14 +5,16 @@
 @model IEnumerable<AutoPartsWebSite.Models.Import>
 
 @{
-    ViewBag.Title = "Импорт";
+    ViewBag.Title = "ИМПОРТ ПРАЙСОВ";
 }
 
-<h2>Импорт</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<br>
+<div class="alink2" id="cntr">
+    @Html.ActionLink("НОВЫЙ ИМПОРТ", "Create")
+</div><br>
 
-<p>
-    @Html.ActionLink("Новый импорт", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -71,3 +73,4 @@
 }
 
 </table>
+</div>

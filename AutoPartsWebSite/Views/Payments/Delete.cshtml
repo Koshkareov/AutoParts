@@ -1,48 +1,26 @@
 ﻿@model AutoPartsWebSite.Models.Payment
 
 @{
-    ViewBag.Title = "Удалить";
+    ViewBag.Title = "УДАЛЕНИЕ ПЛАТЕЖА";
 }
 
-<h2>Удалить</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
-<h3>Вы точно уверены, что хотите удалить этот платеж?</h3>
-<div>
-    <h4>Платеж</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @*<dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>*@
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Data)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Data)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-
-    </dl>
+<p>ДАТА: @Html.DisplayFor(model => model.Data)</p>
+<p>СУММА: $@Html.DisplayFor(model => model.Amount)</p>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку платежей", "IndexUser", new { id = Model.UserId })
+            <input type="submit" value="УДАЛИТЬ" class="btn btn-default" />
         </div>
     }
+</div><br>
+<div id="cntr">
+    @Html.ActionLink("Вернуться к списку платежей", "IndexUser", new { id = Model.UserId })
+</div>
 </div>

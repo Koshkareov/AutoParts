@@ -1,86 +1,85 @@
 ﻿@model IdentityAutoPart.Models.EditUserViewModel
 
 @{
-    ViewBag.Title = "Редактирование";
+    ViewBag.Title = "Редактирование данных пользователя";
 }
 
-<h2>Редактирование</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+	<br>
+	<div class="reg-form">
+	<br>
 
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Изменить данные пользователя.</h4>
-        <hr />
+
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-               @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-               @Html.ValidationMessageFor(model => model.FirstName)
-            </div>
+        
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder="E-Mail" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LastName)
-            </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder="ИМЯ" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Phone)
-            </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder="ФАМИЛИЯ" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.MoneyLimit, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.MoneyLimit, new { @class = "form-control", type = "number", min = "0" })
-                @Html.ValidationMessageFor(model => model.MoneyLimit)
-            </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder="НОМЕР ТЕЛЕФОНА" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.SearchLimit, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.SearchLimit, new { @class = "form-control", type = "number", min = "1" })
-                @Html.ValidationMessageFor(model => model.SearchLimit)
-            </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.MoneyLimit, new { @class = "form-control", type = "number", min = "0", placeholder="ЛИМИТ" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Email)
-            </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SearchLimit, new { @class = "form-control", type = "number", min = "1", placeholder="ПОИСК ПОЗИЦИЙ" })
         </div>
+    </div>
+		<br>
         <div class="form-group">
-            @Html.Label("Роли", new { @class = "control-label col-md-2" })
-            <span class=" col-md-10">
+            @Html.Label("Выбрать роль пользователя:", new { @class = "control-label col-md-2" })
+            <ul id="lft">
                 @foreach (var item in Model.RolesList)
                 {
-                    <input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
+                    <li id="ol50"><input type="checkbox" name="SelectedRole" value="@item.Value" checked="@item.Selected" class="checkbox-inline" />
                     @Html.Label(item.Value, new { @class = "control-label" })
+					</li>
                 }
-            </span>
+            </ul>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="СОХРАНИТЬ" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку пользователей", "Index")
+</div><br>
+<div id="cntr">
+    @Html.ActionLink("Назад", "Index")
 </div>
-
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

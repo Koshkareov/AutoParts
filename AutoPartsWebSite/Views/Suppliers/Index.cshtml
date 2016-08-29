@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.Supplier>
 
 @{
-    ViewBag.Title = "Поставщики";
+    ViewBag.Title = "ПОСТАВЩИКИ";
 }
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
 
-<h2>Поставщики</h2>
+<br>
+<div class="alink2" id="cntr">
+    @Html.ActionLink("НОВЫЙ ПОСТАВЩИК", "Create")
+</div><br>
 
-<p>
-    @Html.ActionLink("Новый поставщик", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -48,10 +50,11 @@
         </td>
         <td>
             @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |
+            @*Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |*@
             @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
 
 </table>
+</DIV>

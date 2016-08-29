@@ -1,23 +1,26 @@
 ﻿@model AutoPartsWebSite.Models.PartReplacement
 
 @{
-    ViewBag.Title = "Изменить";
+    ViewBag.Title = "ИЗМЕНЕНИЕ ЗАМЕНЫ";
 }
 
-<h2>Изменить</h2>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+
+<div class="reg-form">
+<br>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Таблица замен</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+            НОМЕР
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
@@ -25,7 +28,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Replacement, htmlAttributes: new { @class = "control-label col-md-2" })
+            ЗАМЕНА
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Replacement, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Replacement, "", new { @class = "text-danger" })
@@ -34,12 +37,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
+                <input type="submit" value="СОХРАНИТЬ" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку", "Index")
 </div>
+<br />
+<div id="cntr">
+    @Html.ActionLink("Назад в таблицу замен", "Index")
+</div>
+</div>
+

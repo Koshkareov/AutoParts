@@ -1,19 +1,21 @@
 ﻿@model IdentityAutoPart.Models.RoleViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создать роль";
 }
 
-<h2>Create.</h2>
+	<DIV class="main-text">
+
+	<h1 id="cntr">@ViewBag.Title</h1>
+
+	<div class="reg-form">
+	<br>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Role.</h4>
-        <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
@@ -26,14 +28,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Создать" class="btn btn-default" />
             </div>
         </div>
-    </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+</div><br>
+<div id="cntr">
+    @Html.ActionLink("Назад", "Index")
+</div>
 </div>
 
 @section Scripts {

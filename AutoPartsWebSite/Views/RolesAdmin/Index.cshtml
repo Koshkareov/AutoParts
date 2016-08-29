@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
-
 @{
-    ViewBag.Title = "Роли";
+    ViewBag.Title = "РОЛИ ПОЛЬЗОВАТЕЛЕЙ";
 }
+	<DIV class="main-text">
 
-<h2>Список ролей</h2>
+	<h1 id="cntr">@ViewBag.Title</h1>
 
-<p>
-    @Html.ActionLink("Новая роль", "Create")
-</p>
+	<div class="reg-form">
+	<br>
+
 <table class="table">
     <tr>
         <th>
@@ -34,3 +34,9 @@
     }
 
 </table>
+</div>
+<br>
+<p id="cntr" class="alink2">
+    @Html.ActionLink("ДОБАВИТЬ РОЛЬ", "Create")
+</p>
+</div>

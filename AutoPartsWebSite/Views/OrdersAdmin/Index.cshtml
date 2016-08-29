@@ -7,50 +7,36 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Заказы Клиентов";
+    ViewBag.Title = "ЗАКАЗЫ КЛИЕНТОВ";
 }
 
-<h2>Заказы Клиентов</h2>
-
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
 @using (Html.BeginForm("Index", "OrdersAdmin", FormMethod.Get))
 {
-    <p>
-        Номер заказа : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { htmlAttributes = new { @class = "form-control" } })
-        <input type="submit" value="Поиск"  class="btn btn-default" />
-    </p>
+
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "НОМЕР ЗАКАЗА" })
+        <input type="submit" value="ПОИСК"  class="btn btn-default" />
+
 }
+</div><br>
 
 <table class="table">
     <tr>
-        <th>
-            @*@Html.DisplayNameFor(model => model.Id)*@
-            @Html.ActionLink("Номер", "Index", new { sortOrder = ViewBag.IdSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>
-        <th>
-            Пользователь
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.Data)*@
-            @Html.ActionLink("Дата", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>
-        <th>            
-            Сумма
-        </th>
-        @*<th>            
-            @Html.ActionLink("Статус", "Index", new { sortOrder = ViewBag.StateSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>*@
+        <th>@Html.ActionLink("Номер", "Index", new { sortOrder = ViewBag.IdSortParm, currentFilter = ViewBag.CurrentFilter })</th>
+		<th>@Html.ActionLink("Дата", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })</th>
+        <th>Пользователь</th>
+        <th>Сумма</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
+        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+		<td>@Html.DisplayFor(modelItem => item.Data)</td>
         <td>
             @{
                 string userFN = "";
@@ -63,24 +49,10 @@
             }            
             @userFN
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Data)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Summary)
-        </td>
-        @*<td>
-            @item.getOrderStates().First(itm => itm.Value == item.State.ToString()).Text                            
-        </td>*@
-        <td>
-            @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Детально", "IndexOrderItems", new { id=item.Id })
-             @*|
-            @Html.ActionLink("Удалить", "Delete", new { id=item.Id })*@
-        </td>
+        <td>@Html.DisplayFor(modelItem => item.Summary)</td>
+        <td>@Html.ActionLink("Детально", "IndexOrderItems", new { id=item.Id })</td>
     </tr>
 }
-
 </table>
 <br />
 @if (Model.PageCount > 1) {
@@ -91,3 +63,4 @@
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     </div>
 }
+</div>

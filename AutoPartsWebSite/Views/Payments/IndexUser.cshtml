@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<AutoPartsWebSite.Models.Payment>
 
 @{
-    ViewBag.Title = "Платежи";
+    ViewBag.Title = "Платежи пользователя " + @ViewBag.UserName;
 }
 
-<h2>Платежи  @ViewBag.UserName</h2>
+<DIV class="main-text">
+<h1>@ViewBag.Title</h1>
 
-<p>
-    @Html.ActionLink("Новый платеж", "Create", new { UserId = ViewBag.UserId })
-</p>
+<p id="cntr" class="alink2">
+    @Html.ActionLink("НОВЫЙ ПЛАТЕЖ", "Create", new { UserId = ViewBag.UserId })
+</p><br>
 <table class="table">
     <tr>
         @*<th>
@@ -43,7 +44,10 @@
 }
 
 </table>
-<p>
-    @Html.ActionLink("Вернуться к списку пользователей", "Index", "UsersAdmin")
-</p>
+
+<br>
+<div id="cntr">
+    @Html.ActionLink("Назад к реестру пользователей", "Index", "UsersAdmin")
+</div>
+</DIV>
 

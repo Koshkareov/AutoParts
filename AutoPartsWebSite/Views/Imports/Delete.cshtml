@@ -1,80 +1,32 @@
 ﻿@model AutoPartsWebSite.Models.Import
 
 @{
-    ViewBag.Title = "Удалить";
+    ViewBag.Title = "УДАЛЕНИЕ ДАННЫХ";
 }
 
-<h2>Удалить</h2>
 
-<h3>Вы точно хотите удалить это?</h3>
-<div>
-    <h4>Импорт</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
+<DIV class="main-text">
+<h1 id="cntr">@ViewBag.Title</h1>
+<div class="reg-form">
+<br>
 
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
+<h3>Внимание!</h3>
+<p>Операция импорта № @Html.DisplayFor(model => model.Id) от @Html.DisplayFor(model => model.Date)</p>
+<p>Пользователь: @Html.DisplayFor(model => model.UserName)</p>
+<p>Поставщик: @Html.DisplayFor(model => model.Supplier)</p>
+<p>Количество позиций: @Html.DisplayFor(model => model.LinesNumber)</p>
+<p>Файл: <span id="red">@Html.DisplayFor(model => model.FileName)</span></p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Supplier)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Supplier)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeliveryTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeliveryTime)
-        </dd>
-
-        <dt>
-        @Html.DisplayNameFor(model => model.LinesNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LinesNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FileName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FileName)
-        </dd>
-
-    </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Удалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку импортов", "Index")
+            <input type="submit" value="УДАЛИТЬ" class="btn btn-default" />
         </div>
     }
 </div>
+</div>
+<div id="cntr">
+@Html.ActionLink("Назад в импорт прайсов", "Index")
+</div><br>
