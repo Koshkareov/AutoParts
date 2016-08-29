@@ -121,62 +121,62 @@ namespace AutoPartsWebSite.Controllers
         }
         
 
-        //[Authorize(Roles = "RegistredUser")]
-        public ActionResult SearchParts(string autopartNumbers) //, int? maxItemCount)
-        {
-            string[] autopartNumbersList = new string[] { };
-            int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
-            ViewBag.SearchLimit = maxItemCount;
-            var autoparts = (from s in db.Parts
-                             select s).Take(0);
+        ////[Authorize(Roles = "RegistredUser")]
+        //public ActionResult SearchParts(string autopartNumbers) //, int? maxItemCount)
+        //{
+        //    string[] autopartNumbersList = new string[] { };
+        //    int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
+        //    ViewBag.SearchLimit = maxItemCount;
+        //    var autoparts = (from s in db.Parts
+        //                     select s).Take(0);
 
-            if (!String.IsNullOrEmpty(autopartNumbers))
-            {
-                // string txt = TextBox1.Text;
-                string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
-                autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
+        //    if (!String.IsNullOrEmpty(autopartNumbers))
+        //    {
+        //        // string txt = TextBox1.Text;
+        //        string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
+        //        autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
 
-                var numbersList = new List<string>(autopartNumbersList);
+        //        var numbersList = new List<string>(autopartNumbersList);
 
-                // two digits for search item message
-                ViewBag.SearchLimit = maxItemCount;
-                ViewBag.ItemsToSearch = numbersList.Count;
+        //        // two digits for search item message
+        //        ViewBag.SearchLimit = maxItemCount;
+        //        ViewBag.ItemsToSearch = numbersList.Count;
 
-                if (maxItemCount < numbersList.Count)
-                {
-                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
-                }
-                autopartNumbersList = numbersList.ToArray();
+        //        if (maxItemCount < numbersList.Count)
+        //        {
+        //            numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
+        //        }
+        //        autopartNumbersList = numbersList.ToArray();
 
-                //foreach (string autopartNumber in autopartNumbersList)
-                //{
-                //    if (!String.IsNullOrEmpty(autopartNumber))                 
-                //    {
-                //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));                       
-                //    }
-                //}
+        //        //foreach (string autopartNumber in autopartNumbersList)
+        //        //{
+        //        //    if (!String.IsNullOrEmpty(autopartNumber))                 
+        //        //    {
+        //        //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));                       
+        //        //    }
+        //        //}
 
 
-                //assemble an array of ID values
-                //int[] customerIds = new int[] { 1, 2, 3 };
-                //string autopartNumbersString = autopartNumbersList.ToString(", ");
+        //        //assemble an array of ID values
+        //        //int[] customerIds = new int[] { 1, 2, 3 };
+        //        //string autopartNumbersString = autopartNumbersList.ToString(", ");
 
-                autoparts = (from s in db.Parts
-                             where autopartNumbersList.Contains(s.Number)
-                             select s).Take(1000);
+        //        autoparts = (from s in db.Parts
+        //                     where autopartNumbersList.Contains(s.Number)
+        //                     select s).Take(1000);
 
-                //autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
+        //        //autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
 
-            }
-            foreach (Part part in autoparts)
-            {
-                part.Price = CalcUserPrice(part.Id);
-                part.Quantity = CalcUserQuantity(part.Id);
-            }
-            //Session["AutopartsSearchResult"] = autoparts; //.ToList();
-            Session["AutopartNumbersList"] = autopartNumbersList;
-            return View(autoparts);
-        }
+        //    }
+        //    foreach (Part part in autoparts)
+        //    {
+        //        part.Price = CalcUserPrice(part.Id);
+        //        part.Quantity = CalcUserQuantity(part.Id);
+        //    }
+        //    //Session["AutopartsSearchResult"] = autoparts; //.ToList();
+        //    Session["AutopartNumbersList"] = autopartNumbersList;
+        //    return View(autoparts);
+        //}
 
         //[Authorize(Roles = "RegistredUser")]
         public ActionResult Search(string autopartNumbers) 
@@ -270,110 +270,110 @@ namespace AutoPartsWebSite.Controllers
             }
         }
 
-        private ActionResult SearchTEMP(string autopartNumbers) //, int? maxItemCount)
-        {
-            string[] autopartNumbersList = new string[] { };
-            int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
-            ViewBag.SearchLimit = maxItemCount;
-            //var autoparts = (IQueryable<Part>)(from p in db.Parts
-            //                 select new
-            //                 {
-            //                     p.Id,
-            //                     p.ImportId,
-            //                     p.Brand,
-            //                     p.Number,
-            //                     p.Name,
-            //                     p.Details,
-            //                     p.Size,
-            //                     p.Weight,
-            //                     p.Quantity,
-            //                     p.Price,
-            //                     p.Supplier,
-            //                     p.DeliveryTime,
-            //                     p.SupplierId
-            //                 }
-            //                 ).Take(0);
+        //private ActionResult SearchTEMP(string autopartNumbers) //, int? maxItemCount)
+        //{
+        //    string[] autopartNumbersList = new string[] { };
+        //    int maxItemCount = GetSearchLimit(); // get info from db about curren user search limit
+        //    ViewBag.SearchLimit = maxItemCount;
+        //    //var autoparts = (IQueryable<Part>)(from p in db.Parts
+        //    //                 select new
+        //    //                 {
+        //    //                     p.Id,
+        //    //                     p.ImportId,
+        //    //                     p.Brand,
+        //    //                     p.Number,
+        //    //                     p.Name,
+        //    //                     p.Details,
+        //    //                     p.Size,
+        //    //                     p.Weight,
+        //    //                     p.Quantity,
+        //    //                     p.Price,
+        //    //                     p.Supplier,
+        //    //                     p.DeliveryTime,
+        //    //                     p.SupplierId
+        //    //                 }
+        //    //                 ).Take(0);
 
-            //var autoparts = (from p in db.Parts
-            //                 select p).Take(0);
+        //    //var autoparts = (from p in db.Parts
+        //    //                 select p).Take(0);
 
-            if (!String.IsNullOrEmpty(autopartNumbers))
-            {
-                // string txt = TextBox1.Text;
-                string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
-                autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
+        //    if (!String.IsNullOrEmpty(autopartNumbers))
+        //    {
+        //        // string txt = TextBox1.Text;
+        //        string[] delimiters = { Environment.NewLine, ".", ",", ";", " " }; //new Char[] { '\n', '\r' }
+        //        autopartNumbersList = autopartNumbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries); // StringSplitOptions.None
 
-                var numbersList = new List<string>(autopartNumbersList);
+        //        var numbersList = new List<string>(autopartNumbersList);
 
-                // two digits for search item message
-                ViewBag.SearchLimit = maxItemCount;
-                ViewBag.ItemsToSearch = numbersList.Count;
+        //        // two digits for search item message
+        //        ViewBag.SearchLimit = maxItemCount;
+        //        ViewBag.ItemsToSearch = numbersList.Count;
 
-                if (maxItemCount < numbersList.Count)
-                {
-                    numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
-                }
-                // find and add replacement to numbers list
-                var autopartsReplacement = (from s in db.PartReplacement
-                                            where numbersList.Contains(s.Number)
-                                            select s.Replacement).ToList();
-                numbersList.AddRange(autopartsReplacement);
+        //        if (maxItemCount < numbersList.Count)
+        //        {
+        //            numbersList.RemoveRange((int)maxItemCount, numbersList.Count() - (int)maxItemCount);
+        //        }
+        //        // find and add replacement to numbers list
+        //        var autopartsReplacement = (from s in db.PartReplacement
+        //                                    where numbersList.Contains(s.Number)
+        //                                    select s.Replacement).ToList();
+        //        numbersList.AddRange(autopartsReplacement);
 
-                autopartNumbersList = numbersList.ToArray();
-
-
-                //foreach (string autopartNumber in autopartNumbersList)
-                //{
-                //    if (!String.IsNullOrEmpty(autopartNumber))
-                //    {
-                //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
-                //    }
-                //}
+        //        autopartNumbersList = numbersList.ToArray();
 
 
-                //assemble an array of ID values
-                //int[] customerIds = new int[] { 1, 2, 3 };
-                //string autopartNumbersString = autopartNumbersList.ToString(", ");
+        //        //foreach (string autopartNumber in autopartNumbersList)
+        //        //{
+        //        //    if (!String.IsNullOrEmpty(autopartNumber))
+        //        //    {
+        //        //        autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
+        //        //    }
+        //        //}
 
-                //autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
 
-                //autoparts = (from s in db.Parts
-                //             where autopartNumbersList.Contains(s.Number)
-                //             select s).Take(1000);
+        //        //assemble an array of ID values
+        //        //int[] customerIds = new int[] { 1, 2, 3 };
+        //        //string autopartNumbersString = autopartNumbersList.ToString(", ");
 
-                var autoparts = (IEnumerable<AutoPartsWebSite.Models.Part>)(from p in db.Parts
-                                                                            join a in db.PartAliases on p.Number equals a.Number into ps
-                                                                            from a in ps.DefaultIfEmpty()
-                                                                            where autopartNumbersList.Contains(p.Number)
-                                                                            select new
-                                                                            {
-                                                                                p.Id,
-                                                                                p.ImportId,
-                                                                                p.Brand,
-                                                                                p.Number,
-                                                                                p.Name,
-                                                                                p.Details,
-                                                                                p.Size,
-                                                                                p.Weight,
-                                                                                p.Quantity,
-                                                                                p.Price,
-                                                                                p.Supplier,
-                                                                                p.DeliveryTime,
-                                                                                p.SupplierId
-                                                                            }
-                             ).Take(1000);
+        //        //autoparts = autoparts.Where(c => c.Number.Contains(autopartNumbersList));
 
-                foreach (Part part in autoparts)
-                {
-                    part.Price = CalcUserPrice(part.Id);
-                    part.Quantity = CalcUserQuantity(part.Id);
-                }
-                //Session["AutopartsSearchResult"] = autoparts; //.ToList();
-                Session["AutopartNumbersList"] = autopartNumbersList;
-                return View(autoparts);
-            }
-            return View();
-        }
+        //        //autoparts = (from s in db.Parts
+        //        //             where autopartNumbersList.Contains(s.Number)
+        //        //             select s).Take(1000);
+
+        //        var autoparts = (IEnumerable<AutoPartsWebSite.Models.Part>)(from p in db.Parts
+        //                                                                    join a in db.PartAliases on p.Number equals a.Number into ps
+        //                                                                    from a in ps.DefaultIfEmpty()
+        //                                                                    where autopartNumbersList.Contains(p.Number)
+        //                                                                    select new
+        //                                                                    {
+        //                                                                        p.Id,
+        //                                                                        p.ImportId,
+        //                                                                        p.Brand,
+        //                                                                        p.Number,
+        //                                                                        p.Name,
+        //                                                                        p.Details,
+        //                                                                        p.Size,
+        //                                                                        p.Weight,
+        //                                                                        p.Quantity,
+        //                                                                        p.Price,
+        //                                                                        p.Supplier,
+        //                                                                        p.DeliveryTime,
+        //                                                                        p.SupplierId
+        //                                                                    }
+        //                     ).Take(1000);
+
+        //        foreach (Part part in autoparts)
+        //        {
+        //            part.Price = CalcUserPrice(part.Id);
+        //            part.Quantity = CalcUserQuantity(part.Id);
+        //        }
+        //        //Session["AutopartsSearchResult"] = autoparts; //.ToList();
+        //        Session["AutopartNumbersList"] = autopartNumbersList;
+        //        return View(autoparts);
+        //    }
+        //    return View();
+        //}
 
 
         public ActionResult Excel()
