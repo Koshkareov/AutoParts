@@ -15,7 +15,10 @@
         public string Number { get; set; }
 
         [Display(Name = "Название")]
-        public string Name { get; set; }       
+        public string Name { get; set; }
+
+        [Display(Name = "Описание")]
+        public string Details { get; set; }
 
         [Display(Name = "Объем")]
         public string Size { get; set; }
