@@ -1,10 +1,14 @@
 ﻿namespace AutoPartsWebSite.Models
 {
+    using IdentityAutoPart.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web;
     using System.Web.Mvc;
 
     [Table("Invoice")]
@@ -22,6 +26,25 @@
         [Required]
         [StringLength(128)]
         public string UserId { get; set; }
+
+        [Display(Name = "Пользователь")]
+        [StringLength(128)]
+        public string UserName
+        {
+            get
+            {
+                ApplicationUserManager userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = userManager.FindById(UserId);
+                if (user != null)
+                {
+                    return user.FullName;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
 
         [Required]
         [DataType(DataType.Date)]
@@ -81,5 +104,11 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
+
+        [Display(Name = "Имя файла")]
+        public string FileName { get; set; }
+
+        [Display(Name = "К-во позиций")]
+        public int LinesNumber { get; set; }
     }
 }

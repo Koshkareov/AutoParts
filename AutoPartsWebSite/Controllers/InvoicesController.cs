@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AutoPartsWebSite.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -38,6 +39,13 @@ namespace AutoPartsWebSite.Controllers
         // GET: Invoices/Create
         public ActionResult Create()
         {
+            ViewBag.UserId = User.Identity.GetUserId();
+            ViewBag.Data = System.DateTime.Now.ToString("dd.MM.yyyy");
+
+
+            Invoice invoice = new Invoice();
+            ViewBag.SuppliersList = from supplier in db.Suppliers
+                                    select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             return View();
         }
 
@@ -48,6 +56,8 @@ namespace AutoPartsWebSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UserId,Data,Number,State,SupplierId")] Invoice invoice)
         {
+            ViewBag.SuppliersList = from supplier in db.Suppliers
+                                    select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             if (ModelState.IsValid)
             {
                 db.Invoices.Add(invoice);
