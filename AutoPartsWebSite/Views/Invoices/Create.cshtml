@@ -9,30 +9,26 @@
     <h1 id="cntr">@ViewBag.Title</h1>
     <div class="reg-form">
         <br>
-
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Create", "Invoices", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>Invoice</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                        @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @Value = System.DateTime.Now.ToString("yyyy-MM-dd") } })                       
+                    </div >
+                </div >
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -40,18 +36,17 @@
                     Выбор поставщика:
                     <div class="col-md-10">
                         @Html.DropDownListFor(model => model.SupplierId, (IEnumerable<SelectListItem>)ViewBag.SuppliersList, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
                     </div>
-                </div>             
+                </div>
 
                 <div class="form-group">
                     Имя файла:
                     <div class="col-md-10">
-                        <input type="file" name="upload" id="upload_hidden" onchange="document.getElementById('upload_visible').value = this.value;" accept=".xlsx" />
-                        <input type="text" readonly="1" id="upload_visible" onclick="document.getElementById('upload_hidden').click();" />
-                        @* <button onclick="document.getElementById('upload_hidden').click();">Обзор</button> *@
-
-                        @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
+                        <input type = "file" name="upload" id="upload_hidden" onchange="document.getElementById('upload_visible').value = this.value;" accept=".xlsx" />
+                        <input type = "text" readonly="1" id="upload_visible" onclick="document.getElementById('upload_hidden').click();" />
+                        @* <button onclick="document.getElementById('upload_hidden').click();">Обзор</button> *@   
+                        
+                        @*<input type="file" id="FileName" name="upload" accept=".xlsx" />*@                          
                     </div>
                 </div>
 

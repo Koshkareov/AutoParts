@@ -83,15 +83,14 @@ namespace AutoPartsWebSite.Controllers
                     db.SaveChanges();
                     // toDo: parse data from XSLT file and store it into DB
                     if (LoadImportDataTEST(import.Id))
-                    {
-                        ViewBag.Message = "Импорт завершен.";
+                    {                        
+                        TempData["shortMessage"] = "Импорт завершен."; 
                         return RedirectToAction("Index");                     
                     }                
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Ошибка импорта:" + ex.Message.ToString();
-                    
+                    TempData["shortMessage"] = "Ошибка импорта:" + ex.Message.ToString();
                     return View(import);
                 }
             }

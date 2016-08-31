@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Data)
+                @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Number)
@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Data)
+                    @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Number)
@@ -52,7 +52,8 @@
                     @Html.DisplayFor(modelItem => item.Supplier)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.State)
+                    @*@Html.DisplayFor(modelItem => item.State)*@
+                    @item.getInvoiceStates().First(itm => itm.Value == item.State.ToString()).Text
                 </td>
                 <td>
                     @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |

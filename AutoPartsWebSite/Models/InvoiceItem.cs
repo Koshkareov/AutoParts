@@ -29,7 +29,7 @@
         [Display(Name = "Количество")]
         public string Quantity { get; set; }
 
-        public DateTime? Data { get; set; }
+        public DateTime? Date { get; set; }
 
         [Display(Name = "Статус")]
         public int? State { get; set; }

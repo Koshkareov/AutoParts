@@ -23,7 +23,6 @@
         [Key]
         public int Id { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string UserId { get; set; }
 
@@ -45,12 +44,11 @@
                 }
             }
         }
-
-        [Required]
+        
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Дата")]
-        public DateTime? Data { get; set; }
+        public DateTime? Date { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -58,25 +56,25 @@
         public string Number { get; set; }
 
         [Display(Name = "Статус")]
-        public int? State { get; set; }
+        public int State { get; set; }
 
         public List<SelectListItem> getInvoiceStates()
         {
             List<SelectListItem> StateItems = new List<SelectListItem>();
             StateItems.Add(new SelectListItem
             {
-                Text = "Статус 1",
+                Text = "Загружен",
                 Value = "1"
             });
             StateItems.Add(new SelectListItem
             {
-                Text = "Статус 2",
+                Text = "В работе",
                 Value = "2",
                 Selected = true
             });
             StateItems.Add(new SelectListItem
             {
-                Text = "Статус 3",
+                Text = "Разложен",
                 Value = "3"
             });
             return StateItems;
@@ -105,6 +103,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
 
+        
         [Display(Name = "Имя файла")]
         public string FileName { get; set; }
 
