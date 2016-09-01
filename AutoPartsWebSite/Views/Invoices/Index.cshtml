@@ -1,4 +1,6 @@
-﻿@model IEnumerable<AutoPartsWebSite.Models.Invoice>
+﻿@model PagedList.IPagedList<AutoPartsWebSite.Models.Invoice>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "ПРИЕМ ТОВАРА";
@@ -6,29 +8,38 @@
 
 <DIV class="main-text">
     <h1 id="cntr">@ViewBag.Title</h1>
-    <br>
-    <div class="alink2" id="cntr">
-        @Html.ActionLink("НОВЫЙ ПРИЕМ", "Create")
-    </div><br>   
+    <div class="reg-form">
+        <br>
+        <p>
+            @Html.ActionLink("НОВЫЙ ПРИЕМ", "Create") |
+            <a href="~/Content/files/ALFAPARTS-Invoice.xlsx">ШАБЛОН</a>
+        </p>
+        @using (Html.BeginForm("Index", "Invoices", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "НОМЕР ПРИЕМА" })
+                <input type="submit" value="НАЙТИ" />
+            </p>
+        }
+    </div>   
+  
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
+        <tr>            
+            
+            <th>                
+                @Html.ActionLink("Дата", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Number)
+                @Html.ActionLink("Номер", "Index", new { sortOrder = ViewBag.NumberSortParm, currentFilter = ViewBag.CurrentFilter })
             </th>            
             <th>
-                @Html.DisplayNameFor(model => model.Supplier)
+                Поставщик
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
+                Статус
+            </th>
+            <th>
+                Пользователь
             </th>
             <th></th>
         </tr>
@@ -36,12 +47,8 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
+                
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
@@ -56,6 +63,9 @@
                     @item.getInvoiceStates().First(itm => itm.Value == item.State.ToString()).Text
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
                     @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Просмотр", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
@@ -64,4 +74,9 @@
         }
 
     </table>
+    <br />
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </DIV>

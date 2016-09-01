@@ -10,6 +10,7 @@ using AutoPartsWebSite.Models;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using OfficeOpenXml;
+using PagedList;
 
 namespace AutoPartsWebSite.Controllers
 {
@@ -18,9 +19,47 @@ namespace AutoPartsWebSite.Controllers
         private InvoiceModel db = new InvoiceModel();
 
         // GET: Invoices
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Invoices.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NumberSortParm = String.IsNullOrEmpty(sortOrder) ? "number_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            var invoices = from s in db.Invoices
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                invoices = invoices.Where(s => s.Number.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "number_desc":
+                    invoices = invoices.OrderByDescending(s => s.Number);
+                    break;
+                case "Date":
+                    invoices = invoices.OrderBy(s => s.Date);
+                    break;
+                case "date_desc":
+                    invoices = invoices.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    invoices = invoices.OrderBy(s => s.Number);
+                    break;
+            }
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            return View(invoices.ToPagedList(pageNumber, pageSize));
+            //return View(db.Invoices.ToList());
         }
 
         // GET: Invoices/Details/5
@@ -63,8 +102,7 @@ namespace AutoPartsWebSite.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    
+                {                    
                     invoice.UserId = User.Identity.GetUserId();
                     invoice.Date = System.DateTime.Now;
                     invoice.FileName = System.IO.Path.GetFileName(upload.FileName);
