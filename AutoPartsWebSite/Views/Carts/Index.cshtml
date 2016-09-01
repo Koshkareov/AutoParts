@@ -10,9 +10,6 @@
 
 <table class="table">
     <tr>
-        @*<th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Brand)
         </th>
@@ -42,28 +39,26 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.Reference1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reference2)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Total)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Data)
-        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Brand)
         </td>
         <td>
-
             @Html.ActionLink(item.Number, "Edit", new { id = item.Id })
-            @*@Html.DisplayFor(modelItem => item.Number)*@
         </td>
         <td TITLE="@Html.DisplayFor(modelItem => item.Name)">
             @Html.DisplayFor(modelItem => item.Details)
@@ -77,8 +72,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.DeliveryTime)
         </td>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.Price)*@
+        <td>            
             @Math.Round(Convert.ToDecimal(item.Price), 2).ToString()            
         </td>
         <td>
@@ -86,22 +80,20 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Quantity)
+        </td>        
+        <td>
+            @Html.ActionLink(item.Amount.ToString(), "Edit", new { id = item.Id })                    
         </td>
         <td>
-            @Html.ActionLink(item.Amount.ToString(), "Edit", new { id = item.Id })
-            @*@Html.DisplayFor(modelItem => item.Amount)*@            
+            @Html.ActionLink(!string.IsNullOrEmpty(item.Reference1) ? item.Reference1.ToString() : " " , "Edit", new { id = item.Id })                        
+        </td>
+        <td>
+            @Html.ActionLink(!string.IsNullOrEmpty(item.Reference2) ? item.Reference2.ToString() : " ", "Edit", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Total)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Data)
-        </td>*@
         <td>
-            @*@Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |*@
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-            @*@Html.ActionLink("Удалить", "Delete", new { id=item.Id })*@
-
             @using (Html.BeginForm("Delete", "Carts", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()   
@@ -114,7 +106,7 @@
 }
     <tfoot align="left" style="background: #fc0">
         <tr>
-            <td colspan="9"></td>          
+            <td colspan="11"></td>          
             <td>
                 @*Всего деталей: @ViewBag.CartCount*@              
                 Всего деталей: @Model.Sum(x => x.Amount)

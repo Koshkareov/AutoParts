@@ -50,7 +50,7 @@
         [Display(Name = "Срок поставки")]
         public string DeliveryTime { get; set; }
 
-        [Display(Name = "Количество")]
+        [Display(Name = "К-во")]
         public int? Amount { get; set; }
 
         [DataType(DataType.Date)]
