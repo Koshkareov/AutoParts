@@ -140,6 +140,8 @@ namespace AutoPartsWebSite.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.SuppliersList = from supplier in db.Suppliers
+                                    select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             return View(invoice);
         }
 
@@ -148,10 +150,23 @@ namespace AutoPartsWebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,Data,Number,State,SupplierId,FileName")] Invoice invoice)
+        public ActionResult Edit([Bind(Include = "Id,UserId,Data,Number,State,SupplierId,FileName")] Invoice invoice, HttpPostedFileBase upload)
         {
+            ViewBag.SuppliersList = from supplier in db.Suppliers
+                                    select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             if (ModelState.IsValid)
             {
+                invoice.UserId = User.Identity.GetUserId();
+                invoice.Date = System.DateTime.Now;
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    invoice.FileName = System.IO.Path.GetFileName(upload.FileName);
+                }
+                    if (ExcelImport(invoice.Id, upload))
+                {                    
+                    TempData["shortMessage"] = "Загружено.";
+                    return RedirectToAction("Index");
+                }
                 db.Entry(invoice).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -194,8 +209,8 @@ namespace AutoPartsWebSite.Controllers
                 if (upload != null && upload.ContentLength > 0)
                 {
                     // clear the table InvoiceItem by InvoiceId
-                    var all = from c in db.InvoiceItems where c.InvoiceId.Equals(invoiceId)  select c ;
-                    db.InvoiceItems.RemoveRange(all);                    
+                    var all = from c in db.InvoiceItems where c.InvoiceId.Equals(invoiceId) select c;
+                    db.InvoiceItems.RemoveRange(all);
                     // load from stream
                     using (ExcelPackage package = new ExcelPackage(upload.InputStream))
                     {
@@ -214,8 +229,12 @@ namespace AutoPartsWebSite.Controllers
                     }
                     db.SaveChanges();
                     ViewBag.Message = "Загружено.";
+                    return true;
                 }
-                return true;
+                else
+                {
+                    return true;
+                }
             }
             catch (Exception ex)
             {
