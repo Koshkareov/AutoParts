@@ -12,9 +12,7 @@
         <br>
         <p>
             @Html.ActionLink("НОВЫЙ ПРИЕМ", "Create") |
-            @Html.ActionLink("РАСПРЕДЕЛЕНИЕ", "Distribution") |
             <a href="~/Content/files/ALFAPARTS-Invoice.xlsx">ШАБЛОН</a>
-
         </p>
         @using (Html.BeginForm("Index", "Invoices", FormMethod.Get))
         {
@@ -23,17 +21,17 @@
                 <input type="submit" value="НАЙТИ" />
             </p>
         }
-    </div>
-
+    </div>   
+  
     <table class="table">
-        <tr>
-
-            <th>
+        <tr>            
+            
+            <th>                
                 @Html.ActionLink("Дата", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th>
                 @Html.ActionLink("Номер", "Index", new { sortOrder = ViewBag.NumberSortParm, currentFilter = ViewBag.CurrentFilter })
-            </th>
+            </th>            
             <th>
                 Поставщик
             </th>
@@ -49,14 +47,14 @@
         @foreach (var item in Model)
         {
             <tr>
-
-
+                
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Number)
-                </td>
+                </td>                
                 <td>
                     @Html.DisplayFor(modelItem => item.Supplier)
                 </td>

@@ -69,7 +69,7 @@ namespace AutoPartsWebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Invoice invoice = db.Invoices.Find(id);            
+            Invoice invoice = db.Invoices.Find(id);
             if (invoice == null)
             {
                 return HttpNotFound();
@@ -84,14 +84,14 @@ namespace AutoPartsWebSite.Controllers
             ViewBag.Date = System.DateTime.Now.ToString("yyyy-MM-dd");
 
 
-            Invoice invoice = new Invoice();          
+            Invoice invoice = new Invoice();
             ViewBag.SuppliersList = from supplier in db.Suppliers
                                     select new SelectListItem { Text = supplier.Name, Value = supplier.Id.ToString() };
             return View();
         }
 
         // POST: Invoices/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -102,7 +102,7 @@ namespace AutoPartsWebSite.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {                    
+                {
                     invoice.UserId = User.Identity.GetUserId();
                     invoice.Date = System.DateTime.Now;
                     invoice.FileName = System.IO.Path.GetFileName(upload.FileName);
@@ -146,7 +146,7 @@ namespace AutoPartsWebSite.Controllers
         }
 
         // POST: Invoices/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -163,7 +163,7 @@ namespace AutoPartsWebSite.Controllers
                     invoice.FileName = System.IO.Path.GetFileName(upload.FileName);
                 }
                     if (ExcelImport(invoice.Id, upload))
-                {                    
+                {
                     TempData["shortMessage"] = "Загружено.";
                     return RedirectToAction("Index");
                 }
@@ -200,7 +200,7 @@ namespace AutoPartsWebSite.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
         private bool ExcelImport(int invoiceId, HttpPostedFileBase upload)
         {
             int firstDataRow = 4;
@@ -244,6 +244,10 @@ namespace AutoPartsWebSite.Controllers
             }
         }
 
+        public ActionResult Distribution()
+        {
+            return View(db.Invoices.ToList());
+        }
 
         protected override void Dispose(bool disposing)
         {
