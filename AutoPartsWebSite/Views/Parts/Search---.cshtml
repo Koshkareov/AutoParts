@@ -1,0 +1,128 @@
+﻿@model IEnumerable<AutoPartsWebSite.Models.Part>
+
+
+@{
+    ViewBag.Title = "Поиск запчастей";
+    int maxSearchItemCount = 1;
+    int maxSearchRowsCount = 1;
+    string searchMsgText = "Для поиска более 1-й позиции требуется авторизация";
+}
+
+@if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+{
+    maxSearchItemCount = ViewBag.SearchLimit;
+    maxSearchRowsCount = 10;
+    searchMsgText = "Результат для поиска " + @ViewBag.SearchLimit + " позиций из " + @ViewBag.ItemsToSearch;
+}
+
+<div class="jumbotron">
+    <h2>Поиск запчастей</h2>
+
+    <p>
+        @using (Html.BeginForm("Search", "Parts", FormMethod.Post))
+        {
+        <p>
+            @Html.TextArea("autopartNumbers", new { rows = maxSearchRowsCount, columns = 60, placeholder = "КОД ЗАПЧАСТИ" })
+            <input type="submit" value="Поиск" />
+        </p>
+        }
+
+        @if (ViewBag.SearchLimit < ViewBag.ItemsToSearch)
+        {
+            <div>
+                @searchMsgText
+            </div>
+        }
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Марка")
+            </th>
+            <th>
+                @Html.DisplayName("Номер")
+            </th>
+            <th>
+                @Html.DisplayName("Описание")
+            </th>
+            <th>
+                @Html.DisplayName("Объем")
+            </th>
+            <th>
+                @Html.DisplayName("Вес")
+            </th>
+            <th>
+                @Html.DisplayName("Срок поставки")
+            </th>
+            <th>
+                @Html.DisplayName("Цена")
+            </th>
+            <th>
+                @Html.DisplayName("Поставщик")
+            </th>
+            <th>
+                @Html.DisplayName("Наличие")
+            </th>
+            @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+            {
+                <th>
+                    @Html.DisplayName("Количество")
+                </th>
+            }
+        </tr>
+
+        @using (Html.BeginForm("AddToCartMulti", "Carts"))
+        {
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td TITLE="@Html.DisplayFor(modelItem => item.Name)">
+                        @Html.DisplayFor(modelItem => item.Details)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryTime)
+                    </td>
+                    <td>
+                        @Math.Round(Convert.ToDecimal(item.Price), 2).ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Supplier)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    @if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+                    {
+                        <td>
+                            @Html.TextBox("Amount" + item.Id, "0", new { PartId = item.Id, type = "number", min = "0", max = item.Quantity })
+                        </td>
+                    }
+                </tr>
+            }
+            if (Request.IsAuthenticated && User.IsInRole("RegistredUser"))
+            {
+                <div class="pull-right">
+                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                    <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+                </div>
+            }
+        }
+
+    </table>
+    <p>
+        @Html.ActionLink("Экспорт результатов в Excel", "Excel")
+    </p>
